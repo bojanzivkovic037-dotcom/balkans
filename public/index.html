@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Balkans – Nađi cimera</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #0B1F3A; --orange: #FF6B2B; --white: #fff;
+  --gray1: #F4F6FA; --gray2: #8A96A8; --gray3: #D1D9E4; --green: #22C55E;
+}
+body { font-family: 'Inter', sans-serif; background: var(--gray1); color: var(--navy); }
+
+nav { background: var(--navy); padding: 0 5%; height: 64px; display: flex; align-items: center; justify-content: space-between; position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; cursor: pointer; }
+.logo-text { font-size: 1.3rem; font-weight: 800; color: #fff; }
+.logo-text b { color: var(--orange); }
+.nav-links { display: flex; gap: 16px; align-items: center; }
+.nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.875rem; font-weight: 500; cursor: pointer; }
+.nav-links a:hover { color: #fff; }
+.btn { padding: 9px 20px; border-radius: 8px; font-size: 0.875rem; font-weight: 700; cursor: pointer; border: none; font-family: 'Inter', sans-serif; transition: opacity .2s; }
+.btn-orange { background: var(--orange); color: #fff; }
+.btn-orange:hover { opacity: .88; }
+.btn-outline { background: transparent; color: var(--navy); border: 1.5px solid var(--gray3); }
+.btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+
+.page { display: none; padding-top: 64px; min-height: 100vh; }
+.page.active { display: block; }
+
+/* HOME */
+.hero { background: var(--navy); padding: 80px 5% 60px; }
+.hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900; color: #fff; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 16px; }
+.hero h1 em { font-style: normal; color: var(--orange); }
+.hero p { color: rgba(255,255,255,0.65); font-size: 1rem; line-height: 1.7; margin-bottom: 32px; max-width: 500px; }
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.search-bar { background: #fff; padding: 16px 5%; display: flex; gap: 12px; flex-wrap: wrap; border-bottom: 1px solid var(--gray3); }
+.search-field { display: flex; align-items: center; gap: 8px; background: var(--gray1); border: 1.5px solid var(--gray3); border-radius: 8px; padding: 9px 14px; flex: 1; min-width: 160px; }
+.search-field select { border: none; outline: none; background: transparent; font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--navy); width: 100%; cursor: pointer; }
+
+.cards-section { padding: 28px 5%; }
+.cards-section h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: 20px; }
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.card { background: #fff; border-radius: 14px; padding: 22px; border: 1.5px solid var(--gray3); transition: border-color .2s, transform .2s; cursor: pointer; }
+.card:hover { border-color: var(--orange); transform: translateY(-2px); }
+.card-top { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.avatar { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 800; color: #fff; flex-shrink: 0; position: relative; overflow: hidden; }
+.avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.vdot { position: absolute; bottom: 1px; right: 1px; width: 12px; height: 12px; border-radius: 50%; background: var(--green); border: 2px solid #fff; }
+.card-name { font-size: 0.95rem; font-weight: 700; }
+.card-origin { font-size: 0.78rem; color: var(--gray2); margin-top: 2px; }
+.vbadge { margin-left: auto; background: rgba(34,197,94,0.1); color: #16a34a; font-size: 0.7rem; font-weight: 700; padding: 3px 9px; border-radius: 100px; white-space: nowrap; }
+.dest-block { background: var(--gray1); border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; }
+.dest-label { font-size: 0.68rem; font-weight: 600; color: var(--gray2); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+.dest-city { font-size: 0.95rem; font-weight: 800; }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.chip { font-size: 0.72rem; font-weight: 600; background: var(--gray1); color: var(--gray2); padding: 3px 9px; border-radius: 6px; }
+.card-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid var(--gray3); }
+.price { font-size: 1rem; font-weight: 800; }
+.price span { font-size: 0.75rem; font-weight: 500; color: var(--gray2); }
+.btn-sm { padding: 7px 14px; border-radius: 7px; font-size: 0.78rem; font-weight: 700; cursor: pointer; border: none; font-family: 'Inter', sans-serif; background: var(--orange); color: #fff; }
+.btn-sm:hover { opacity: .88; }
+
+/* AUTH */
+.auth-wrap { max-width: 420px; margin: 60px auto; padding: 0 20px 60px; }
+.auth-card { background: #fff; border-radius: 16px; padding: 36px; border: 1.5px solid var(--gray3); }
+.auth-card h2 { font-size: 1.5rem; font-weight: 900; margin-bottom: 6px; }
+.auth-card p { color: var(--gray2); font-size: 0.875rem; margin-bottom: 28px; }
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 6px; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 11px 14px; border: 1.5px solid var(--gray3); border-radius: 8px; font-size: 0.875rem; font-family: 'Inter', sans-serif; outline: none; transition: border-color .2s; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--orange); }
+.form-group textarea { resize: vertical; min-height: 90px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.btn-full { width: 100%; padding: 13px; font-size: 0.95rem; margin-top: 4px; }
+.auth-switch { text-align: center; margin-top: 20px; font-size: 0.85rem; color: var(--gray2); }
+.auth-switch a { color: var(--orange); text-decoration: none; font-weight: 600; cursor: pointer; }
+.msg { padding: 12px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; margin-bottom: 16px; display: none; }
+.msg.ok { background: rgba(34,197,94,0.1); color: #16a34a; display: block; }
+.msg.err { background: rgba(239,68,68,0.1); color: #dc2626; display: block; }
+
+/* SETUP PROFIL (obavezan korak) */
+.setup-wrap { max-width: 560px; margin: 40px auto; padding: 0 20px 60px; }
+.setup-wrap h2 { font-size: 1.5rem; font-weight: 900; margin-bottom: 6px; }
+.setup-wrap > p { color: var(--gray2); font-size: 0.9rem; margin-bottom: 28px; }
+.setup-card { background: #fff; border-radius: 16px; padding: 28px; border: 1.5px solid var(--gray3); }
+
+/* PROFIL */
+.profil-wrap { max-width: 600px; margin: 40px auto; padding: 0 20px 60px; }
+.profil-header { background: var(--navy); border-radius: 16px; padding: 28px; margin-bottom: 20px; display: flex; align-items: center; gap: 20px; }
+.profil-avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--orange); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; color: #fff; flex-shrink: 0; overflow: hidden; }
+.profil-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.profil-info h2 { font-size: 1.3rem; font-weight: 800; color: #fff; }
+.profil-info p { color: rgba(255,255,255,0.6); font-size: 0.85rem; margin-top: 4px; }
+.profil-card { background: #fff; border-radius: 14px; padding: 24px; border: 1.5px solid var(--gray3); margin-bottom: 16px; }
+.profil-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 18px; }
+
+/* CHAT */
+.chat-wrap { max-width: 800px; margin: 0 auto; padding: 20px 20px 0; display: flex; gap: 0; height: calc(100vh - 64px); }
+.konv-lista { width: 280px; flex-shrink: 0; background: #fff; border-right: 1px solid var(--gray3); overflow-y: auto; }
+.konv-header { padding: 20px 16px 12px; font-size: 1rem; font-weight: 800; border-bottom: 1px solid var(--gray3); }
+.konv-item { padding: 14px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; border-bottom: 1px solid var(--gray3); transition: background .15s; }
+.konv-item:hover, .konv-item.active { background: rgba(255,107,43,0.05); }
+.konv-avatar { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700; color: #fff; flex-shrink: 0; overflow: hidden; }
+.konv-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.konv-ime { font-size: 0.875rem; font-weight: 700; }
+.konv-zadnja { font-size: 0.75rem; color: var(--gray2); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+
+.chat-prozor { flex: 1; display: flex; flex-direction: column; background: var(--gray1); }
+.chat-empty { flex: 1; display: flex; align-items: center; justify-content: center; color: var(--gray2); font-size: 0.9rem; }
+.chat-header { background: #fff; padding: 16px 20px; border-bottom: 1px solid var(--gray3); font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 12px; }
+.chat-poruke { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+.poruka-bubble { max-width: 70%; padding: 10px 14px; border-radius: 12px; font-size: 0.875rem; line-height: 1.5; }
+.poruka-bubble.moja { background: var(--orange); color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
+.poruka-bubble.njegova { background: #fff; color: var(--navy); align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid var(--gray3); }
+.poruka-vreme { font-size: 0.65rem; opacity: 0.6; margin-top: 4px; }
+.chat-input-bar { background: #fff; padding: 16px 20px; border-top: 1px solid var(--gray3); display: flex; gap: 10px; align-items: flex-end; }
+.chat-input { flex: 1; border: 1.5px solid var(--gray3); border-radius: 10px; padding: 10px 14px; font-size: 0.875rem; font-family: 'Inter', sans-serif; outline: none; resize: none; max-height: 120px; min-height: 42px; transition: border-color .2s; }
+.chat-input:focus { border-color: var(--orange); }
+.chat-send { background: var(--orange); color: #fff; border: none; border-radius: 10px; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: opacity .2s; }
+.chat-send:hover { opacity: .88; }
+
+/* MODAL */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 500; display: none; align-items: center; justify-content: center; padding: 20px; }
+.modal-overlay.open { display: flex; }
+.modal { background: #fff; border-radius: 16px; padding: 28px; max-width: 480px; width: 100%; }
+.modal h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; }
+.modal-close { float: right; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--gray2); margin-top: -6px; line-height: 1; }
+.empty { color: var(--gray2); padding: 40px 0; text-align: center; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo" onclick="showPage('home')">
+    <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+      <circle cx="18" cy="23" r="12" fill="#122849" stroke="#FF6B2B" stroke-width="1.8"/>
+      <ellipse cx="18" cy="23" rx="12" ry="4.5" stroke="rgba(255,107,43,0.4)" stroke-width="1.2" fill="none" transform="rotate(-18 18 23)"/>
+      <g transform="translate(24,9) rotate(40)">
+        <path d="M0 0 L9 4 L0 8 L2.5 4 Z" fill="#FF6B2B"/>
+        <path d="M2.5 3 L-3.5 0.5 L-2 4 Z" fill="#FF8C55" opacity="0.8"/>
+        <path d="M2.5 5 L-3.5 7.5 L-2 4 Z" fill="#FF8C55" opacity="0.8"/>
+      </g>
+    </svg>
+    <span class="logo-text">Bal<b>kans</b></span>
+  </div>
+  <div class="nav-links">
+    <a onclick="showPage('oglasi')">Oglasi</a>
+    <a id="navLogin" onclick="showPage('login')">Prijavi se</a>
+    <button id="navReg" class="btn btn-orange" onclick="showPage('registracija')">Registruj se</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <h1>Nađi cimera na koga<br>možeš da <em>računaš</em></h1>
+    <p>Pronađi verifikovanog cimera iz Srbije, BiH ili Hrvatske koji ide u istu zemlju kao ti. Delite kiriju i troškove smestaja.</p>
+    <div class="hero-btns">
+      <button class="btn btn-orange" onclick="showPage('registracija')">Kreiraj profil besplatno</button>
+      <button class="btn" style="background:rgba(255,255,255,0.1);color:#fff" onclick="showPage('oglasi')">Pregledaj oglase</button>
+    </div>
+  </div>
+  <div class="cards-section">
+    <h2>Traže cimera upravo sad</h2>
+    <div class="cards-grid" id="homeCards"><p class="empty">Učitavanje...</p></div>
+  </div>
+</div>
+
+<!-- OGLASI -->
+<div class="page" id="page-oglasi">
+  <div class="search-bar">
+    <div class="search-field">
+      <select id="fGrad" onchange="ucitajOglase()">
+        <option value="">Svi gradovi</option>
+        <option>Beč</option><option>Minhen</option><option>Berlin</option>
+        <option>Cirih</option><option>Ljubljana</option><option>Hamburg</option><option>Frankfurt</option>
+      </select>
+    </div>
+    <div class="search-field">
+      <select id="fDrzava" onchange="ucitajOglase()">
+        <option value="">Sve zemlje</option>
+        <option>Austrija</option><option>Nemačka</option><option>Švajcarska</option><option>Slovenija</option>
+      </select>
+    </div>
+    <div class="search-field">
+      <select id="fBudzet" onchange="ucitajOglase()">
+        <option value="">Svaki budžet</option>
+        <option value="500">Do 500€</option>
+        <option value="700">Do 700€</option>
+        <option value="1000">Do 1000€</option>
+      </select>
+    </div>
+  </div>
+  <div class="cards-section">
+    <h2>Aktivni oglasi</h2>
+    <div class="cards-grid" id="oglasiCards"><p class="empty">Učitavanje...</p></div>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div class="page" id="page-login">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <h2>Dobrodošao nazad</h2>
+      <p>Prijavi se na svoj Balkans nalog</p>
+      <div class="msg" id="loginMsg"></div>
+      <div class="form-group"><label>Email</label><input type="email" id="loginEmail" placeholder="tvoj@email.com"></div>
+      <div class="form-group"><label>Lozinka</label><input type="password" id="loginLozinka" placeholder="••••••••"></div>
+      <button class="btn btn-orange btn-full" onclick="login()">Prijavi se</button>
+      <div class="auth-switch">Nemaš nalog? <a onclick="showPage('registracija')">Registruj se</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- REGISTRACIJA -->
+<div class="page" id="page-registracija">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <h2>Kreiraj profil</h2>
+      <p>Pridruži se Balkancima u inostranstvu</p>
+      <div class="msg" id="regMsg"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Ime</label><input type="text" id="regIme" placeholder="Marko"></div>
+        <div class="form-group"><label>Prezime</label><input type="text" id="regPrezime" placeholder="Petrović"></div>
+      </div>
+      <div class="form-group"><label>Email</label><input type="email" id="regEmail" placeholder="tvoj@email.com"></div>
+      <div class="form-group"><label>Lozinka</label><input type="password" id="regLozinka" placeholder="Minimum 6 karaktera"></div>
+      <button class="btn btn-orange btn-full" onclick="registracija()">Kreiraj nalog</button>
+      <div class="auth-switch">Već imaš nalog? <a onclick="showPage('login')">Prijavi se</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- VERIFIKACIJA EMAIL -->
+<div class="page" id="page-verifikacija">
+  <div class="auth-wrap">
+    <div class="auth-card" style="text-align:center">
+      <div style="font-size:3rem;margin-bottom:16px">📧</div>
+      <h2>Potvrdi email</h2>
+      <p style="margin-bottom:0">Poslali smo ti link na <strong id="verEmail"></strong>.<br>Klikni na link u emailu pa se prijavi.</p>
+      <div style="margin-top:28px">
+        <button class="btn btn-orange btn-full" onclick="showPage('login')">Idi na prijavu</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SETUP PROFIL (obavezan) -->
+<div class="page" id="page-setup">
+  <div class="setup-wrap">
+    <h2>Popuni tvoj oglas</h2>
+    <p>Pre nego što možeš da koristiš Balkans, popuni sve podatke. Ovo je tvoj oglas koji drugi vide.</p>
+    <div class="setup-card">
+      <div class="msg" id="setupMsg"></div>
+      <div class="form-group"><label>Odakle si? *</label><input type="text" id="sOdakle" placeholder="Beograd, Novi Sad, Sarajevo..."></div>
+      <div class="form-row">
+        <div class="form-group"><label>Grad odredišta *</label>
+          <select id="sGrad"><option>Beč</option><option>Minhen</option><option>Berlin</option><option>Cirih</option><option>Ljubljana</option><option>Hamburg</option><option>Frankfurt</option></select>
+        </div>
+        <div class="form-group"><label>Država *</label>
+          <select id="sDrzava"><option>Austrija</option><option>Nemačka</option><option>Švajcarska</option><option>Slovenija</option></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Budžet od (€/mes) *</label><input type="number" id="sBudzMin" placeholder="400"></div>
+        <div class="form-group"><label>Budžet do (€/mes) *</label><input type="number" id="sBudzMax" placeholder="800"></div>
+      </div>
+      <div class="form-group"><label>Datum useljenja *</label><input type="date" id="sDatum"></div>
+      <div class="form-group"><label>Zanimanje *</label><input type="text" id="sZanimanje" placeholder="IT radnik, student, konobar..."></div>
+      <div class="form-group"><label>O meni *</label><textarea id="sOMeni" placeholder="Napiši nešto o sebi i šta tražiš u cimeru (minimum 20 karaktera)..."></textarea></div>
+      <div class="form-row">
+        <div class="form-group"><label>Pušač?</label><select id="sPusac"><option value="false">Ne</option><option value="true">Da</option></select></div>
+        <div class="form-group"><label>Kućni ljubimci?</label><select id="sLjubimci"><option value="false">Ne</option><option value="true">Da</option></select></div>
+      </div>
+      <div class="form-group"><label>Profilna slika *</label><input type="file" id="sSlika" accept="image/*"></div>
+      <button class="btn btn-orange btn-full" onclick="sacuvajSetup()">Završi i ulazi</button>
+    </div>
+  </div>
+</div>
+
+<!-- PROFIL -->
+<div class="page" id="page-profil">
+  <div class="profil-wrap">
+    <div class="profil-header">
+      <div class="profil-avatar" id="profilAvatar">?</div>
+      <div class="profil-info">
+        <h2 id="profilIme">Učitavanje...</h2>
+        <p id="profilEmail"></p>
+      </div>
+    </div>
+    <div class="profil-card">
+      <h3>Uredi oglas</h3>
+      <div class="form-group"><label>Odakle si?</label><input type="text" id="pOdakle" placeholder="Beograd, Novi Sad..."></div>
+      <div class="form-row">
+        <div class="form-group"><label>Grad odredišta</label>
+          <select id="pGrad"><option>Beč</option><option>Minhen</option><option>Berlin</option><option>Cirih</option><option>Ljubljana</option><option>Hamburg</option><option>Frankfurt</option></select>
+        </div>
+        <div class="form-group"><label>Država</label>
+          <select id="pDrzava"><option>Austrija</option><option>Nemačka</option><option>Švajcarska</option><option>Slovenija</option></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Budžet od (€/mes)</label><input type="number" id="pBudzMin" placeholder="400"></div>
+        <div class="form-group"><label>Budžet do (€/mes)</label><input type="number" id="pBudzMax" placeholder="800"></div>
+      </div>
+      <div class="form-group"><label>Datum useljenja</label><input type="date" id="pDatum"></div>
+      <div class="form-group"><label>Zanimanje</label><input type="text" id="pZanimanje" placeholder="IT radnik, student, konobar..."></div>
+      <div class="form-group"><label>O meni</label><textarea id="pOMeni"></textarea></div>
+      <div class="form-row">
+        <div class="form-group"><label>Pušač?</label><select id="pPusac"><option value="false">Ne</option><option value="true">Da</option></select></div>
+        <div class="form-group"><label>Kućni ljubimci?</label><select id="pLjubimci"><option value="false">Ne</option><option value="true">Da</option></select></div>
+      </div>
+      <div class="form-group"><label>Promeni sliku</label><input type="file" id="pSlika" accept="image/*" onchange="uploadSlika(this)"></div>
+      <div class="msg" id="profilMsg"></div>
+      <button class="btn btn-orange btn-full" onclick="sacuvajProfil()">Sačuvaj izmene</button>
+    </div>
+    <button class="btn btn-outline btn-full" style="margin-top:8px" onclick="odjava()">Odjavi se</button>
+  </div>
+</div>
+
+<!-- PORUKE / CHAT -->
+<div class="page" id="page-poruke">
+  <div class="chat-wrap">
+    <div class="konv-lista">
+      <div class="konv-header">Poruke</div>
+      <div id="konvLista"><p class="empty" style="padding:20px">Nema poruka</p></div>
+    </div>
+    <div class="chat-prozor" id="chatProzor">
+      <div class="chat-empty">Odaberi konverzaciju</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL KONTAKT -->
+<div class="modal-overlay" id="kontaktModal">
+  <div class="modal">
+    <button class="modal-close" onclick="zatvoriModal()">×</button>
+    <h3 id="modalNaslov">Pošalji poruku</h3>
+    <div class="msg" id="modalMsg"></div>
+    <div class="form-group"><label>Poruka</label><textarea id="modalTekst" placeholder="Zdravo! Video sam tvoj oglas..." style="min-height:120px"></textarea></div>
+    <input type="hidden" id="modalPrimalac">
+    <button class="btn btn-orange btn-full" onclick="posaljiPrvuPoruku()">Pošalji</button>
+  </div>
+</div>
+
+<script>
+let korisnik = null;
+let session = null;
+let aktivniChat = null;
+let chatInterval = null;
+const boje = ['#1a4a7a','#6b1a4a','#2d1a5c','#1a5a3a','#5a3a1a','#1a3a5a'];
+
+window.onload = () => {
+  const k = localStorage.getItem('bk_user');
+  const s = localStorage.getItem('bk_session');
+  if (k && s) { korisnik = JSON.parse(k); session = JSON.parse(s); updateNav(); }
+  ucitajHomeKartice();
+};
+
+function showPage(ime) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + ime).classList.add('active');
+  window.scrollTo(0, 0);
+  if (ime === 'oglasi') ucitajOglase();
+  if (ime === 'profil') ucitajProfil();
+  if (ime === 'poruke') ucitajKonverzacije();
+  if (chatInterval && ime !== 'poruke') { clearInterval(chatInterval); chatInterval = null; }
+}
+
+function updateNav() {
+  const nl = document.getElementById('navLogin');
+  const nr = document.getElementById('navReg');
+  if (korisnik) {
+    nl.textContent = 'Moj profil'; nl.onclick = () => showPage('profil');
+    nr.textContent = 'Poruke'; nr.onclick = () => showPage('poruke');
+  } else {
+    nl.textContent = 'Prijavi se'; nl.onclick = () => showPage('login');
+    nr.textContent = 'Registruj se'; nr.onclick = () => showPage('registracija');
+  }
+}
+
+function prikaziMsg(id, tekst, tip) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = tekst; el.className = 'msg ' + tip;
+}
+
+async function registracija() {
+  const ime = document.getElementById('regIme').value.trim();
+  const prezime = document.getElementById('regPrezime').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const lozinka = document.getElementById('regLozinka').value;
+  if (!ime || !prezime || !email || !lozinka) return prikaziMsg('regMsg', 'Popuni sva polja', 'err');
+  if (lozinka.length < 6) return prikaziMsg('regMsg', 'Lozinka mora imati minimum 6 karaktera', 'err');
+  try {
+    const r = await fetch('/api/registracija', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ime, prezime, email, lozinka}) });
+    const d = await r.json();
+    if (d.greska) return prikaziMsg('regMsg', d.greska, 'err');
+    document.getElementById('verEmail').textContent = email;
+    showPage('verifikacija');
+  } catch(e) { prikaziMsg('regMsg', 'Greška, pokušaj ponovo', 'err'); }
+}
+
+async function login() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const lozinka = document.getElementById('loginLozinka').value;
+  if (!email || !lozinka) return prikaziMsg('loginMsg', 'Popuni sva polja', 'err');
+  try {
+    const r = await fetch('/api/login', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({email, lozinka}) });
+    const d = await r.json();
+    if (d.greska) return prikaziMsg('loginMsg', d.greska, 'err');
+    korisnik = d.korisnik; session = d.session;
+    localStorage.setItem('bk_user', JSON.stringify(korisnik));
+    localStorage.setItem('bk_session', JSON.stringify(session));
+    updateNav();
+    // Proveri da li je profil popunjen
+    const pr = await fetch('/api/profil/' + korisnik.id);
+    const profil = await pr.json();
+    if (!profil.odakle || !profil.destinacija_grad || !profil.o_meni) {
+      showPage('setup');
+    } else {
+      showPage('home');
+    }
+  } catch(e) { prikaziMsg('loginMsg', 'Greška, pokušaj ponovo', 'err'); }
+}
+
+function odjava() {
+  korisnik = null; session = null;
+  localStorage.removeItem('bk_user'); localStorage.removeItem('bk_session');
+  updateNav(); showPage('home');
+}
+
+async function sacuvajSetup() {
+  const odakle = document.getElementById('sOdakle').value.trim();
+  const grad = document.getElementById('sGrad').value;
+  const drzava = document.getElementById('sDrzava').value;
+  const budzMin = document.getElementById('sBudzMin').value;
+  const budzMax = document.getElementById('sBudzMax').value;
+  const datum = document.getElementById('sDatum').value;
+  const zanimanje = document.getElementById('sZanimanje').value.trim();
+  const oMeni = document.getElementById('sOMeni').value.trim();
+  const slika = document.getElementById('sSlika').files[0];
+
+  if (!odakle || !grad || !drzava || !budzMin || !budzMax || !datum || !zanimanje || !oMeni) return prikaziMsg('setupMsg', 'Sva polja su obavezna', 'err');
+  if (oMeni.length < 20) return prikaziMsg('setupMsg', 'Napiši više o sebi (minimum 20 karaktera)', 'err');
+  if (!slika) return prikaziMsg('setupMsg', 'Profilna slika je obavezna', 'err');
+
+  try {
+    const r = await fetch('/api/profil/' + korisnik.id, {
+      method: 'PUT', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        odakle, destinacija_grad: grad, destinacija_drzava: drzava,
+        budzet_min: parseInt(budzMin), budzet_max: parseInt(budzMax),
+        datum_useljenja: datum, zanimanje, o_meni: oMeni,
+        pusac: document.getElementById('sPusac').value === 'true',
+        ljubimci: document.getElementById('sLjubimci').value === 'true'
+      })
+    });
+    const d = await r.json();
+    if (d.greska) return prikaziMsg('setupMsg', d.greska, 'err');
+
+    const fd = new FormData(); fd.append('slika', slika);
+    await fetch('/api/slika/' + korisnik.id, { method: 'POST', body: fd });
+
+    showPage('home');
+    ucitajHomeKartice();
+  } catch(e) { prikaziMsg('setupMsg', 'Greška, pokušaj ponovo', 'err'); }
+}
+
+async function ucitajProfil() {
+  if (!korisnik) return showPage('login');
+  try {
+    const r = await fetch('/api/profil/' + korisnik.id);
+    const d = await r.json();
+    document.getElementById('profilIme').textContent = (d.ime||'') + ' ' + (d.prezime||'');
+    document.getElementById('profilEmail').textContent = d.email || '';
+    const av = document.getElementById('profilAvatar');
+    if (d.avatar_url) { av.innerHTML = `<img src="${d.avatar_url}">`; } else { av.textContent = (d.ime||'?')[0].toUpperCase(); }
+    document.getElementById('pOdakle').value = d.odakle || '';
+    document.getElementById('pGrad').value = d.destinacija_grad || 'Beč';
+    document.getElementById('pDrzava').value = d.destinacija_drzava || 'Austrija';
+    document.getElementById('pBudzMin').value = d.budzet_min || '';
+    document.getElementById('pBudzMax').value = d.budzet_max || '';
+    document.getElementById('pDatum').value = d.datum_useljenja || '';
+    document.getElementById('pZanimanje').value = d.zanimanje || '';
+    document.getElementById('pOMeni').value = d.o_meni || '';
+    document.getElementById('pPusac').value = d.pusac ? 'true' : 'false';
+    document.getElementById('pLjubimci').value = d.ljubimci ? 'true' : 'false';
+  } catch(e) {}
+}
+
+async function sacuvajProfil() {
+  if (!korisnik) return;
+  const podaci = {
+    odakle: document.getElementById('pOdakle').value,
+    destinacija_grad: document.getElementById('pGrad').value,
+    destinacija_drzava: document.getElementById('pDrzava').value,
+    budzet_min: parseInt(document.getElementById('pBudzMin').value) || null,
+    budzet_max: parseInt(document.getElementById('pBudzMax').value) || null,
+    datum_useljenja: document.getElementById('pDatum').value || null,
+    zanimanje: document.getElementById('pZanimanje').value,
+    o_meni: document.getElementById('pOMeni').value,
+    pusac: document.getElementById('pPusac').value === 'true',
+    ljubimci: document.getElementById('pLjubimci').value === 'true'
+  };
+  try {
+    const r = await fetch('/api/profil/' + korisnik.id, { method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(podaci) });
+    const d = await r.json();
+    if (d.greska) return prikaziMsg('profilMsg', d.greska, 'err');
+    prikaziMsg('profilMsg', 'Sačuvano!', 'ok');
+  } catch(e) { prikaziMsg('profilMsg', 'Greška', 'err'); }
+}
+
+async function uploadSlika(input) {
+  if (!input.files[0] || !korisnik) return;
+  const fd = new FormData(); fd.append('slika', input.files[0]);
+  try {
+    const r = await fetch('/api/slika/' + korisnik.id, { method: 'POST', body: fd });
+    const d = await r.json();
+    if (d.url) { document.getElementById('profilAvatar').innerHTML = `<img src="${d.url}">`; }
+  } catch(e) {}
+}
+
+async function ucitajOglase() {
+  const grad = document.getElementById('fGrad')?.value || '';
+  const drzava = document.getElementById('fDrzava')?.value || '';
+  const budzet = document.getElementById('fBudzet')?.value || '';
+  let url = '/api/oglasi?';
+  if (grad) url += `grad=${encodeURIComponent(grad)}&`;
+  if (drzava) url += `drzava=${encodeURIComponent(drzava)}&`;
+  if (budzet) url += `budzet_max=${budzet}`;
+  try {
+    const r = await fetch(url);
+    const data = await r.json();
+    renderKartice(data, 'oglasiCards');
+  } catch(e) { document.getElementById('oglasiCards').innerHTML = '<p class="empty">Greška pri učitavanju</p>'; }
+}
+
+async function ucitajHomeKartice() {
+  try {
+    const r = await fetch('/api/oglasi');
+    const data = await r.json();
+    renderKartice(data.slice(0, 6), 'homeCards');
+  } catch(e) { document.getElementById('homeCards').innerHTML = '<p class="empty">Budi prvi koji kreira oglas!</p>'; }
+}
+
+function renderKartice(data, id) {
+  const el = document.getElementById(id);
+  if (!data || data.length === 0) { el.innerHTML = '<p class="empty">Nema oglasa još. Budi prvi!</p>'; return; }
+  el.innerHTML = data.map((k, i) => {
+    const boja = boje[i % boje.length];
+    const avatar = k.avatar_url ? `<img src="${k.avatar_url}">` : (k.ime||'?')[0].toUpperCase();
+    return `<div class="card" onclick="otvoriKontakt('${k.id}','${(k.ime||'')} ${(k.prezime||'')}')">
+      <div class="card-top">
+        <div class="avatar" style="background:${boja}">${avatar}<div class="vdot"></div></div>
+        <div><div class="card-name">${k.ime||''} ${k.prezime||''}</div><div class="card-origin">${k.odakle||''}</div></div>
+        <div class="vbadge">✓ Verifikovan</div>
+      </div>
+      <div class="dest-block">
+        <div class="dest-label">Traži cimera u</div>
+        <div class="dest-city">${k.destinacija_grad||''}, ${k.destinacija_drzava||''}</div>
+      </div>
+      <div class="chips">
+        ${k.zanimanje ? `<span class="chip">${k.zanimanje}</span>` : ''}
+        ${k.pusac ? '' : '<span class="chip">Nepušač</span>'}
+        ${k.ljubimci ? '<span class="chip">Ljubimci 🐾</span>' : ''}
+        ${k.datum_useljenja ? `<span class="chip">${new Date(k.datum_useljenja).toLocaleDateString('sr')}</span>` : ''}
+      </div>
+      <div class="card-footer">
+        <div class="price">${k.budzet_max ? '~' + k.budzet_max + '€' : 'Po dogovoru'} <span>/ mes</span></div>
+        <button class="btn-sm" onclick="event.stopPropagation();otvoriKontakt('${k.id}','${(k.ime||'')} ${(k.prezime||'')}')">Kontaktiraj</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function otvoriKontakt(id, ime) {
+  if (!korisnik) { showPage('login'); return; }
+  if (id === korisnik.id) return;
+  document.getElementById('modalNaslov').textContent = 'Poruka za ' + ime.trim();
+  document.getElementById('modalPrimalac').value = id;
+  document.getElementById('modalTekst').value = '';
+  document.getElementById('modalMsg').className = 'msg';
+  document.getElementById('kontaktModal').classList.add('open');
+}
+
+function zatvoriModal() { document.getElementById('kontaktModal').classList.remove('open'); }
+
+async function posaljiPrvuPoruku() {
+  const tekst = document.getElementById('modalTekst').value.trim();
+  const primalac_id = document.getElementById('modalPrimalac').value;
+  if (!tekst) return prikaziMsg('modalMsg', 'Napiši poruku', 'err');
+  try {
+    const r = await fetch('/api/poruka', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({posiljalac_id: korisnik.id, primalac_id, tekst}) });
+    const d = await r.json();
+    if (d.greska) return prikaziMsg('modalMsg', d.greska, 'err');
+    prikaziMsg('modalMsg', 'Poruka poslata!', 'ok');
+    setTimeout(() => { zatvoriModal(); showPage('poruke'); }, 1000);
+  } catch(e) { prikaziMsg('modalMsg', 'Greška', 'err'); }
+}
+
+// CHAT
+async function ucitajKonverzacije() {
+  if (!korisnik) return showPage('login');
+  try {
+    const r = await fetch('/api/konverzacije/' + korisnik.id);
+    const data = await r.json();
+    const lista = document.getElementById('konvLista');
+    if (!data || data.length === 0) { lista.innerHTML = '<p class="empty" style="padding:20px">Nema poruka</p>'; return; }
+    lista.innerHTML = data.map((k, i) => {
+      const boja = boje[i % boje.length];
+      const avatar = k.profil?.avatar_url ? `<img src="${k.profil.avatar_url}">` : ((k.profil?.ime||'?')[0]).toUpperCase();
+      const zadnja = k.poruke[k.poruke.length - 1]?.tekst || '';
+      return `<div class="konv-item" id="konv-${k.drugiId}" onclick="otvoriChat('${k.drugiId}','${(k.profil?.ime||'')} ${(k.profil?.prezime||'')}','${boja}')">
+        <div class="konv-avatar" style="background:${boja}">${avatar}</div>
+        <div><div class="konv-ime">${k.profil?.ime||''} ${k.profil?.prezime||''}</div><div class="konv-zadnja">${zadnja}</div></div>
+      </div>`;
+    }).join('');
+  } catch(e) {}
+}
+
+async function otvoriChat(drugiId, ime, boja) {
+  aktivniChat = drugiId;
+  document.querySelectorAll('.konv-item').forEach(i => i.classList.remove('active'));
+  const konvEl = document.getElementById('konv-' + drugiId);
+  if (konvEl) konvEl.classList.add('active');
+
+  const prozor = document.getElementById('chatProzor');
+  prozor.innerHTML = `
+    <div class="chat-header">
+      <div class="konv-avatar" style="background:${boja};width:36px;height:36px;font-size:0.85rem">${ime.trim()[0]}</div>
+      ${ime.trim()}
+    </div>
+    <div class="chat-poruke" id="chatPoruke"></div>
+    <div class="chat-input-bar">
+      <textarea class="chat-input" id="chatInput" placeholder="Napiši poruku..." rows="1" onkeydown="handleEnter(event,'${drugiId}')"></textarea>
+      <button class="chat-send" onclick="posaljiChatPoruku('${drugiId}')">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+      </button>
+    </div>`;
+
+  await ucitajChatPoruke(drugiId);
+
+  if (chatInterval) clearInterval(chatInterval);
+  chatInterval = setInterval(() => { if (aktivniChat === drugiId) ucitajChatPoruke(drugiId); }, 3000);
+}
+
+async function ucitajChatPoruke(drugiId) {
+  try {
+    const r = await fetch(`/api/poruke/${korisnik.id}/${drugiId}`);
+    const data = await r.json();
+    const el = document.getElementById('chatPoruke');
+    if (!el) return;
+    const stariScroll = el.scrollHeight - el.scrollTop === el.clientHeight;
+    el.innerHTML = data.map(p => {
+      const moja = p.posiljalac_id === korisnik.id;
+      const vreme = new Date(p.created_at).toLocaleTimeString('sr', {hour:'2-digit', minute:'2-digit'});
+      return `<div style="display:flex;flex-direction:column;align-items:${moja?'flex-end':'flex-start'}">
+        <div class="poruka-bubble ${moja?'moja':'njegova'}">${p.tekst}<div class="poruka-vreme">${vreme}</div></div>
+      </div>`;
+    }).join('');
+    if (stariScroll || data.length < 5) el.scrollTop = el.scrollHeight;
+  } catch(e) {}
+}
+
+async function posaljiChatPoruku(drugiId) {
+  const input = document.getElementById('chatInput');
+  const tekst = input?.value.trim();
+  if (!tekst) return;
+  input.value = '';
+  try {
+    await fetch('/api/poruka', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({posiljalac_id: korisnik.id, primalac_id: drugiId, tekst}) });
+    await ucitajChatPoruke(drugiId);
+    await ucitajKonverzacije();
+    const konvEl = document.getElementById('konv-' + drugiId);
+    if (konvEl) konvEl.classList.add('active');
+  } catch(e) {}
+}
+
+function handleEnter(e, drugiId) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); posaljiChatPoruku(drugiId); }
+}
+
+window.onclick = (e) => { if (e.target === document.getElementById('kontaktModal')) zatvoriModal(); };
+</script>
+</body>
+</html>
