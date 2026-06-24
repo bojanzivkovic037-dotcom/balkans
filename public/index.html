@@ -2345,31 +2345,45 @@ async function loginSaGoogle() {
 
 // Proveri Google OAuth callback
 async function provjeriGoogleCallback() {
-  const { data: { session } } = await supabaseClient.auth.getSession();
-  if (session && !trenutniKorisnik) {
-    try {
-      const r = await fetch(API + '/api/google-session', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          access_token: session.access_token,
-          refresh_token: session.refresh_token
-        })
-      });
-      const d = await r.json();
-      if (d.uspeh) {
-        trenutniKorisnik = d.korisnik;
-        trenutniSession = d.session;
-        localStorage.setItem('balkans_user', JSON.stringify(d.korisnik));
-        localStorage.setItem('balkans_session', JSON.stringify(d.session));
-        updateNav();
-        provjeriNeprocitane();
-        startMsgPolling();
-        showPage('profil');
-        showNotif('Dobrodošao!', 'Prijavljen si sa Google nalogom', 'success', 3000);
-      }
-    } catch(e) {}
-  }
+  try {
+    // Supabase automatski parsira hash iz URL-a
+    const { data: { session }, error } = await supabaseClient.auth.getSession();
+    
+    if (session && !trenutniKorisnik) {
+      const user = session.user;
+      
+      // Kreiraj profil ako ne postoji
+      try {
+        const checkR = await fetch(API + '/api/profil/' + user.id);
+        if (!checkR.ok) {
+          // Profil ne postoji, kreiraj ga
+          const ime = user.user_metadata?.full_name?.split(' ')[0] || user.email.split('@')[0];
+          const prezime = user.user_metadata?.full_name?.split(' ').slice(1).join(' ') || '';
+          await fetch(API + '/api/google-session', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              access_token: session.access_token,
+              refresh_token: session.refresh_token
+            })
+          });
+        }
+      } catch(e) {}
+      
+      trenutniKorisnik = user;
+      trenutniSession = session;
+      localStorage.setItem('balkans_user', JSON.stringify(user));
+      localStorage.setItem('balkans_session', JSON.stringify(session));
+      updateNav();
+      provjeriNeprocitane();
+      startMsgPolling();
+      showPage('profil');
+      showNotif('Dobrodošao!', 'Prijavljen si sa Google nalogom', 'success', 3000);
+      
+      // Ocisti URL
+      window.history.replaceState({}, document.title, '/');
+    }
+  } catch(e) { console.error('Google callback error:', e); }
 }
 
 /* ===== INIT ===== */
