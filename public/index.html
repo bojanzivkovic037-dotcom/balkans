@@ -1,508 +1,451 @@
 <!DOCTYPE html>
-<html lang="sr">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Balkans – Nađi cimera</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root { --navy: #0B1F3A; --orange: #FF6B2B; --white: #fff; --gray1: #F4F6FA; --gray2: #8A96A8; --gray3: #D1D9E4; --green: #22C55E; }
-body { font-family: 'Inter', sans-serif; background: var(--gray1); color: var(--navy); }
-nav { background: var(--navy); padding: 0 5%; height: 64px; display: flex; align-items: center; justify-content: space-between; position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
-.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; cursor: pointer; }
-.logo-text { font-size: 1.3rem; font-weight: 800; color: #fff; }
-.logo-text b { color: var(--orange); }
-.nav-links { display: flex; gap: 16px; align-items: center; }
-.nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.875rem; font-weight: 500; cursor: pointer; }
-.nav-links a:hover { color: #fff; }
-.btn { padding: 9px 20px; border-radius: 8px; font-size: 0.875rem; font-weight: 700; cursor: pointer; border: none; font-family: 'Inter', sans-serif; transition: opacity .2s; }
-.btn-orange { background: var(--orange); color: #fff; }
-.btn-orange:hover { opacity: .88; }
-.btn-outline { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.3); }
-.page { display: none; padding-top: 64px; min-height: 100vh; }
-.page.active { display: block; }
-.hero { background: var(--navy); padding: 80px 5% 60px; }
-.hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900; color: #fff; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 16px; }
-.hero h1 em { font-style: normal; color: var(--orange); }
-.hero p { color: rgba(255,255,255,0.65); font-size: 1rem; line-height: 1.7; margin-bottom: 32px; max-width: 500px; }
-.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
-.search-bar { background: #fff; padding: 16px 5%; display: flex; gap: 12px; flex-wrap: wrap; border-bottom: 1px solid var(--gray3); }
-.search-field { display: flex; align-items: center; gap: 8px; background: var(--gray1); border: 1.5px solid var(--gray3); border-radius: 8px; padding: 9px 14px; flex: 1; min-width: 160px; }
-.search-field select { border: none; outline: none; background: transparent; font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--navy); width: 100%; }
-.cards-section { padding: 28px 5%; }
-.cards-section h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: 20px; }
-.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-.card { background: #fff; border-radius: 14px; padding: 22px; border: 1.5px solid var(--gray3); transition: border-color .2s, transform .2s; cursor: pointer; }
-.card:hover { border-color: var(--orange); transform: translateY(-2px); }
-.card-top { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-.avatar { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 800; color: #fff; flex-shrink: 0; }
-.card-name { font-size: 0.95rem; font-weight: 700; }
-.card-origin { font-size: 0.78rem; color: var(--gray2); margin-top: 2px; }
-.vbadge { margin-left: auto; background: rgba(34,197,94,0.1); color: #16a34a; font-size: 0.7rem; font-weight: 700; padding: 3px 9px; border-radius: 100px; }
-.dest-block { background: var(--gray1); border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; }
-.dest-label { font-size: 0.68rem; font-weight: 600; color: var(--gray2); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
-.dest-city { font-size: 0.95rem; font-weight: 800; }
-.chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
-.chip { font-size: 0.72rem; font-weight: 600; background: var(--gray1); color: var(--gray2); padding: 3px 9px; border-radius: 6px; }
-.card-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid var(--gray3); }
-.price { font-size: 1rem; font-weight: 800; }
-.price span { font-size: 0.75rem; font-weight: 500; color: var(--gray2); }
-.btn-sm { padding: 7px 14px; border-radius: 7px; font-size: 0.78rem; font-weight: 700; cursor: pointer; border: none; font-family: 'Inter', sans-serif; background: var(--orange); color: #fff; }
-.auth-wrap { max-width: 420px; margin: 60px auto; padding: 0 20px; }
-.auth-card { background: #fff; border-radius: 16px; padding: 36px; border: 1.5px solid var(--gray3); }
-.auth-card h2 { font-size: 1.5rem; font-weight: 900; margin-bottom: 6px; }
-.auth-card p { color: var(--gray2); font-size: 0.875rem; margin-bottom: 28px; }
-.form-group { margin-bottom: 16px; }
-.form-group label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 6px; }
-.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 11px 14px; border: 1.5px solid var(--gray3); border-radius: 8px; font-size: 0.875rem; font-family: 'Inter', sans-serif; outline: none; transition: border-color .2s; }
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--orange); }
-.form-group textarea { resize: vertical; min-height: 90px; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.btn-full { width: 100%; padding: 13px; font-size: 0.95rem; }
-.auth-switch { text-align: center; margin-top: 20px; font-size: 0.85rem; color: var(--gray2); }
-.auth-switch a { color: var(--orange); text-decoration: none; font-weight: 600; cursor: pointer; }
-.msg { padding: 12px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; margin-bottom: 16px; display: none; }
-.msg.ok { background: rgba(34,197,94,0.1); color: #16a34a; display: block; }
-.msg.err { background: rgba(239,68,68,0.1); color: #dc2626; display: block; }
-.profil-wrap { max-width: 600px; margin: 40px auto; padding: 0 20px 60px; }
-.profil-header { background: var(--navy); border-radius: 16px; padding: 28px; margin-bottom: 20px; display: flex; align-items: center; gap: 20px; }
-.profil-avatar { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; color: #fff; flex-shrink: 0; background: var(--orange); background-size: cover; background-position: center; }
-.profil-info h2 { font-size: 1.3rem; font-weight: 800; color: #fff; }
-.profil-info p { color: rgba(255,255,255,0.6); font-size: 0.85rem; margin-top: 4px; }
-.profil-card { background: #fff; border-radius: 14px; padding: 24px; border: 1.5px solid var(--gray3); margin-bottom: 16px; }
-.profil-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 18px; }
-.poruke-wrap { max-width: 700px; margin: 40px auto; padding: 0 20px 60px; }
-.poruke-wrap h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: 20px; }
-.poruka-item { background: #fff; border-radius: 12px; padding: 16px 18px; border: 1.5px solid var(--gray3); margin-bottom: 10px; }
-.poruka-meta { font-size: 0.75rem; color: var(--gray2); margin-bottom: 6px; }
-.poruka-tekst { font-size: 0.9rem; font-weight: 500; }
-.poruka-sent { border-left: 3px solid var(--orange); }
-.poruka-recv { border-left: 3px solid var(--green); }
-.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 500; display: none; align-items: center; justify-content: center; padding: 20px; }
-.modal-overlay.open { display: flex; }
-.modal { background: #fff; border-radius: 16px; padding: 28px; max-width: 480px; width: 100%; }
-.modal h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; }
-.modal-close { float: right; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--gray2); margin-top: -6px; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Valkyra Agency | OnlyFans Chatting Agency</title>
+  <meta name="description" content="Valkyra Agency — professional OnlyFans chatting agency. Quarter million in one month. Real results, disciplined chatters, proven methods."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #07030f;
+      --purple-deep: #1a0533;
+      --purple: #7c3aed;
+      --purple-mid: #a855f7;
+      --purple-light: #d8b4fe;
+      --pink: #ec4899;
+      --white: #f8f4ff;
+      --gray: rgba(248,244,255,0.45);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    /* ── GLOW ORBS ── */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb-1 { width: 600px; height: 600px; background: rgba(124,58,237,0.22); top: -150px; left: -150px; }
+    .orb-2 { width: 500px; height: 500px; background: rgba(168,85,247,0.15); bottom: 10%; right: -100px; }
+    .orb-3 { width: 400px; height: 400px; background: rgba(236,72,153,0.1); top: 40%; left: 40%; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.1rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(7,3,15,0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(168,85,247,0.18);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      background: linear-gradient(90deg, var(--purple-mid), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: white;
+      font-weight: 600;
+      font-size: 0.82rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.4rem;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 0 20px rgba(168,85,247,0.3);
+    }
+    .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    /* ── SECTIONS ── */
+    section { position: relative; z-index: 1; padding: 6rem 1.5rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 9rem 1.5rem 5rem;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(168,85,247,0.12);
+      border: 1px solid rgba(168,85,247,0.35);
+      color: var(--purple-light);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.45rem 1.1rem;
+      border-radius: 100px;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(8px);
+      animation: fadeUp 0.7s ease both;
+    }
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      line-height: 1.02;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    .grad {
+      background: linear-gradient(135deg, #c084fc 0%, #ec4899 60%, #f472b6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      max-width: 580px; margin: 0 auto 2.5rem;
+      font-size: 1.1rem;
+      color: var(--gray);
+      line-height: 1.75;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+    .hero-btns {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: white; font-weight: 600;
+      font-size: 0.92rem; letter-spacing: 0.05em;
+      padding: 0.95rem 2.2rem;
+      border-radius: 100px; text-decoration: none;
+      box-shadow: 0 0 30px rgba(168,85,247,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(168,85,247,0.6); }
+    .btn-ghost {
+      border: 1px solid rgba(168,85,247,0.35);
+      color: var(--purple-light);
+      font-size: 0.92rem; letter-spacing: 0.05em;
+      padding: 0.95rem 2.2rem;
+      border-radius: 100px; text-decoration: none;
+      backdrop-filter: blur(8px);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--purple-mid); transform: translateY(-2px); }
+
+    /* ── BIG STAT ── */
+    .big-stat {
+      text-align: center;
+      padding: 5rem 1.5rem;
+      background: linear-gradient(180deg, transparent, rgba(124,58,237,0.06) 50%, transparent);
+      border-top: 1px solid rgba(168,85,247,0.1);
+      border-bottom: 1px solid rgba(168,85,247,0.1);
+    }
+    .big-stat .label {
+      font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--purple-mid); margin-bottom: 0.8rem;
+    }
+    .big-stat .number {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(4rem, 12vw, 9rem);
+      font-weight: 800;
+      line-height: 1;
+      background: linear-gradient(135deg, #c084fc, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: none;
+      filter: drop-shadow(0 0 40px rgba(168,85,247,0.4));
+    }
+    .big-stat .sub {
+      font-size: 1rem; color: var(--gray);
+      margin-top: 0.8rem; max-width: 500px; margin-inline: auto;
+      line-height: 1.7;
+    }
+
+    /* ── POSTS ── */
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .post-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(168,85,247,0.15);
+      border-radius: 16px;
+      padding: 2rem;
+      backdrop-filter: blur(12px);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .post-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--purple), var(--pink));
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .post-card:hover { border-color: rgba(168,85,247,0.4); transform: translateY(-4px); }
+    .post-card:hover::before { opacity: 1; }
+    .post-emoji { font-size: 2rem; margin-bottom: 1rem; display: block; }
+    .post-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem; font-weight: 700;
+      margin-bottom: 0.8rem;
+      background: linear-gradient(135deg, var(--white), var(--purple-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .post-body { font-size: 0.9rem; color: var(--gray); line-height: 1.7; }
+    .post-body strong { color: var(--white); }
+
+    /* ── SECTION LABEL ── */
+    .sec-label {
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--purple-mid); margin-bottom: 0.8rem;
+    }
+    .sec-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; margin-bottom: 1rem; line-height: 1.12;
+    }
+    .sec-sub { color: var(--gray); font-size: 1rem; line-height: 1.7; max-width: 520px; margin-bottom: 3rem; }
+
+    /* ── TEAM ── */
+    .team-grid { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .team-card {
+      flex: 1; min-width: 200px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(168,85,247,0.15);
+      border-radius: 12px;
+      padding: 1.8rem;
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+    .team-avatar {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin: 0 auto 1rem;
+      box-shadow: 0 0 20px rgba(168,85,247,0.35);
+    }
+    .team-name { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .team-handle { font-size: 0.82rem; color: var(--purple-light); }
+    .team-handle a { color: inherit; text-decoration: none; }
+    .team-handle a:hover { color: var(--purple-mid); }
+
+    /* ── PROOF VIDEO PLACEHOLDER ── */
+    .proof-note {
+      background: rgba(168,85,247,0.07);
+      border: 1px dashed rgba(168,85,247,0.3);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    .proof-note strong { color: var(--purple-light); }
+
+    /* ── CTA ── */
+    .cta-section {
+      text-align: center;
+      padding: 7rem 1.5rem;
+      position: relative;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(124,58,237,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-section h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+    .cta-section p { color: var(--gray); font-size: 1rem; margin-bottom: 2.5rem; max-width: 480px; margin-inline: auto; line-height: 1.7; }
+    .tg-btn {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      background: linear-gradient(135deg, #229ED9, #1a7ab5);
+      color: white; font-weight: 700; font-size: 1rem;
+      padding: 1rem 2.4rem; border-radius: 100px;
+      text-decoration: none;
+      box-shadow: 0 0 30px rgba(34,158,217,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin: 0.4rem;
+    }
+    .tg-btn:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(34,158,217,0.5); }
+    .tg-btn svg { width: 20px; height: 20px; fill: white; flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 1.5rem; text-align: center;
+      border-top: 1px solid rgba(168,85,247,0.1);
+      position: relative; z-index: 1;
+    }
+    footer p { font-size: 0.8rem; color: rgba(255,255,255,0.2); }
+    footer a { color: var(--purple-light); text-decoration: none; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
 
-<nav>
-  <div class="logo" onclick="showPage('home')">
-    <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
-      <circle cx="18" cy="23" r="12" fill="#122849" stroke="#FF6B2B" stroke-width="1.8"/>
-      <ellipse cx="18" cy="23" rx="12" ry="4.5" stroke="rgba(255,107,43,0.4)" stroke-width="1.2" fill="none" transform="rotate(-18 18 23)"/>
-      <g transform="translate(24,9) rotate(40)">
-        <path d="M0 0 L9 4 L0 8 L2.5 4 Z" fill="#FF6B2B"/>
-        <path d="M2.5 3 L-3.5 0.5 L-2 4 Z" fill="#FF8C55" opacity="0.8"/>
-        <path d="M2.5 5 L-3.5 7.5 L-2 4 Z" fill="#FF8C55" opacity="0.8"/>
-      </g>
-    </svg>
-    <span class="logo-text">Bal<b>kans</b></span>
-  </div>
-  <div class="nav-links">
-    <a onclick="showPage('oglasi')">Oglasi</a>
-    <a onclick="showPage('login')" id="navLogin">Prijavi se</a>
-    <button class="btn btn-orange" onclick="showPage('registracija')" id="navReg">Registruj se</button>
-  </div>
-</nav>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
 
-<!-- HOME -->
-<div class="page active" id="page-home">
-  <div class="hero">
-    <h1>Nađi cimera na koga<br>možeš da <em>računaš</em></h1>
-    <p>Pronađi verifikovanog cimera iz Srbije, BiH ili Hrvatske koji ide u istu zemlju kao ti. Delite kiriju i troškove smestaja.</p>
-    <div class="hero-btns">
-      <button class="btn btn-orange" onclick="showPage('registracija')">Kreiraj profil besplatno</button>
-      <button class="btn btn-outline" onclick="showPage('oglasi')">Pregledaj oglase</button>
-    </div>
-  </div>
-  <div class="cards-section">
-    <h2>Traže cimera upravo sad</h2>
-    <div class="cards-grid" id="homeCards"><p style="color:var(--gray2)">Učitavanje...</p></div>
-  </div>
-</div>
+  <!-- NAV -->
+  <nav>
+    <span class="nav-logo">Valkyra Agency</span>
+    <a href="https://t.me/bojan037" target="_blank" class="nav-cta">Book a Call</a>
+  </nav>
 
-<!-- OGLASI -->
-<div class="page" id="page-oglasi">
-  <div class="search-bar">
-    <div class="search-field">
-      <select id="filterGrad" onchange="ucitajOglase()">
-        <option value="">Svi gradovi</option>
-        <option>Beč</option><option>Minhen</option><option>Berlin</option>
-        <option>Cirih</option><option>Ljubljana</option><option>Hamburg</option><option>Frankfurt</option>
-      </select>
-    </div>
-    <div class="search-field">
-      <select id="filterDrzava" onchange="ucitajOglase()">
-        <option value="">Sve zemlje</option>
-        <option>Austrija</option><option>Nemačka</option><option>Švajcarska</option><option>Slovenija</option>
-      </select>
-    </div>
-    <div class="search-field">
-      <select id="filterBudzet" onchange="ucitajOglase()">
-        <option value="">Svaki budžet</option>
-        <option value="500">Do 500€</option>
-        <option value="700">Do 700€</option>
-        <option value="1000">Do 1000€</option>
-      </select>
-    </div>
-  </div>
-  <div class="cards-section">
-    <h2>Aktivni oglasi</h2>
-    <div class="cards-grid" id="oglasiCards"><p style="color:var(--gray2)">Učitavanje...</p></div>
-  </div>
-</div>
-
-<!-- LOGIN -->
-<div class="page" id="page-login">
-  <div class="auth-wrap">
-    <div class="auth-card">
-      <h2>Dobrodošao nazad</h2>
-      <p>Prijavi se na svoj Balkans nalog</p>
-      <div class="msg" id="loginMsg"></div>
-      <div class="form-group"><label>Email</label><input type="email" id="loginEmail" placeholder="tvoj@email.com"></div>
-      <div class="form-group"><label>Lozinka</label><input type="password" id="loginLozinka" placeholder="••••••••"></div>
-      <button class="btn btn-orange btn-full" onclick="login()">Prijavi se</button>
-      <div class="auth-switch">Nemaš nalog? <a onclick="showPage('registracija')">Registruj se</a></div>
-    </div>
-  </div>
-</div>
-
-<!-- REGISTRACIJA -->
-<div class="page" id="page-registracija">
-  <div class="auth-wrap">
-    <div class="auth-card">
-      <h2>Kreiraj profil</h2>
-      <p>Pridruži se Balkans zajednici</p>
-      <div class="msg" id="regMsg"></div>
-      <div class="form-row">
-        <div class="form-group"><label>Ime</label><input type="text" id="regIme" placeholder="Marko"></div>
-        <div class="form-group"><label>Prezime</label><input type="text" id="regPrezime" placeholder="Petrović"></div>
-      </div>
-      <div class="form-group"><label>Email</label><input type="email" id="regEmail" placeholder="tvoj@email.com"></div>
-      <div class="form-group"><label>Lozinka</label><input type="password" id="regLozinka" placeholder="Minimum 6 karaktera"></div>
-      <button class="btn btn-orange btn-full" onclick="registracija()">Kreiraj nalog</button>
-      <div class="auth-switch">Već imaš nalog? <a onclick="showPage('login')">Prijavi se</a></div>
-    </div>
-  </div>
-</div>
-
-<!-- PROFIL -->
-<div class="page" id="page-profil">
-  <div class="profil-wrap">
-    <div class="profil-header">
-      <div class="profil-avatar" id="profilAvatar">?</div>
-      <div class="profil-info">
-        <h2 id="profilIme">Učitavanje...</h2>
-        <p id="profilEmail"></p>
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <span class="hero-badge">⚡ Professional OFM Chatting Agency</span>
+      <h1>Good Chatting<br><span class="grad">Matters.</span></h1>
+      <p>Your traffic is useless if you don't milk the fans. We've done it again and again — and we will not stop. Be part of something that matters. Be part of Valkyra.</p>
+      <div class="hero-btns">
+        <a href="https://t.me/bojan037" target="_blank" class="btn-primary">Book a Call</a>
+        <a href="#results" class="btn-ghost">See Our Results</a>
       </div>
     </div>
-    <div class="profil-card">
-      <h3>Moj oglas</h3>
-      <div class="form-group"><label>Odakle si?</label><input type="text" id="pOdakle" placeholder="Beograd, Novi Sad..."></div>
-      <div class="form-row">
-        <div class="form-group"><label>Grad odredišta</label>
-          <select id="pGrad"><option>Beč</option><option>Minhen</option><option>Berlin</option><option>Cirih</option><option>Ljubljana</option><option>Hamburg</option><option>Frankfurt</option></select>
+  </section>
+
+  <!-- BIG STAT -->
+  <div class="big-stat" id="results">
+    <p class="label">Proven Track Record</p>
+    <div class="number">$250K</div>
+    <p class="sub">Quarter of a million in one month — the only "secret" is what you learn when you step inside. Results like this don't come from luck.</p>
+  </div>
+
+  <!-- POSTS / CONTENT -->
+  <section>
+    <div class="container">
+      <p class="sec-label">Our Philosophy</p>
+      <h2 class="sec-title">Why <span class="grad">Valkyra</span> Wins</h2>
+      <p class="sec-sub">Hard work and disciplined chatters who execute. Every step matters, and we make sure every single one is done right.</p>
+      <div class="posts-grid">
+        <div class="post-card">
+          <span class="post-emoji">💰</span>
+          <div class="post-title">Quarter of a Million in One Month</div>
+          <p class="post-body">Results like this don't happen by luck — they come from <strong>hard work and disciplined chatters</strong> who execute. Every step matters, and we make sure every single one is done right.</p>
         </div>
-        <div class="form-group"><label>Država</label>
-          <select id="pDrzava"><option>Austrija</option><option>Nemačka</option><option>Švajcarska</option><option>Slovenija</option></select>
+        <div class="post-card">
+          <span class="post-emoji">🔥</span>
+          <div class="post-title">Good Chatting Matters</div>
+          <p class="post-body">Your traffic is <strong>USELESS</strong> if you don't milk the fans. We've done it again and again and we will not stop. Get to know our methods by working with us.</p>
+        </div>
+        <div class="post-card">
+          <span class="post-emoji">📈</span>
+          <div class="post-title">It's Only Up From Here</div>
+          <p class="post-body">Our team is the sole reason for the <strong>increase in sales across multiple pages</strong>. Don't be blinded by the idea that this is easy — it's not. But we manage to get the best possible outcome every single time.</p>
         </div>
       </div>
-      <div class="form-row">
-        <div class="form-group"><label>Budžet od (€)</label><input type="number" id="pBudzMin" placeholder="400"></div>
-        <div class="form-group"><label>Budžet do (€)</label><input type="number" id="pBudzMax" placeholder="800"></div>
-      </div>
-      <div class="form-group"><label>Datum useljenja</label><input type="date" id="pDatum"></div>
-      <div class="form-group"><label>Zanimanje</label><input type="text" id="pZanimanje" placeholder="IT radnik, student..."></div>
-      <div class="form-group"><label>O meni</label><textarea id="pOMeni" placeholder="Napiši nešto o sebi..."></textarea></div>
-      <div class="form-row">
-        <div class="form-group"><label>Pušač?</label><select id="pPusac"><option value="false">Ne</option><option value="true">Da</option></select></div>
-        <div class="form-group"><label>Ljubimci?</label><select id="pLjubimci"><option value="false">Ne</option><option value="true">Da</option></select></div>
-      </div>
-      <div class="form-group"><label>Profilna slika</label><input type="file" id="pSlika" accept="image/*"></div>
-      <button class="btn btn-orange btn-full" onclick="sacuvajProfil()">Sačuvaj oglas</button>
-      <div class="msg" id="profilMsg" style="margin-top:12px"></div>
     </div>
-    <button class="btn" style="background:var(--gray1);color:var(--navy);width:100%;margin-top:8px" onclick="odjava()">Odjavi se</button>
-  </div>
-</div>
+  </section>
 
-<!-- PORUKE -->
-<div class="page" id="page-poruke">
-  <div class="poruke-wrap">
-    <h2>Moje poruke</h2>
-    <div id="porukeList"><p style="color:var(--gray2)">Učitavanje...</p></div>
-  </div>
-</div>
+  <!-- PROOF SECTION -->
+  <section style="padding-top: 0;">
+    <div class="container">
+      <p class="sec-label">Proof & Results</p>
+      <h2 class="sec-title">Real Numbers, <span class="grad">Real Creators</span></h2>
+      <p class="sec-sub">We have videos, screenshots, and detailed case studies. Reach out and we'll show you everything.</p>
+      <div class="proof-note">
+        <strong>📹 Video proof & results available on request</strong><br><br>
+        DM us on Telegram and we'll share our full portfolio of results — revenue screenshots, case studies, and more.
+        <br><br>
+        <a href="https://t.me/ValkyraChatting" target="_blank" style="color: var(--purple-light);">@ValkyraChatting</a>
+      </div>
+    </div>
+  </section>
 
-<!-- MODAL -->
-<div class="modal-overlay" id="kontaktModal">
-  <div class="modal">
-    <button class="modal-close" onclick="zatvoriModal()">×</button>
-    <h3>Pošalji poruku</h3>
-    <div class="msg" id="modalMsg"></div>
-    <div class="form-group"><label>Poruka</label><textarea id="modalTekst" placeholder="Zdravo! Video sam tvoj oglas..." style="min-height:120px"></textarea></div>
-    <input type="hidden" id="modalPrimalac">
-    <button class="btn btn-orange btn-full" onclick="posaljiPoruku()">Pošalji</button>
-  </div>
-</div>
-
-<script>
-const API = 'https://balkans-production.up.railway.app';
-let trenutniKorisnik = null;
-let trenutniSession = null;
-const boje = ['#1a4a7a','#6b1a4a','#2d1a5c','#1a5a3a','#5a3a1a','#1a3a5a'];
-
-function prikaziMsg(el, tekst, tip) {
-  el.textContent = tekst;
-  el.className = 'msg ' + tip;
-}
-
-function showPage(ime) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + ime).classList.add('active');
-  window.scrollTo(0,0);
-  if (ime === 'oglasi') ucitajOglase();
-  if (ime === 'home') ucitajHomeKartice();
-  if (ime === 'profil') ucitajProfil();
-  if (ime === 'poruke') ucitajPoruke();
-}
-
-function updateNav() {
-  const navLogin = document.getElementById('navLogin');
-  const navReg = document.getElementById('navReg');
-  if (trenutniKorisnik) {
-    navLogin.textContent = 'Moj profil';
-    navLogin.onclick = () => showPage('profil');
-    navReg.textContent = 'Poruke';
-    navReg.onclick = () => showPage('poruke');
-  } else {
-    navLogin.textContent = 'Prijavi se';
-    navLogin.onclick = () => showPage('login');
-    navReg.textContent = 'Registruj se';
-    navReg.onclick = () => showPage('registracija');
-  }
-}
-
-function renderKartice(data, containerId) {
-  const c = document.getElementById(containerId);
-  if (!data || data.length === 0) {
-    c.innerHTML = '<p style="color:var(--gray2);padding:20px 0">Nema oglasa još. Budi prvi!</p>';
-    return;
-  }
-  c.innerHTML = data.map((u, i) => `
-    <div class="card">
-      <div class="card-top">
-        <div class="avatar" style="background:${boje[i%boje.length]}">${u.ime ? u.ime[0].toUpperCase() : '?'}</div>
-        <div>
-          <div class="card-name">${u.ime} ${u.prezime}</div>
-          <div class="card-origin">${u.odakle || ''}</div>
+  <!-- TEAM -->
+  <section style="padding-top: 2rem;">
+    <div class="container">
+      <p class="sec-label">The Team</p>
+      <h2 class="sec-title">Talk to <span class="grad">Real People</span></h2>
+      <p class="sec-sub">Book a call with a simple DM. Our team will walk you through everything.</p>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-avatar">⚡</div>
+          <div class="team-name">Bojan</div>
+          <div class="team-handle"><a href="https://t.me/bojan037" target="_blank">@bojan037</a></div>
         </div>
-        <div class="vbadge">✓ Verifikovan</div>
-      </div>
-      <div class="dest-block">
-        <div class="dest-label">Traži cimera u</div>
-        <div class="dest-city">${u.destinacija_grad || ''}, ${u.destinacija_drzava || ''}</div>
-      </div>
-      <div class="chips">
-        ${u.zanimanje ? `<span class="chip">${u.zanimanje}</span>` : ''}
-        ${u.pusac ? '<span class="chip">Pušač</span>' : '<span class="chip">Nepušač</span>'}
-        ${u.ljubimci ? '<span class="chip">Ljubimci</span>' : ''}
-        ${u.datum_useljenja ? `<span class="chip">${new Date(u.datum_useljenja).toLocaleDateString('sr')}</span>` : ''}
-      </div>
-      <div class="card-footer">
-        <div class="price">${u.budzet_max ? '~' + u.budzet_max + '€' : 'Dogovor'} <span>/ mes</span></div>
-        <button class="btn-sm" onclick="otvoriModal('${u.id}')">Kontaktiraj</button>
+        <div class="team-card">
+          <div class="team-avatar">🔥</div>
+          <div class="team-name">Valk</div>
+          <div class="team-handle"><a href="https://t.me/valkmym" target="_blank">@valkmym</a></div>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar">💎</div>
+          <div class="team-name">Teska</div>
+          <div class="team-handle"><a href="https://t.me/teskaprica" target="_blank">@teskaprica</a></div>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar">🚀</div>
+          <div class="team-name">Channel</div>
+          <div class="team-handle"><a href="https://t.me/ValkyraChatting" target="_blank">@ValkyraChatting</a></div>
+        </div>
       </div>
     </div>
-  `).join('');
-}
+  </section>
 
-async function ucitajOglase() {
-  const grad = document.getElementById('filterGrad')?.value || '';
-  const drzava = document.getElementById('filterDrzava')?.value || '';
-  const budzet = document.getElementById('filterBudzet')?.value || '';
-  let url = API + '/api/oglasi?';
-  if (grad) url += `grad=${encodeURIComponent(grad)}&`;
-  if (drzava) url += `drzava=${encodeURIComponent(drzava)}&`;
-  if (budzet) url += `budzet_max=${budzet}`;
-  try {
-    const r = await fetch(url);
-    const data = await r.json();
-    renderKartice(data, 'oglasiCards');
-  } catch(e) {
-    document.getElementById('oglasiCards').innerHTML = '<p style="color:var(--gray2)">Greška pri učitavanju</p>';
-  }
-}
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2>Ready to <span class="grad">Scale?</span></h2>
+    <p>Book a call with a simple DM. Start your service application today and be part of something that matters.</p>
+    <div>
+      <a href="https://t.me/bojan037" target="_blank" class="tg-btn">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+        @bojan037
+      </a>
+      <a href="https://t.me/valkmym" target="_blank" class="tg-btn">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+        @valkmym
+      </a>
+      <a href="https://t.me/teskaprica" target="_blank" class="tg-btn">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+        @teskaprica
+      </a>
+    </div>
+  </section>
 
-async function ucitajHomeKartice() {
-  try {
-    const r = await fetch(API + '/api/oglasi');
-    const data = await r.json();
-    renderKartice(data.slice(0,6), 'homeCards');
-  } catch(e) {
-    document.getElementById('homeCards').innerHTML = '<p style="color:var(--gray2)">Greška pri učitavanju</p>';
-  }
-}
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Valkyra Agency. &nbsp;|&nbsp; <a href="https://t.me/ValkyraChatting" target="_blank">@ValkyraChatting</a></p>
+  </footer>
 
-async function registracija() {
-  const ime = document.getElementById('regIme').value.trim();
-  const prezime = document.getElementById('regPrezime').value.trim();
-  const email = document.getElementById('regEmail').value.trim();
-  const lozinka = document.getElementById('regLozinka').value;
-  const msg = document.getElementById('regMsg');
-  if (!ime || !prezime || !email || !lozinka) return prikaziMsg(msg, 'Popuni sva polja', 'err');
-  if (lozinka.length < 6) return prikaziMsg(msg, 'Lozinka mora imati minimum 6 karaktera', 'err');
-  try {
-    const r = await fetch(API + '/api/registracija', {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ime, prezime, email, lozinka})
-    });
-    const d = await r.json();
-    if (d.greska) return prikaziMsg(msg, d.greska, 'err');
-    prikaziMsg(msg, 'Nalog kreiran! Prijavljujem te...', 'ok');
-    setTimeout(() => showPage('login'), 1500);
-  } catch(e) { prikaziMsg(msg, 'Greška, pokušaj ponovo', 'err'); }
-}
-
-async function login() {
-  const email = document.getElementById('loginEmail').value.trim();
-  const lozinka = document.getElementById('loginLozinka').value;
-  const msg = document.getElementById('loginMsg');
-  if (!email || !lozinka) return prikaziMsg(msg, 'Popuni sva polja', 'err');
-  try {
-    const r = await fetch(API + '/api/login', {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({email, lozinka})
-    });
-    const d = await r.json();
-    if (d.greska) return prikaziMsg(msg, d.greska, 'err');
-    trenutniKorisnik = d.korisnik;
-    trenutniSession = d.session;
-    updateNav();
-    showPage('profil');
-  } catch(e) { prikaziMsg(msg, 'Greška, pokušaj ponovo', 'err'); }
-}
-
-function odjava() {
-  trenutniKorisnik = null;
-  trenutniSession = null;
-  updateNav();
-  showPage('home');
-}
-
-async function ucitajProfil() {
-  if (!trenutniKorisnik) return showPage('login');
-  try {
-    const r = await fetch(API + '/api/profil/' + trenutniKorisnik.id);
-    const d = await r.json();
-    document.getElementById('profilIme').textContent = d.ime + ' ' + d.prezime;
-    document.getElementById('profilEmail').textContent = d.email;
-    const av = document.getElementById('profilAvatar');
-    if (d.avatar_url) {
-      av.style.backgroundImage = `url(${d.avatar_url})`;
-      av.style.backgroundSize = 'cover';
-      av.textContent = '';
-    } else {
-      av.textContent = d.ime ? d.ime[0].toUpperCase() : '?';
-    }
-    document.getElementById('pOdakle').value = d.odakle || '';
-    document.getElementById('pGrad').value = d.destinacija_grad || 'Beč';
-    document.getElementById('pDrzava').value = d.destinacija_drzava || 'Austrija';
-    document.getElementById('pBudzMin').value = d.budzet_min || '';
-    document.getElementById('pBudzMax').value = d.budzet_max || '';
-    document.getElementById('pDatum').value = d.datum_useljenja || '';
-    document.getElementById('pZanimanje').value = d.zanimanje || '';
-    document.getElementById('pOMeni').value = d.o_meni || '';
-    document.getElementById('pPusac').value = d.pusac ? 'true' : 'false';
-    document.getElementById('pLjubimci').value = d.ljubimci ? 'true' : 'false';
-  } catch(e) {}
-}
-
-async function sacuvajProfil() {
-  if (!trenutniKorisnik) return;
-  const msg = document.getElementById('profilMsg');
-  const podaci = {
-    odakle: document.getElementById('pOdakle').value,
-    destinacija_grad: document.getElementById('pGrad').value,
-    destinacija_drzava: document.getElementById('pDrzava').value,
-    budzet_min: parseInt(document.getElementById('pBudzMin').value) || null,
-    budzet_max: parseInt(document.getElementById('pBudzMax').value) || null,
-    datum_useljenja: document.getElementById('pDatum').value || null,
-    zanimanje: document.getElementById('pZanimanje').value,
-    o_meni: document.getElementById('pOMeni').value,
-    pusac: document.getElementById('pPusac').value === 'true',
-    ljubimci: document.getElementById('pLjubimci').value === 'true'
-  };
-  try {
-    const r = await fetch(API + '/api/profil/' + trenutniKorisnik.id, {
-      method: 'PUT', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(podaci)
-    });
-    const d = await r.json();
-    if (d.greska) return prikaziMsg(msg, d.greska, 'err');
-    const slika = document.getElementById('pSlika').files[0];
-    if (slika) {
-      const fd = new FormData();
-      fd.append('slika', slika);
-      await fetch(API + '/api/slika/' + trenutniKorisnik.id, { method: 'POST', body: fd });
-    }
-    prikaziMsg(msg, 'Profil sacuvan!', 'ok');
-    ucitajHomeKartice();
-  } catch(e) { prikaziMsg(msg, 'Greška, pokušaj ponovo', 'err'); }
-}
-
-async function ucitajPoruke() {
-  if (!trenutniKorisnik) return showPage('login');
-  try {
-    const r = await fetch(API + '/api/poruke/' + trenutniKorisnik.id);
-    const data = await r.json();
-    const c = document.getElementById('porukeList');
-    if (!data || data.length === 0) {
-      c.innerHTML = '<p style="color:var(--gray2)">Nema poruka još.</p>';
-      return;
-    }
-    c.innerHTML = data.map(p => `
-      <div class="poruka-item ${p.posiljalac_id === trenutniKorisnik.id ? 'poruka-sent' : 'poruka-recv'}">
-        <div class="poruka-meta">${p.posiljalac_id === trenutniKorisnik.id ? 'Ti' : 'Primljeno'} · ${new Date(p.created_at).toLocaleString('sr')}</div>
-        <div class="poruka-tekst">${p.tekst}</div>
-      </div>
-    `).join('');
-  } catch(e) {}
-}
-
-function otvoriModal(primalacId) {
-  if (!trenutniKorisnik) return showPage('login');
-  document.getElementById('modalPrimalac').value = primalacId;
-  document.getElementById('modalTekst').value = '';
-  document.getElementById('modalMsg').className = 'msg';
-  document.getElementById('kontaktModal').classList.add('open');
-}
-
-function zatvoriModal() {
-  document.getElementById('kontaktModal').classList.remove('open');
-}
-
-async function posaljiPoruku() {
-  const tekst = document.getElementById('modalTekst').value.trim();
-  const primalac_id = document.getElementById('modalPrimalac').value;
-  const msg = document.getElementById('modalMsg');
-  if (!tekst) return prikaziMsg(msg, 'Napisi poruku', 'err');
-  try {
-    const r = await fetch(API + '/api/poruka', {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ posiljalac_id: trenutniKorisnik.id, primalac_id, tekst })
-    });
-    const d = await r.json();
-    if (d.greska) return prikaziMsg(msg, d.greska, 'err');
-    prikaziMsg(msg, 'Poruka poslata!', 'ok');
-    setTimeout(() => zatvoriModal(), 1500);
-  } catch(e) { prikaziMsg(msg, 'Greška, pokušaj ponovo', 'err'); }
-}
-
-ucitajHomeKartice();
-</script>
 </body>
 </html>
