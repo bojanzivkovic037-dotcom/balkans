@@ -2387,6 +2387,41 @@ async function provjeriGoogleCallback() {
 }
 
 /* ===== INIT ===== */
+// Supabase auth state listener - hvata Google OAuth
+supabaseClient.auth.onAuthStateChange(async (event, session) => {
+  if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session && !trenutniKorisnik) {
+    const user = session.user;
+    
+    // Kreiraj profil ako ne postoji
+    try {
+      const checkR = await fetch(API + '/api/profil/' + user.id);
+      if (!checkR.ok) {
+        const ime = (user.user_metadata?.full_name || user.email).split(' ')[0];
+        const prezime = user.user_metadata?.full_name?.split(' ').slice(1).join(' ') || '';
+        await fetch(API + '/api/google-session', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            access_token: session.access_token,
+            refresh_token: session.refresh_token
+          })
+        });
+      }
+    } catch(e) {}
+    
+    trenutniKorisnik = user;
+    trenutniSession = session;
+    localStorage.setItem('balkans_user', JSON.stringify(user));
+    localStorage.setItem('balkans_session', JSON.stringify(session));
+    updateNav();
+    provjeriNeprocitane();
+    startMsgPolling();
+    showPage('profil');
+    showNotif('Dobrodošao!', 'Prijavljen si sa Google nalogom', 'success', 3000);
+    window.history.replaceState({}, document.title, '/');
+  }
+});
+
 ucitajSesiju();
 ucitajHomeKartice();
 provjeriGoogleCallback();
