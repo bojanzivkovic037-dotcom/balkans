@@ -125,6 +125,45 @@ app.put('/api/admin/korisnik/:id', async (req, res) => {
   res.json({ uspeh: true, profil: data[0] });
 });
 
+
+// GOOGLE OAUTH
+app.post('/api/google-auth', async (req, res) => {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: 'https://balkansapp.com'
+    }
+  });
+  if (error) return res.status(400).json({ greska: error.message });
+  res.json({ data });
+});
+
+// GOOGLE CALLBACK - handle session from URL
+app.post('/api/google-session', async (req, res) => {
+  const { access_token, refresh_token } = req.body;
+  const { data, error } = await supabase.auth.setSession({ access_token, refresh_token });
+  if (error) return res.status(400).json({ greska: error.message });
+  
+  // Kreiraj profil ako ne postoji
+  const user = data.user;
+  if (user) {
+    const { data: existing } = await supabase.from('profiles').select('id').eq('id', user.id).single();
+    if (!existing) {
+      const ime = user.user_metadata?.full_name?.split(' ')[0] || 'Korisnik';
+      const prezime = user.user_metadata?.full_name?.split(' ').slice(1).join(' ') || '';
+      await supabase.from('profiles').insert({
+        id: user.id,
+        email: user.email,
+        ime, prezime,
+        odakle: '', destinacija_grad: '', destinacija_drzava: '',
+        avatar_url: user.user_metadata?.avatar_url || null
+      });
+    }
+  }
+  
+  res.json({ uspeh: true, session: data.session, korisnik: data.user });
+});
+
 // HEALTH CHECK
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 

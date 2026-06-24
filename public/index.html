@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Balkans — Nađi cimera u Evropi</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -895,6 +897,36 @@ textarea.form-input { resize: vertical; min-height: 90px; }
   background: #fff;
 }
 
+
+/* ===================== GOOGLE BTN ===================== */
+.btn-google {
+  width: 100%;
+  padding: 11px;
+  border: 1.5px solid var(--gray3);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--navy);
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: border-color .2s, box-shadow .2s;
+  margin-bottom: 14px;
+}
+.btn-google:hover { border-color: var(--orange); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.or-divider {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 14px; color: var(--gray2);
+  font-size: 0.78rem;
+}
+.or-divider::before, .or-divider::after {
+  content: ''; flex: 1;
+  height: 1px; background: var(--gray3);
+}
 </style>
 </head>
 <body>
@@ -1135,7 +1167,12 @@ textarea.form-input { resize: vertical; min-height: 90px; }
         <div class="msg" id="loginMsg"></div>
         <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" id="loginEmail" placeholder="tvoj@email.com"></div>
         <div class="form-group"><label class="form-label">Lozinka</label><input class="form-input" type="password" id="loginLozinka" placeholder="••••••••"></div>
-        <button class="btn-full" onclick="login()">Prijavi se</button>
+        <button class="btn-google" onclick="loginSaGoogle()">
+          <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 002.38-5.88c0-.57-.05-.66-.15-1.18z"/><path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 01-7.18-2.54H1.83v2.07A8 8 0 008.98 17z"/><path fill="#FBBC05" d="M4.5 10.52a4.8 4.8 0 010-3.04V5.41H1.83a8 8 0 000 7.18l2.67-2.07z"/><path fill="#EA4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 001.83 5.4L4.5 7.49a4.77 4.77 0 014.48-3.3z"/></svg>
+          Prijavi se sa Google
+        </button>
+        <div class="or-divider">ili</div>
+        <button class="btn-full" onclick="login()">Prijavi se sa emailom</button>
         <div class="auth-switch">Nemaš nalog? <a onclick="showPage('registracija')">Registruj se</a></div>
       </div>
     </div>
@@ -1167,7 +1204,12 @@ textarea.form-input { resize: vertical; min-height: 90px; }
         </div>
         <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" id="regEmail" placeholder="tvoj@email.com"></div>
         <div class="form-group"><label class="form-label">Lozinka</label><input class="form-input" type="password" id="regLozinka" placeholder="Minimum 6 karaktera"></div>
-        <button class="btn-full" onclick="registracija()">Kreiraj nalog besplatno</button>
+        <button class="btn-google" onclick="loginSaGoogle()">
+          <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 002.38-5.88c0-.57-.05-.66-.15-1.18z"/><path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 01-7.18-2.54H1.83v2.07A8 8 0 008.98 17z"/><path fill="#FBBC05" d="M4.5 10.52a4.8 4.8 0 010-3.04V5.41H1.83a8 8 0 000 7.18l2.67-2.07z"/><path fill="#EA4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 001.83 5.4L4.5 7.49a4.77 4.77 0 014.48-3.3z"/></svg>
+          Registruj se sa Google
+        </button>
+        <div class="or-divider">ili</div>
+        <button class="btn-full" onclick="registracija()">Kreiraj nalog sa emailom</button>
         <div class="auth-switch">Već imaš nalog? <a onclick="showPage('login')">Prijavi se</a></div>
       </div>
     </div>
@@ -1703,7 +1745,12 @@ async function login() {
   try {
     const r = await fetch(API+'/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,lozinka})});
     const d = await r.json();
-    if (d.greska) return prikaziMsg(msg, d.greska, 'err');
+    if (d.greska) {
+      if (d.greska.includes('Email not confirmed')) {
+        return prikaziMsg(msg, 'Email nije potvrđen. Proveri inbox i klikni na link.', 'err');
+      }
+      return prikaziMsg(msg, d.greska, 'err');
+    }
     trenutniKorisnik = d.korisnik; trenutniSession = d.session;
     localStorage.setItem('balkans_user', JSON.stringify(d.korisnik));
     localStorage.setItem('balkans_session', JSON.stringify(d.session));
@@ -2279,9 +2326,56 @@ async function posaljiChatPoruku() {
   } catch(e) {}
 }
 
+
+// Supabase JS klijent za Google OAuth
+const supabaseClient = supabase.createClient(
+  'https://lgactqerwldzdvuenwap.supabase.co',
+  'sb_publishable_Ladmy1WdTRuT4BkeqVaXqA_Za-rRqeY'
+);
+
+async function loginSaGoogle() {
+  const { data, error } = await supabaseClient.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: window.location.origin
+    }
+  });
+  if (error) showNotif('Greška', error.message, 'warning', 3000);
+}
+
+// Proveri Google OAuth callback
+async function provjeriGoogleCallback() {
+  const { data: { session } } = await supabaseClient.auth.getSession();
+  if (session && !trenutniKorisnik) {
+    try {
+      const r = await fetch(API + '/api/google-session', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          access_token: session.access_token,
+          refresh_token: session.refresh_token
+        })
+      });
+      const d = await r.json();
+      if (d.uspeh) {
+        trenutniKorisnik = d.korisnik;
+        trenutniSession = d.session;
+        localStorage.setItem('balkans_user', JSON.stringify(d.korisnik));
+        localStorage.setItem('balkans_session', JSON.stringify(d.session));
+        updateNav();
+        provjeriNeprocitane();
+        startMsgPolling();
+        showPage('profil');
+        showNotif('Dobrodošao!', 'Prijavljen si sa Google nalogom', 'success', 3000);
+      }
+    } catch(e) {}
+  }
+}
+
 /* ===== INIT ===== */
 ucitajSesiju();
 ucitajHomeKartice();
+provjeriGoogleCallback();
 setInterval(() => { if (trenutniKorisnik) provjeriNeprocitane(); }, 60000);
 
 // Keep-alive ping svakih 10 minuta da Render ne zaspi
