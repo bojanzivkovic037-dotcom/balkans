@@ -2330,7 +2330,15 @@ async function posaljiChatPoruku() {
 // Supabase JS klijent za Google OAuth
 const supabaseClient = supabase.createClient(
   'https://lgactqerwldzdvuenwap.supabase.co',
-  'sb_publishable_Ladmy1WdTRuT4BkeqVaXqA_Za-rRqeY'
+  'sb_publishable_Ladmy1WdTRuT4BkeqVaXqA_Za-rRqeY',
+  {
+    auth: {
+      detectSessionInUrl: true,
+      persistSession: true,
+      autoRefreshToken: true,
+      flowType: 'implicit'
+    }
+  }
 );
 
 async function loginSaGoogle() {
