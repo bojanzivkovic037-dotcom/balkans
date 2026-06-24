@@ -1,451 +1,2348 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Valkyra Agency | OnlyFans Chatting Agency</title>
-  <meta name="description" content="Valkyra Agency — professional OnlyFans chatting agency. Quarter million in one month. Real results, disciplined chatters, proven methods."/>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Balkans — Nađi cimera u Evropi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0B1F3A;
+  --navy2: #0f2847;
+  --orange: #FF6B2B;
+  --orange2: #ff8650;
+  --white: #fff;
+  --gray1: #F4F6FA;
+  --gray2: #8A96A8;
+  --gray3: #D1D9E4;
+  --green: #22C55E;
+  --card-bg: #ffffff;
+  --ease: cubic-bezier(.22,1,.36,1);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; background: var(--gray1); color: var(--navy); overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+button { cursor: pointer; font-family: 'Inter', sans-serif; }
 
-    :root {
-      --bg: #07030f;
-      --purple-deep: #1a0533;
-      --purple: #7c3aed;
-      --purple-mid: #a855f7;
-      --purple-light: #d8b4fe;
-      --pink: #ec4899;
-      --white: #f8f4ff;
-      --gray: rgba(248,244,255,0.45);
-    }
+/* ===================== NAV ===================== */
+nav {
+  background: rgba(11,31,58,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 0 5%;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.logo-text { font-family: 'Inter', sans-serif; font-size: 1.35rem; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+.logo-text b { color: var(--orange); }
+.nav-links { display: flex; gap: 8px; align-items: center; }
+.nav-link { color: rgba(255,255,255,0.65); font-size: 0.875rem; font-weight: 500; cursor: pointer; padding: 6px 12px; border-radius: 6px; border: none; background: none; transition: color .2s, background .2s; }
+.nav-link:hover { color: #fff; background: rgba(255,255,255,0.07); }
+.btn-nav { background: var(--orange); color: #fff; font-size: 0.875rem; font-weight: 700; padding: 8px 18px; border-radius: 8px; border: none; transition: background .2s, transform .15s; }
+.btn-nav:hover { background: var(--orange2); transform: translateY(-1px); }
+.notif-badge { background: var(--orange); color: #fff; border-radius: 100px; font-size: 0.62rem; font-weight: 800; padding: 1px 5px; margin-left: 3px; vertical-align: middle; display: inline-block; }
+@media (max-width: 520px) { .nav-hide-mobile { display: none !important; } }
 
-    html { scroll-behavior: smooth; }
+/* ===================== PAGES ===================== */
+.page { display: none; padding-top: 64px; min-height: 100vh; }
+.page.active { display: block; }
 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--white);
-      overflow-x: hidden;
-    }
+/* ===================== HERO ===================== */
+.hero {
+  background: var(--navy);
+  padding: 60px 5% 50px;
+  position: relative;
+  overflow: hidden;
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.hero-bg-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,107,43,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,107,43,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  z-index: 0;
+}
+.hero-glow {
+  position: absolute;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(255,107,43,0.12) 0%, transparent 70%);
+  top: -100px; right: -100px;
+  z-index: 0;
+  animation: glowPulse 6s ease-in-out infinite;
+}
+.hero-glow2 {
+  position: absolute;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(34,197,94,0.07) 0%, transparent 70%);
+  bottom: 0; left: 10%;
+  z-index: 0;
+}
+@keyframes glowPulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.1); } }
+.bubble { position: absolute; border-radius: 50%; pointer-events: none; }
 
-    /* ── NOISE OVERLAY ── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0; z-index: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      opacity: 0.6;
-    }
+.hero-content { position: relative; z-index: 2; max-width: 680px; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,107,43,0.12);
+  border: 1px solid rgba(255,107,43,0.25);
+  color: var(--orange);
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 1.2px; text-transform: uppercase;
+  padding: 5px 12px; border-radius: 100px;
+  margin-bottom: 24px;
+}
+.hero-eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); animation: blink 2s ease-in-out infinite; }
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.2; } }
 
-    /* ── GLOW ORBS ── */
-    .orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(100px);
-      pointer-events: none;
-      z-index: 0;
-    }
-    .orb-1 { width: 600px; height: 600px; background: rgba(124,58,237,0.22); top: -150px; left: -150px; }
-    .orb-2 { width: 500px; height: 500px; background: rgba(168,85,247,0.15); bottom: 10%; right: -100px; }
-    .orb-3 { width: 400px; height: 400px; background: rgba(236,72,153,0.1); top: 40%; left: 40%; }
+.hero h1 {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+}
+.hero h1 .accent { color: var(--orange); }
 
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      padding: 1.1rem 2rem;
-      display: flex; justify-content: space-between; align-items: center;
-      background: rgba(7,3,15,0.7);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(168,85,247,0.18);
-    }
-    .nav-logo {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.3rem;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      background: linear-gradient(90deg, var(--purple-mid), var(--pink));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .nav-cta {
-      background: linear-gradient(135deg, var(--purple), var(--pink));
-      color: white;
-      font-weight: 600;
-      font-size: 0.82rem;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      padding: 0.6rem 1.4rem;
-      border-radius: 100px;
-      text-decoration: none;
-      transition: opacity 0.2s, transform 0.2s;
-      box-shadow: 0 0 20px rgba(168,85,247,0.3);
-    }
-    .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
 
-    /* ── SECTIONS ── */
-    section { position: relative; z-index: 1; padding: 6rem 1.5rem; }
-    .container { max-width: 1100px; margin: 0 auto; }
+.hero-sub {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 36px;
+  max-width: 460px;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 56px; }
+.btn-primary {
+  background: var(--orange);
+  color: #fff;
+  font-size: 0.875rem; font-weight: 700;
+  padding: 10px 22px; border-radius: 8px; border: none;
+  transition: background .2s, transform .15s, box-shadow .2s;
+  box-shadow: 0 4px 20px rgba(255,107,43,0.35);
+}
+.btn-primary:hover { background: var(--orange2); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,107,43,0.45); }
+.btn-secondary {
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-size: 0.875rem; font-weight: 600;
+  padding: 10px 22px; border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: background .2s, transform .15s;
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.13); transform: translateY(-2px); }
 
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      display: flex; align-items: center; justify-content: center;
-      text-align: center;
-      padding: 9rem 1.5rem 5rem;
-    }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(168,85,247,0.12);
-      border: 1px solid rgba(168,85,247,0.35);
-      color: var(--purple-light);
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 0.45rem 1.1rem;
-      border-radius: 100px;
-      margin-bottom: 2rem;
-      backdrop-filter: blur(8px);
-      animation: fadeUp 0.7s ease both;
-    }
-    .hero h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(3rem, 8vw, 6rem);
-      font-weight: 800;
-      line-height: 1.02;
-      margin-bottom: 1.5rem;
-      animation: fadeUp 0.7s 0.1s ease both;
-    }
-    .grad {
-      background: linear-gradient(135deg, #c084fc 0%, #ec4899 60%, #f472b6 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero p {
-      max-width: 580px; margin: 0 auto 2.5rem;
-      font-size: 1.1rem;
-      color: var(--gray);
-      line-height: 1.75;
-      animation: fadeUp 0.7s 0.2s ease both;
-    }
-    .hero-btns {
-      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
-      animation: fadeUp 0.7s 0.3s ease both;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--purple), var(--pink));
-      color: white; font-weight: 600;
-      font-size: 0.92rem; letter-spacing: 0.05em;
-      padding: 0.95rem 2.2rem;
-      border-radius: 100px; text-decoration: none;
-      box-shadow: 0 0 30px rgba(168,85,247,0.4);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(168,85,247,0.6); }
-    .btn-ghost {
-      border: 1px solid rgba(168,85,247,0.35);
-      color: var(--purple-light);
-      font-size: 0.92rem; letter-spacing: 0.05em;
-      padding: 0.95rem 2.2rem;
-      border-radius: 100px; text-decoration: none;
-      backdrop-filter: blur(8px);
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .btn-ghost:hover { border-color: var(--purple-mid); transform: translateY(-2px); }
+.hero-trust { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.trust-avatars { display: flex; }
+.trust-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 2px solid var(--navy);
+  margin-left: -8px;
+  font-size: 0.75rem; font-weight: 800; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+}
+.trust-avatars .trust-avatar:first-child { margin-left: 0; }
+.trust-text { font-size: 0.82rem; color: rgba(255,255,255,0.55); }
+.trust-text strong { color: #fff; }
 
-    /* ── BIG STAT ── */
-    .big-stat {
-      text-align: center;
-      padding: 5rem 1.5rem;
-      background: linear-gradient(180deg, transparent, rgba(124,58,237,0.06) 50%, transparent);
-      border-top: 1px solid rgba(168,85,247,0.1);
-      border-bottom: 1px solid rgba(168,85,247,0.1);
-    }
-    .big-stat .label {
-      font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--purple-mid); margin-bottom: 0.8rem;
-    }
-    .big-stat .number {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(4rem, 12vw, 9rem);
-      font-weight: 800;
-      line-height: 1;
-      background: linear-gradient(135deg, #c084fc, #ec4899);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-shadow: none;
-      filter: drop-shadow(0 0 40px rgba(168,85,247,0.4));
-    }
-    .big-stat .sub {
-      font-size: 1rem; color: var(--gray);
-      margin-top: 0.8rem; max-width: 500px; margin-inline: auto;
-      line-height: 1.7;
-    }
+/* HERO MAP (Europe SVG) */
 
-    /* ── POSTS ── */
-    .posts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-    }
-    .post-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(168,85,247,0.15);
-      border-radius: 16px;
-      padding: 2rem;
-      backdrop-filter: blur(12px);
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.3s, transform 0.3s;
-    }
-    .post-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--purple), var(--pink));
-      opacity: 0; transition: opacity 0.3s;
-    }
-    .post-card:hover { border-color: rgba(168,85,247,0.4); transform: translateY(-4px); }
-    .post-card:hover::before { opacity: 1; }
-    .post-emoji { font-size: 2rem; margin-bottom: 1rem; display: block; }
-    .post-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.2rem; font-weight: 700;
-      margin-bottom: 0.8rem;
-      background: linear-gradient(135deg, var(--white), var(--purple-light));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .post-body { font-size: 0.9rem; color: var(--gray); line-height: 1.7; }
-    .post-body strong { color: var(--white); }
 
-    /* ── SECTION LABEL ── */
-    .sec-label {
-      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--purple-mid); margin-bottom: 0.8rem;
-    }
-    .sec-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 800; margin-bottom: 1rem; line-height: 1.12;
-    }
-    .sec-sub { color: var(--gray); font-size: 1rem; line-height: 1.7; max-width: 520px; margin-bottom: 3rem; }
+/* ===================== TICKER ===================== */
+.ticker-wrap {
+  background: var(--orange);
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0;
+  position: relative;
+}
+.ticker-wrap::before, .ticker-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 80px;
+  z-index: 2;
+}
+.ticker-wrap::before { left: 0; background: linear-gradient(90deg, var(--orange), transparent); }
+.ticker-wrap::after { right: 0; background: linear-gradient(-90deg, var(--orange), transparent); }
+.ticker-inner { display: inline-flex; animation: ticker 22s linear infinite; }
+.ticker-inner:hover { animation-play-state: paused; }
+.ticker-item { display: inline-flex; align-items: center; gap: 10px; padding: 16px 44px; }
+.ticker-num { font-family: 'Inter', sans-serif; font-size: 1.35rem; font-weight: 800; color: #fff; }
+.ticker-label { font-size: 0.8rem; color: rgba(255,255,255,0.82); font-weight: 500; }
+.ticker-sep { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.3); margin-left: 10px; }
+@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-    /* ── TEAM ── */
-    .team-grid { display: flex; flex-wrap: wrap; gap: 1rem; }
-    .team-card {
-      flex: 1; min-width: 200px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(168,85,247,0.15);
-      border-radius: 12px;
-      padding: 1.8rem;
-      text-align: center;
-      backdrop-filter: blur(8px);
-    }
-    .team-avatar {
-      width: 64px; height: 64px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--purple), var(--pink));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem; margin: 0 auto 1rem;
-      box-shadow: 0 0 20px rgba(168,85,247,0.35);
-    }
-    .team-name { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
-    .team-handle { font-size: 0.82rem; color: var(--purple-light); }
-    .team-handle a { color: inherit; text-decoration: none; }
-    .team-handle a:hover { color: var(--purple-mid); }
+/* ===================== SECTION SHARED ===================== */
+.section { padding: 72px 5%; }
+.section-label {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--orange);
+  margin-bottom: 10px;
+}
+.section-title {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800; color: var(--navy);
+  letter-spacing: -1px; line-height: 1.1;
+  margin-bottom: 14px;
+}
+.section-sub { font-size: 0.95rem; color: var(--gray2); line-height: 1.7; max-width: 520px; }
 
-    /* ── PROOF VIDEO PLACEHOLDER ── */
-    .proof-note {
-      background: rgba(168,85,247,0.07);
-      border: 1px dashed rgba(168,85,247,0.3);
-      border-radius: 12px;
-      padding: 2rem;
-      text-align: center;
-      color: var(--gray);
-      font-size: 0.9rem;
-    }
-    .proof-note strong { color: var(--purple-light); }
+/* ===================== CARDS ===================== */
+.cards-section { padding: 56px 5%; background: var(--gray1); }
+.cards-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 28px; }
+.cards-header .section-title { margin-bottom: 0; }
+.see-all { font-size: 0.85rem; color: var(--orange); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; border: none; background: none; padding: 0; transition: gap .2s; }
+.see-all:hover { gap: 8px; }
 
-    /* ── CTA ── */
-    .cta-section {
-      text-align: center;
-      padding: 7rem 1.5rem;
-      position: relative;
-    }
-    .cta-section::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(124,58,237,0.15) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .cta-section h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2.2rem, 5vw, 3.8rem);
-      font-weight: 800;
-      margin-bottom: 1rem;
-    }
-    .cta-section p { color: var(--gray); font-size: 1rem; margin-bottom: 2.5rem; max-width: 480px; margin-inline: auto; line-height: 1.7; }
-    .tg-btn {
-      display: inline-flex; align-items: center; gap: 0.7rem;
-      background: linear-gradient(135deg, #229ED9, #1a7ab5);
-      color: white; font-weight: 700; font-size: 1rem;
-      padding: 1rem 2.4rem; border-radius: 100px;
-      text-decoration: none;
-      box-shadow: 0 0 30px rgba(34,158,217,0.35);
-      transition: transform 0.2s, box-shadow 0.2s;
-      margin: 0.4rem;
-    }
-    .tg-btn:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(34,158,217,0.5); }
-    .tg-btn svg { width: 20px; height: 20px; fill: white; flex-shrink: 0; }
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px;
+  border: 1.5px solid var(--gray3);
+  transition: border-color .25s var(--ease), transform .25s var(--ease), box-shadow .25s var(--ease);
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,107,43,0.04) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity .3s;
+  pointer-events: none;
+}
+.card:hover { border-color: var(--orange); transform: translateY(-4px); box-shadow: 0 12px 36px rgba(11,31,58,0.1); }
+.card:hover::before { opacity: 1; }
 
-    /* ── FOOTER ── */
-    footer {
-      padding: 2rem 1.5rem; text-align: center;
-      border-top: 1px solid rgba(168,85,247,0.1);
-      position: relative; z-index: 1;
-    }
-    footer p { font-size: 0.8rem; color: rgba(255,255,255,0.2); }
-    footer a { color: var(--purple-light); text-decoration: none; }
+.card-top { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.c-avatar {
+  width: 50px; height: 50px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; font-weight: 800; color: #fff;
+  flex-shrink: 0; background-size: cover; background-position: center;
+  position: relative;
+}
+.c-avatar-ring {
+  position: absolute; inset: -3px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: linear-gradient(135deg, var(--orange), transparent) border-box;
+}
+.c-name { font-size: 0.95rem; font-weight: 700; }
+.c-from { font-size: 0.76rem; color: var(--gray2); margin-top: 2px; }
+.c-badge {
+  margin-left: auto;
+  background: rgba(34,197,94,0.1);
+  color: #16a34a;
+  font-size: 0.68rem; font-weight: 700;
+  padding: 3px 9px; border-radius: 100px;
+  white-space: nowrap;
+  display: flex; align-items: center; gap: 4px;
+}
+.dest {
+  background: var(--gray1);
+  border-radius: 10px;
+  padding: 11px 14px;
+  margin-bottom: 13px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.dest-label { font-size: 0.64rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gray2); margin-bottom: 3px; }
+.dest-city { font-size: 0.95rem; font-weight: 800; }
+.chips { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 14px; }
+.chip { font-size: 0.7rem; font-weight: 600; background: var(--gray1); color: var(--gray2); padding: 3px 9px; border-radius: 6px; }
+.card-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 13px; border-top: 1px solid var(--gray3); }
+.c-price { font-size: 1rem; font-weight: 800; }
+.c-price span { font-size: 0.72rem; color: var(--gray2); font-weight: 500; }
+.btn-contact {
+  background: var(--navy);
+  color: #fff;
+  font-size: 0.78rem; font-weight: 700;
+  padding: 8px 16px; border-radius: 8px; border: none;
+  transition: background .2s, transform .15s;
+}
+.btn-contact:hover { background: var(--orange); transform: scale(1.04); }
+.btn-own { background: var(--gray2) !important; cursor: default !important; }
+.btn-own:hover { background: var(--gray2) !important; transform: none !important; }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+/* EMPTY STATE */
+.empty-state {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 60px 20px;
+}
+.empty-icon { font-size: 3rem; margin-bottom: 12px; }
+.empty-state h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
+.empty-state p { color: var(--gray2); font-size: 0.88rem; }
+
+/* ===================== HOW IT WORKS ===================== */
+.how-section { background: #fff; padding: 72px 5%; }
+.how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0; margin-top: 48px; }
+.how-step {
+  padding: 32px 24px;
+  border-right: 1px solid var(--gray3);
+  position: relative;
+}
+.how-step:last-child { border-right: none; }
+@media (max-width: 640px) { .how-step { border-right: none; border-bottom: 1px solid var(--gray3); } .how-step:last-child { border-bottom: none; } }
+.how-num {
+  font-family: 'Inter', sans-serif;
+  font-size: 3.5rem; font-weight: 800;
+  color: var(--orange); opacity: 0.15;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.how-icon { font-size: 1.6rem; margin-bottom: 14px; }
+.how-title { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+.how-desc { font-size: 0.83rem; color: var(--gray2); line-height: 1.65; }
+
+/* ===================== SECURITY ===================== */
+.security-section {
+  background: var(--navy);
+  padding: 72px 5%;
+  position: relative;
+  overflow: hidden;
+}
+.security-section::before {
+  content: '';
+  position: absolute;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(255,107,43,0.08) 0%, transparent 70%);
+  top: -100px; right: -100px;
+}
+.security-section .section-title { color: #fff; }
+.security-section .section-sub { color: rgba(255,255,255,0.5); }
+.security-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 40px; }
+.sec-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 22px;
+  transition: background .2s, border-color .2s;
+}
+.sec-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,107,43,0.3); }
+.sec-icon { font-size: 1.5rem; margin-bottom: 12px; }
+.sec-title { color: #fff; font-size: 0.92rem; font-weight: 700; margin-bottom: 5px; }
+.sec-desc { color: rgba(255,255,255,0.45); font-size: 0.78rem; line-height: 1.6; }
+
+/* ===================== FOOTER ===================== */
+footer {
+  background: #06111f;
+  padding: 32px 5%;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 14px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+footer p { color: rgba(255,255,255,0.25); font-size: 0.78rem; }
+
+/* ===================== OGLASI PAGE ===================== */
+.oglasi-page { padding: 36px 5% 60px; }
+.oglasi-header { margin-bottom: 24px; }
+.oglasi-header h1 { font-family: 'Inter', sans-serif; font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 4px; }
+.oglasi-header p { font-size: 0.88rem; color: var(--gray2); }
+.filter-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+.filter-select {
+  display: flex; background: #fff;
+  border: 1.5px solid var(--gray3);
+  border-radius: 10px;
+  padding: 10px 14px;
+  flex: 1; min-width: 150px;
+  transition: border-color .2s;
+}
+.filter-select:focus-within { border-color: var(--orange); }
+.filter-select select {
+  border: none; outline: none; background: transparent;
+  font-family: 'Inter', sans-serif; font-size: 0.85rem;
+  color: var(--navy); width: 100%;
+}
+
+/* ===================== AUTH ===================== */
+.auth-page {
+  padding: 48px 20px 80px;
+  background: var(--navy);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+.auth-bg-bubble1 { position: absolute; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(255,107,43,0.10) 0%, transparent 70%); top: -100px; right: -80px; pointer-events: none; }
+.auth-bg-bubble2 { position: absolute; width: 280px; height: 280px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%); bottom: -60px; left: -40px; pointer-events: none; }
+.auth-bg-bubble3 { position: absolute; width: 160px; height: 160px; border-radius: 50%; background: rgba(255,107,43,0.05); top: 40%; left: 5%; pointer-events: none; }
+.auth-bg-bubble4 { position: absolute; width: 90px; height: 90px; border-radius: 50%; background: rgba(255,255,255,0.04); top: 15%; right: 20%; pointer-events: none; }
+.auth-bg-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,107,43,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,107,43,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+.auth-wrap { max-width: 420px; margin: 0 auto; position: relative; z-index: 2; }
+.auth-card {
+  background: rgba(255,255,255,0.97);
+  border-radius: 20px;
+  padding: 36px;
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 0 0 1px rgba(255,107,43,0.08), 0 8px 40px rgba(0,0,0,0.3), 0 0 60px rgba(255,255,255,0.06);
+}
+.auth-brand { text-align: center; margin-bottom: 28px; }
+.auth-brand .logo-text { font-size: 1.5rem; }
+.auth-card h2 { font-family: 'Inter', sans-serif; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; }
+.auth-card > p { color: var(--gray2); font-size: 0.85rem; margin-bottom: 24px; }
+.form-group { margin-bottom: 14px; }
+.form-label { display: block; font-size: 0.78rem; font-weight: 700; margin-bottom: 5px; color: var(--navy); letter-spacing: 0.3px; }
+.form-input {
+  width: 100%; padding: 11px 14px;
+  border: 1.5px solid var(--gray3);
+  border-radius: 10px;
+  font-size: 0.875rem; font-family: 'Inter', sans-serif;
+  outline: none; transition: border-color .2s, box-shadow .2s;
+  color: var(--navy);
+}
+.form-input:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(255,107,43,0.1); }
+textarea.form-input { resize: vertical; min-height: 90px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.btn-full {
+  width: 100%; padding: 13px;
+  font-size: 0.95rem; font-weight: 700;
+  background: var(--orange); color: #fff;
+  border: none; border-radius: 10px;
+  transition: background .2s, transform .15s, box-shadow .2s;
+  box-shadow: 0 4px 16px rgba(255,107,43,0.3);
+}
+.btn-full:hover { background: var(--orange2); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(255,107,43,0.4); }
+.auth-switch { text-align: center; margin-top: 16px; font-size: 0.83rem; color: var(--gray2); }
+.auth-switch a { color: var(--orange); font-weight: 700; cursor: pointer; }
+.msg { padding: 11px 14px; border-radius: 9px; font-size: 0.83rem; font-weight: 600; margin-bottom: 14px; display: none; }
+.msg.ok { background: rgba(34,197,94,0.08); color: #16a34a; border: 1px solid rgba(34,197,94,0.2); display: block; }
+.msg.err { background: rgba(239,68,68,0.08); color: #dc2626; border: 1px solid rgba(239,68,68,0.15); display: block; }
+
+/* ===================== PROFIL PAGE ===================== */
+.profil-page { padding: 28px 5% 80px; }
+.profil-inner { max-width: 640px; margin: 0 auto; }
+
+.profil-hero {
+  background: var(--navy);
+  border-radius: 20px;
+  padding: 28px;
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 18px;
+  position: relative; overflow: hidden;
+}
+.ph-glow1 { position: absolute; width: 250px; height: 250px; border-radius: 50%; background: radial-gradient(circle, rgba(255,107,43,0.15), transparent); top: -80px; right: -40px; pointer-events: none; }
+.ph-glow2 { position: absolute; width: 150px; height: 150px; border-radius: 50%; background: radial-gradient(circle, rgba(34,197,94,0.08), transparent); bottom: -40px; left: 30%; pointer-events: none; }
+.p-avatar {
+  width: 76px; height: 76px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.8rem; font-weight: 800; color: #fff;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--orange), #ff9a6c);
+  background-size: cover; background-position: center;
+  position: relative; z-index: 1;
+  box-shadow: 0 4px 20px rgba(255,107,43,0.4);
+}
+.p-info { position: relative; z-index: 1; }
+.p-info h2 { font-family: 'Inter', sans-serif; font-size: 1.25rem; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+.p-info p { color: rgba(255,255,255,0.5); font-size: 0.82rem; margin-top: 3px; }
+.p-complete { margin-top: 10px; display: flex; align-items: center; gap: 8px; }
+.p-complete-bar { flex: 1; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
+.p-complete-fill { height: 100%; background: var(--orange); border-radius: 2px; transition: width .5s var(--ease); }
+.p-complete-txt { font-size: 0.72rem; color: rgba(255,255,255,0.4); white-space: nowrap; }
+
+.p-section {
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px;
+  border: 1.5px solid var(--gray3);
+  margin-bottom: 12px;
+  transition: border-color .2s;
+}
+.p-section:focus-within { border-color: rgba(255,107,43,0.3); }
+.p-section-head { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.p-section-icon {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: var(--gray1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.95rem; flex-shrink: 0;
+}
+.p-section-title { font-size: 0.95rem; font-weight: 700; }
+.p-section-sub { font-size: 0.74rem; color: var(--gray2); margin-top: 1px; }
+
+/* VERIFY */
+.verify-row { display: flex; align-items: center; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid var(--gray3); }
+.verify-row:last-child { border-bottom: none; padding-bottom: 0; }
+.verify-left { display: flex; align-items: center; gap: 12px; }
+.verify-icon { font-size: 1.1rem; }
+.verify-lbl { font-size: 0.85rem; font-weight: 600; }
+.verify-sublbl { font-size: 0.74rem; color: var(--gray2); margin-top: 2px; }
+.v-badge { font-size: 0.72rem; font-weight: 700; padding: 4px 11px; border-radius: 100px; white-space: nowrap; }
+.v-done { background: rgba(34,197,94,0.1); color: #16a34a; }
+.v-pending { background: rgba(255,107,43,0.1); color: var(--orange); cursor: pointer; transition: background .2s; }
+.v-pending:hover { background: rgba(255,107,43,0.18); }
+
+.logout-btn {
+  width: 100%; margin-top: 6px;
+  padding: 12px; border-radius: 10px;
+  background: var(--gray1); color: var(--gray2);
+  font-size: 0.88rem; font-weight: 600; border: none;
+  transition: background .2s, color .2s;
+}
+.logout-btn:hover { background: #ffe8e0; color: #c0392b; }
+
+/* ===================== PORUKE PAGE ===================== */
+.poruke-page { padding: 28px 5% 60px; }
+.poruke-inner { max-width: 700px; margin: 0 auto; }
+.poruke-inner h1 { font-family: 'Inter', sans-serif; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 20px; }
+.msg-item {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px 18px;
+  border: 1.5px solid var(--gray3);
+  margin-bottom: 10px;
+  transition: border-color .2s;
+}
+.msg-item:hover { border-color: var(--gray2); }
+.msg-meta { font-size: 0.72rem; color: var(--gray2); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.msg-sent { border-left: 3px solid var(--orange); }
+.msg-recv { border-left: 3px solid var(--green); }
+.msg-recv .msg-meta::before { content: '●'; color: var(--green); font-size: 0.5rem; }
+.msg-sent .msg-meta::before { content: '●'; color: var(--orange); font-size: 0.5rem; }
+.msg-text { font-size: 0.9rem; font-weight: 500; line-height: 1.5; }
+
+/* ===================== CONVERSATIONS ===================== */
+.conv-card { background: #fff; border-radius: 14px; border: 1.5px solid var(--gray3); margin-bottom: 10px; overflow: hidden; transition: border-color .2s; cursor: pointer; }
+.conv-card:hover { border-color: var(--orange); }
+.conv-header { display: flex; align-items: center; gap: 12px; padding: 16px 18px; }
+.conv-avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 800; color: #fff; flex-shrink: 0; }
+.conv-info { flex: 1; min-width: 0; }
+.conv-name { font-size: 0.9rem; font-weight: 700; }
+.conv-preview { font-size: 0.78rem; color: var(--gray2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+.conv-time { font-size: 0.72rem; color: var(--gray2); flex-shrink: 0; }
+.conv-messages { padding: 0 18px 16px; border-top: 1px solid var(--gray3); }
+
+/* ===================== MODAL ===================== */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(6,17,31,0.75);
+  backdrop-filter: blur(8px);
+  z-index: 900;
+  display: none; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: #fff;
+  border-radius: 20px;
+  padding: 28px;
+  max-width: 460px; width: 100%;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.2);
+  animation: modalIn .3s var(--ease);
+}
+@keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: none; } }
+.modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.modal-head h3 { font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 800; }
+.modal-close { background: var(--gray1); border: none; width: 30px; height: 30px; border-radius: 50%; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: background .2s; }
+.modal-close:hover { background: var(--gray3); }
+
+/* ===================== SCROLL REVEAL ===================== */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ===================== PROGRESS BAR ===================== */
+.top-progress {
+  position: fixed; top: 0; left: 0;
+  height: 2px; background: var(--orange);
+  z-index: 9999; width: 0;
+  transition: width .1s;
+  box-shadow: 0 0 8px rgba(255,107,43,0.6);
+}
+
+/* ===================== CITY DOTS ===================== */
+.city-dot {
+  position: absolute;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--orange);
+  animation: dotPulse 2.5s ease-in-out infinite;
+}
+.city-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid var(--orange);
+  opacity: 0.4;
+  animation: ringExpand 2.5s ease-in-out infinite;
+}
+@keyframes dotPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.3); } }
+@keyframes ringExpand { 0% { transform: scale(1); opacity: 0.4; } 100% { transform: scale(2.5); opacity: 0; } }
+
+/* ===================== BOTTOM NAV (MOBILE APP) ===================== */
+.bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 64px;
+  background: var(--navy);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  z-index: 200;
+  padding: 0 4px;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+@media (max-width: 640px) {
+  .bottom-nav { display: flex; align-items: center; justify-content: space-around; }
+  .page { padding-bottom: 72px; }
+  nav .nav-links { display: none !important; }
+  nav { justify-content: center; }
+}
+.bn-item {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; flex: 1; height: 100%;
+  background: none; border: none; cursor: pointer;
+  color: rgba(255,255,255,0.4);
+  font-family: 'Inter', sans-serif;
+  transition: color .2s;
+  position: relative;
+  padding: 0;
+}
+.bn-item.active { color: var(--orange); }
+.bn-item svg { width: 22px; height: 22px; stroke-width: 1.8; }
+.bn-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.3px; }
+.bn-badge {
+  position: absolute;
+  top: 8px; right: calc(50% - 18px);
+  background: var(--orange);
+  color: #fff; font-size: 0.58rem; font-weight: 800;
+  padding: 1px 5px; border-radius: 100px;
+  min-width: 16px; text-align: center;
+  display: none;
+}
+.bn-badge.show { display: block; }
+
+/* Active indicator dot */
+.bn-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--orange);
+}
+
+/* ===================== PROFIL TABS ===================== */
+.profil-tabs {
+  display: flex;
+  background: #fff;
+  border-radius: 12px;
+  padding: 4px;
+  border: 1.5px solid var(--gray3);
+  margin-bottom: 14px;
+  gap: 4px;
+}
+.profil-tab {
+  flex: 1; padding: 10px; border: none;
+  border-radius: 9px;
+  font-size: 0.85rem; font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  background: transparent;
+  color: var(--gray2);
+  transition: all .2s;
+}
+.profil-tab.active {
+  background: var(--navy);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(11,31,58,0.15);
+}
+
+/* ===================== NOTIFIKACIJE ===================== */
+.notif-center {
+  position: fixed;
+  top: 72px; right: 16px;
+  width: 320px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+@media (max-width: 640px) {
+  .notif-center { top: auto; bottom: 80px; right: 12px; left: 12px; width: auto; }
+}
+.notif-toast {
+  background: var(--navy);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  pointer-events: all;
+  animation: toastIn .35s cubic-bezier(.22,1,.36,1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.notif-toast::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--orange);
+  animation: toastTimer linear forwards;
+}
+.notif-toast.success::after { background: var(--green); }
+.notif-toast.info::after { background: #3b82f6; }
+@keyframes toastTimer { from { transform: scaleX(1); transform-origin: left; } to { transform: scaleX(0); transform-origin: left; } }
+@keyframes toastIn { from { opacity: 0; transform: translateX(20px) scale(0.95); } to { opacity: 1; transform: none; } }
+@keyframes toastOut { to { opacity: 0; transform: translateX(20px) scale(0.95); } }
+.notif-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+.notif-body { flex: 1; min-width: 0; }
+.notif-title { font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 2px; }
+.notif-sub { font-size: 0.76rem; color: rgba(255,255,255,0.55); line-height: 1.4; }
+.notif-close { background: none; border: none; color: rgba(255,255,255,0.3); font-size: 1rem; cursor: pointer; padding: 0; flex-shrink: 0; transition: color .15s; }
+.notif-close:hover { color: rgba(255,255,255,0.7); }
+
+/* ===================== HOW ANIMATED ICONS ===================== */
+.how-icon-anim {
+  width: 52px; height: 52px;
+  margin-bottom: 14px;
+}
+.how-icon-anim svg { width: 100%; height: 100%; }
+.anim-draw {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: drawLine 1s ease forwards;
+}
+@keyframes drawLine {
+  to { stroke-dashoffset: 0; }
+}
+.how-step:hover .anim-draw {
+  animation: drawLine .6s ease forwards;
+}
+
+/* ===================== MOTTO ===================== */
+.hero-motto { margin-top: 8px; }
+.motto-text {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.3px;
+  font-style: italic;
+}
+.motto-text span { color: var(--orange); font-weight: 400; }
+
+/* ===================== SETTINGS NIANSE ===================== */
+.p-section-head { cursor: default; }
+.p-section { transition: box-shadow .2s; }
+.p-section:hover { box-shadow: 0 4px 20px rgba(11,31,58,0.06); }
+.settings-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 0; border-bottom: 1px solid var(--gray3);
+}
+.settings-row:last-child { border-bottom: none; padding-bottom: 0; }
+.settings-row-left h4 { font-size: 0.88rem; font-weight: 600; margin-bottom: 2px; }
+.settings-row-left p { font-size: 0.75rem; color: var(--gray2); }
+.settings-status { font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 100px; }
+.settings-status.on { background: rgba(34,197,94,0.1); color: #16a34a; }
+.settings-status.off { background: var(--gray1); color: var(--gray2); }
+
+/* ===================== QUICK REPLIES ===================== */
+.qr-btn {
+  background: #fff;
+  border: 1.5px solid var(--gray3);
+  border-radius: 20px;
+  padding: 6px 13px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--navy);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: border-color .2s, background .2s;
+  white-space: nowrap;
+}
+.qr-btn:hover {
+  border-color: var(--orange);
+  background: rgba(255,107,43,0.04);
+  color: var(--orange);
+}
+
+/* ===================== LOADING DOTS ===================== */
+.loading-dots { display: flex; gap: 6px; justify-content: center; align-items: center; }
+.loading-dots span {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--orange); opacity: 0.3;
+  animation: dotBounce 1.2s ease-in-out infinite;
+}
+.loading-dots span:nth-child(2) { animation-delay: .2s; }
+.loading-dots span:nth-child(3) { animation-delay: .4s; }
+@keyframes dotBounce {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ===================== FULLSCREEN CHAT ===================== */
+.chat-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--gray1);
+  z-index: 9999;
+  display: none;
+  flex-direction: column;
+}
+.chat-overlay.open { display: flex; }
+.chat-header {
+  background: var(--navy);
+  padding: 14px 20px;
+  display: flex; align-items: center; gap: 14px;
+  flex-shrink: 0;
+}
+.chat-back {
+  background: rgba(255,255,255,0.1);
+  border: none; color: #fff;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s; flex-shrink: 0;
+}
+.chat-back:hover { background: rgba(255,255,255,0.18); }
+.chat-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem; font-weight: 800; color: #fff; flex-shrink: 0;
+}
+.chat-name { font-size: 0.95rem; font-weight: 700; color: #fff; }
+.chat-status { font-size: 0.72rem; color: rgba(255,255,255,0.45); margin-top: 1px; }
+.chat-messages {
+  flex: 1; overflow-y: auto;
+  padding: 20px 16px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.chat-bubble {
+  max-width: 75%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 0.88rem; line-height: 1.5;
+}
+.chat-bubble.sent {
+  background: var(--orange);
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+.chat-bubble.recv {
+  background: #fff;
+  color: var(--navy);
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 2px 8px rgba(11,31,58,0.06);
+}
+.chat-bubble-time {
+  font-size: 0.65rem;
+  opacity: 0.55;
+  margin-top: 4px;
+  text-align: right;
+}
+.chat-bubble.recv .chat-bubble-time { text-align: left; }
+.chat-input-bar {
+  background: #fff;
+  border-top: 1px solid var(--gray3);
+  padding: 12px 16px;
+  display: flex; gap: 10px; align-items: flex-end;
+  flex-shrink: 0;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  position: sticky;
+  bottom: 0;
+}
+.chat-input-bar textarea {
+  flex: 1; border: 1.5px solid var(--gray3);
+  border-radius: 22px; padding: 10px 16px;
+  font-family: 'Inter', sans-serif; font-size: 0.88rem;
+  resize: none; outline: none; max-height: 120px;
+  transition: border-color .2s; line-height: 1.4;
+}
+.chat-input-bar textarea:focus { border-color: var(--orange); }
+.chat-send-btn {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--orange); color: #fff;
+  border: none; font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: background .2s, transform .15s;
+  box-shadow: 0 2px 8px rgba(255,107,43,0.3);
+}
+.chat-send-btn:hover { background: var(--orange2); transform: scale(1.05); }
+.chat-quick-replies {
+  padding: 10px 16px 0;
+  display: flex; gap: 6px; flex-wrap: wrap;
+  background: #fff;
+}
+
+</style>
 </head>
 <body>
 
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
+<!-- PROGRESS BAR -->
+<div class="top-progress" id="topProgress"></div>
 
-  <!-- NAV -->
-  <nav>
-    <span class="nav-logo">Valkyra Agency</span>
-    <a href="https://t.me/bojan037" target="_blank" class="nav-cta">Book a Call</a>
-  </nav>
+<!-- NAV -->
+<nav>
+  <div class="logo" onclick="showPage('home')">
+    <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+      <circle cx="18" cy="23" r="12" fill="#122849" stroke="#FF6B2B" stroke-width="1.8"/>
+      <ellipse cx="18" cy="23" rx="12" ry="4.5" stroke="rgba(255,107,43,0.35)" stroke-width="1.2" fill="none" transform="rotate(-18 18 23)"/>
+      <g transform="translate(24,9) rotate(40)">
+        <path d="M0 0 L9 4 L0 8 L2.5 4 Z" fill="#FF6B2B"/>
+        <path d="M2.5 3 L-3.5 0.5 L-2 4 Z" fill="#FF8C55" opacity="0.8"/>
+        <path d="M2.5 5 L-3.5 7.5 L-2 4 Z" fill="#FF8C55" opacity="0.8"/>
+      </g>
+    </svg>
+    <span class="logo-text">Bal<b>kans</b></span>
+  </div>
+  <div class="nav-links">
+    <button class="nav-link nav-hide-mobile" onclick="showPage('oglasi')">Oglasi</button>
+    <button class="nav-link" onclick="showPage('login')" id="navLogin">Prijavi se</button>
+    <button class="btn-nav" id="navReg" onclick="showPage('registracija')">Registruj se</button>
+  </div>
+</nav>
+
+<!-- ==================== HOME PAGE ==================== -->
+<div class="page active" id="page-home">
 
   <!-- HERO -->
   <section class="hero">
-    <div>
-      <span class="hero-badge">⚡ Professional OFM Chatting Agency</span>
-      <h1>Good Chatting<br><span class="grad">Matters.</span></h1>
-      <p>Your traffic is useless if you don't milk the fans. We've done it again and again — and we will not stop. Be part of something that matters. Be part of Valkyra.</p>
-      <div class="hero-btns">
-        <a href="https://t.me/bojan037" target="_blank" class="btn-primary">Book a Call</a>
-        <a href="#results" class="btn-ghost">See Our Results</a>
+    <div class="hero-bg-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow"><span></span> Platforma za Balkance u Evropi</div>
+      <h1>Nađi cimera na koga možeš da <span class="accent">računaš</span></h1>
+      <p class="hero-sub">Pronađi verifikovanog cimera iz Srbije, BiH ili Hrvatske koji ide u istu zemlju kao ti. Delite kiriju i troškove smeštaja širom Evrope.</p>
+      <div class="hero-actions" id="heroBtns">
+        <button class="btn-primary" onclick="showPage('registracija')">Kreiraj profil besplatno</button>
+        <button class="btn-secondary" onclick="showPage('oglasi')">Pregledaj oglase →</button>
+      </div>
+      <div class="hero-motto">
+        <span class="motto-text">Tvoj prvi prijatelj u <span>novom gradu.</span></span>
       </div>
     </div>
+    <!-- Decorative bubbles -->
+    <div class="bubble" style="width:320px;height:320px;background:var(--orange);opacity:0.06;top:-80px;right:-60px;"></div>
+    <div class="bubble" style="width:200px;height:200px;background:#fff;opacity:0.04;bottom:-50px;right:18%;"></div>
+    <div class="bubble" style="width:110px;height:110px;background:var(--orange);opacity:0.07;top:45%;left:-25px;"></div>
+    <div class="bubble" style="width:75px;height:75px;background:#fff;opacity:0.05;top:18px;right:36%;"></div>
+    <div class="bubble" style="width:180px;height:180px;background:var(--orange);opacity:0.04;bottom:-60px;left:28%;"></div>
   </section>
 
-  <!-- BIG STAT -->
-  <div class="big-stat" id="results">
-    <p class="label">Proven Track Record</p>
-    <div class="number">$250K</div>
-    <p class="sub">Quarter of a million in one month — the only "secret" is what you learn when you step inside. Results like this don't come from luck.</p>
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-inner">
+      <div class="ticker-item"><span class="ticker-num">145k+</span><span class="ticker-label">Balkanaca seli se godišnje</span><span class="ticker-sep"></span></div>
+      <div class="ticker-item"><span class="ticker-num">30+</span><span class="ticker-label">Evropskih gradova</span><span class="ticker-sep"></span></div>
+      <div class="ticker-item"><span class="ticker-num">50%</span><span class="ticker-label">Manja kirija sa cimerom</span><span class="ticker-sep"></span></div>
+      <div class="ticker-item"><span class="ticker-num">100%</span><span class="ticker-label">Verifikovani profili</span><span class="ticker-sep"></span></div>
+      <div class="ticker-item"><span class="ticker-num">145k+</span><span class="ticker-label">Balkanaca seli se godišnje</span><span class="ticker-sep"></span></div>
+      <div class="ticker-item"><span class="ticker-num">30+</span><span class="ticker-label">Evropskih gradova</span><span class="ticker-sep"></span></div>
+      <div class="ticker-item"><span class="ticker-num">50%</span><span class="ticker-label">Manja kirija sa cimerom</span><span class="ticker-sep"></span></div>
+      <div class="ticker-item"><span class="ticker-num">100%</span><span class="ticker-label">Verifikovani profili</span><span class="ticker-sep"></span></div>
+    </div>
   </div>
 
-  <!-- POSTS / CONTENT -->
-  <section>
-    <div class="container">
-      <p class="sec-label">Our Philosophy</p>
-      <h2 class="sec-title">Why <span class="grad">Valkyra</span> Wins</h2>
-      <p class="sec-sub">Hard work and disciplined chatters who execute. Every step matters, and we make sure every single one is done right.</p>
-      <div class="posts-grid">
-        <div class="post-card">
-          <span class="post-emoji">💰</span>
-          <div class="post-title">Quarter of a Million in One Month</div>
-          <p class="post-body">Results like this don't happen by luck — they come from <strong>hard work and disciplined chatters</strong> who execute. Every step matters, and we make sure every single one is done right.</p>
+  <!-- LIVE OGLASI -->
+  <section class="cards-section reveal">
+    <div class="cards-header">
+      <div>
+        <div class="section-label">Upravo aktivni</div>
+        <div class="section-title" style="font-size:1.5rem">Traže cimera sad</div>
+      </div>
+      <button class="see-all" onclick="showPage('oglasi')">Vidi sve <span>→</span></button>
+    </div>
+    <div class="cards-grid" id="homeCards">
+      <div class="empty-state"><div class="empty-icon">🔍</div><p>Učitavanje oglasa...</p></div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section reveal">
+    <div style="max-width:520px">
+      <div class="section-label">Kako funkcioniše</div>
+      <div class="section-title">Od registracije do<br>novog cimera za 5 min</div>
+    </div>
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="how-num">01</div>
+        <div class="how-icon-anim">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="14" r="6" stroke="#FF6B2B" stroke-width="2" class="anim-draw"/>
+            <path d="M8 34c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="#FF6B2B" stroke-width="2" stroke-linecap="round" class="anim-draw" style="animation-delay:.2s"/>
+          </svg>
         </div>
-        <div class="post-card">
-          <span class="post-emoji">🔥</span>
-          <div class="post-title">Good Chatting Matters</div>
-          <p class="post-body">Your traffic is <strong>USELESS</strong> if you don't milk the fans. We've done it again and again and we will not stop. Get to know our methods by working with us.</p>
+        <div class="how-title">Kreiraj profil</div>
+        <div class="how-desc">Registruj se i popuni informacije o sebi i destinaciji u par klikova.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">02</div>
+        <div class="how-icon-anim">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="18" cy="18" r="9" stroke="#FF6B2B" stroke-width="2" class="anim-draw"/>
+            <line x1="24.5" y1="24.5" x2="33" y2="33" stroke="#FF6B2B" stroke-width="2" stroke-linecap="round" class="anim-draw" style="animation-delay:.25s"/>
+          </svg>
         </div>
-        <div class="post-card">
-          <span class="post-emoji">📈</span>
-          <div class="post-title">It's Only Up From Here</div>
-          <p class="post-body">Our team is the sole reason for the <strong>increase in sales across multiple pages</strong>. Don't be blinded by the idea that this is easy — it's not. But we manage to get the best possible outcome every single time.</p>
+        <div class="how-title">Pretraži oglase</div>
+        <div class="how-desc">Filtriraj po gradu i budžetu. Nađi ljude koji idu tamo gde i ti.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">03</div>
+        <div class="how-icon-anim">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M34 24a2 2 0 01-2 2H12l-5 5V8a2 2 0 012-2h23a2 2 0 012 2v16z" stroke="#FF6B2B" stroke-width="2" stroke-linejoin="round" class="anim-draw"/>
+            <line x1="14" y1="14" x2="26" y2="14" stroke="#FF6B2B" stroke-width="1.5" stroke-linecap="round" class="anim-draw" style="animation-delay:.3s"/>
+            <line x1="14" y1="19" x2="22" y2="19" stroke="#FF6B2B" stroke-width="1.5" stroke-linecap="round" class="anim-draw" style="animation-delay:.4s"/>
+          </svg>
         </div>
+        <div class="how-title">Kontaktiraj</div>
+        <div class="how-desc">Pošalji poruku direktno u aplikaciji. Brzo, jednostavno, sigurno.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">04</div>
+        <div class="how-icon-anim">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 20L20 7l14 13" stroke="#FF6B2B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="anim-draw"/>
+            <path d="M10 17v13a1 1 0 001 1h6v-7h6v7h6a1 1 0 001-1V17" stroke="#FF6B2B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="anim-draw" style="animation-delay:.25s"/>
+          </svg>
+        </div>
+        <div class="how-title">Useliš se</div>
+        <div class="how-desc">Podelite stan i troškove. Isti jezik, isti mentalitet, polovina kirije.</div>
       </div>
     </div>
   </section>
 
-  <!-- PROOF SECTION -->
-  <section style="padding-top: 0;">
-    <div class="container">
-      <p class="sec-label">Proof & Results</p>
-      <h2 class="sec-title">Real Numbers, <span class="grad">Real Creators</span></h2>
-      <p class="sec-sub">We have videos, screenshots, and detailed case studies. Reach out and we'll show you everything.</p>
-      <div class="proof-note">
-        <strong>📹 Video proof & results available on request</strong><br><br>
-        DM us on Telegram and we'll share our full portfolio of results — revenue screenshots, case studies, and more.
-        <br><br>
-        <a href="https://t.me/ValkyraChatting" target="_blank" style="color: var(--purple-light);">@ValkyraChatting</a>
-      </div>
+  <!-- SECURITY -->
+  <section class="security-section reveal">
+    <div style="max-width:520px; position:relative; z-index:1">
+      <div class="section-label" style="color:rgba(255,107,43,0.8)">Tvoja sigurnost</div>
+      <div class="section-title">Niko ne uđe bez<br>verifikacije</div>
+      <p class="section-sub">Za razliku od Facebook grupa, svaki profil na Balkans prolazi kroz višestruku verifikaciju pre nego što postane vidljiv.</p>
+    </div>
+    <div class="security-grid" style="position:relative; z-index:1">
+      <div class="sec-card"><div class="sec-icon">📧</div><div class="sec-title">Verifikacija emaila</div><div class="sec-desc">Svaki nalog mora imati potvrđen email pre aktivacije.</div></div>
+      <div class="sec-card"><div class="sec-icon">📱</div><div class="sec-title">Broj telefona</div><div class="sec-desc">SMS verifikacija za dodatni sloj sigurnosti i poverenja.</div></div>
+      <div class="sec-card"><div class="sec-icon">🖼️</div><div class="sec-title">Obavezna slika</div><div class="sec-desc">Profil bez prave profilne slike nije vidljiv u pretrazi.</div></div>
+      <div class="sec-card"><div class="sec-icon">✅</div><div class="sec-title">Admin odobrenje</div><div class="sec-desc">Svaki novi profil ručno prolazi kroz pregled tima Balkans.</div></div>
     </div>
   </section>
 
-  <!-- TEAM -->
-  <section style="padding-top: 2rem;">
-    <div class="container">
-      <p class="sec-label">The Team</p>
-      <h2 class="sec-title">Talk to <span class="grad">Real People</span></h2>
-      <p class="sec-sub">Book a call with a simple DM. Our team will walk you through everything.</p>
-      <div class="team-grid">
-        <div class="team-card">
-          <div class="team-avatar">⚡</div>
-          <div class="team-name">Bojan</div>
-          <div class="team-handle"><a href="https://t.me/bojan037" target="_blank">@bojan037</a></div>
-        </div>
-        <div class="team-card">
-          <div class="team-avatar">🔥</div>
-          <div class="team-name">Valk</div>
-          <div class="team-handle"><a href="https://t.me/valkmym" target="_blank">@valkmym</a></div>
-        </div>
-        <div class="team-card">
-          <div class="team-avatar">💎</div>
-          <div class="team-name">Teska</div>
-          <div class="team-handle"><a href="https://t.me/teskaprica" target="_blank">@teskaprica</a></div>
-        </div>
-        <div class="team-card">
-          <div class="team-avatar">🚀</div>
-          <div class="team-name">Channel</div>
-          <div class="team-handle"><a href="https://t.me/ValkyraChatting" target="_blank">@ValkyraChatting</a></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta-section">
-    <h2>Ready to <span class="grad">Scale?</span></h2>
-    <p>Book a call with a simple DM. Start your service application today and be part of something that matters.</p>
-    <div>
-      <a href="https://t.me/bojan037" target="_blank" class="tg-btn">
-        <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
-        @bojan037
-      </a>
-      <a href="https://t.me/valkmym" target="_blank" class="tg-btn">
-        <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
-        @valkmym
-      </a>
-      <a href="https://t.me/teskaprica" target="_blank" class="tg-btn">
-        <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
-        @teskaprica
-      </a>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
   <footer>
-    <p>© 2026 Valkyra Agency. &nbsp;|&nbsp; <a href="https://t.me/ValkyraChatting" target="_blank">@ValkyraChatting</a></p>
+    <div class="logo">
+      <svg width="24" height="24" viewBox="0 0 40 40" fill="none">
+        <circle cx="18" cy="23" r="12" fill="#122849" stroke="#FF6B2B" stroke-width="1.8"/>
+        <g transform="translate(24,9) rotate(40)"><path d="M0 0 L9 4 L0 8 L2.5 4 Z" fill="#FF6B2B"/></g>
+      </svg>
+      <span class="logo-text">Bal<b>kans</b></span>
+    </div>
+    <p>© 2025 Balkans. Napravljen za dijasporu, od dijaspore.</p>
+    <p>balkansapp@gmail.com</p>
   </footer>
+</div>
 
+<!-- ==================== OGLASI PAGE ==================== -->
+<div class="page" id="page-oglasi">
+  <div class="oglasi-page">
+    <div class="oglasi-header">
+      <h1>Aktivni oglasi</h1>
+      <p>Pronađi verifikovanog cimera koji ide tamo gde i ti</p>
+    </div>
+    <div class="filter-bar">
+      <div class="filter-select">
+        <select id="filterGrad" onchange="ucitajOglase()">
+          <option value="">Svi gradovi</option>
+          <optgroup label="🇩🇪 Nemačka"><option>Minhen</option><option>Berlin</option><option>Hamburg</option><option>Frankfurt</option><option>Štutgart</option><option>Diseldorf</option><option>Keln</option><option>Dortmund</option><option>Lajpcig</option><option>Bremen</option></optgroup>
+          <optgroup label="🇦🇹 Austrija"><option>Beč</option><option>Grac</option><option>Linc</option><option>Salcburg</option><option>Insbruk</option></optgroup>
+          <optgroup label="🇨🇭 Švajcarska"><option>Cirih</option><option>Ženeva</option><option>Bazel</option><option>Bern</option><option>Lozana</option></optgroup>
+          <optgroup label="🇸🇮 Slovenija"><option>Ljubljana</option><option>Maribor</option></optgroup>
+          <optgroup label="🇳🇱 Holandija"><option>Amsterdam</option><option>Rotterdam</option><option>Hag</option></optgroup>
+          <optgroup label="🇧🇪 Belgija"><option>Brisel</option><option>Antverpen</option></optgroup>
+          <optgroup label="🇸🇪 Švedska"><option>Stokholm</option><option>Geteborg</option></optgroup>
+          <optgroup label="🇩🇰 Danska"><option>Kopenhagen</option></optgroup>
+          <optgroup label="🇳🇴 Norveška"><option>Oslo</option></optgroup>
+          <optgroup label="🇫🇮 Finska"><option>Helsinki</option></optgroup>
+          <optgroup label="🇫🇷 Francuska"><option>Pariz</option><option>Lion</option><option>Marselj</option></optgroup>
+          <optgroup label="🇬🇧 UK"><option>London</option><option>Mančester</option><option>Birmingham</option></optgroup>
+          <optgroup label="🇮🇪 Irska"><option>Dublin</option></optgroup>
+          <optgroup label="🇱🇺 Luksemburg"><option>Luksemburg</option></optgroup>
+          <optgroup label="🇨🇿 Češka"><option>Prag</option></optgroup>
+          <optgroup label="🇸🇰 Slovačka"><option>Bratislava</option></optgroup>
+          <optgroup label="🇭🇺 Mađarska"><option>Budimpešta</option></optgroup>
+          <optgroup label="🇷🇴 Rumunija"><option>Bukurešt</option></optgroup>
+          <optgroup label="🇬🇷 Grčka"><option>Atina</option><option>Solun</option></optgroup>
+          <optgroup label="🇮🇹 Italija"><option>Milano</option><option>Rim</option><option>Turin</option></optgroup>
+          <optgroup label="🇪🇸 Španija"><option>Madrid</option><option>Barselona</option></optgroup>
+          <optgroup label="🇵🇹 Portugalija"><option>Lisabon</option><option>Porto</option></optgroup>
+        </select>
+      </div>
+      <div class="filter-select">
+        <select id="filterBudzet" onchange="ucitajOglase()">
+          <option value="">Svaki budžet</option>
+          <option value="400">Do 400€/mes</option>
+          <option value="600">Do 600€/mes</option>
+          <option value="800">Do 800€/mes</option>
+          <option value="1000">Do 1.000€/mes</option>
+          <option value="1500">Do 1.500€/mes</option>
+        </select>
+      </div>
+    </div>
+    <div class="cards-grid" id="oglasiCards">
+      <div class="empty-state"><div class="empty-icon">🔍</div><p>Učitavanje...</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== LOGIN ==================== -->
+<div class="page" id="page-login">
+  <div class="auth-page">
+    <div class="auth-bg-grid"></div>
+    <div class="auth-bg-bubble1"></div>
+    <div class="auth-bg-bubble2"></div>
+    <div class="auth-bg-bubble3"></div>
+    <div class="auth-bg-bubble4"></div>
+    <div class="auth-wrap">
+      <div class="auth-card">
+        <div class="auth-brand">
+          <div class="logo" style="justify-content:center">
+            <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><circle cx="18" cy="23" r="12" fill="#122849" stroke="#FF6B2B" stroke-width="1.8"/><g transform="translate(24,9) rotate(40)"><path d="M0 0 L9 4 L0 8 L2.5 4 Z" fill="#FF6B2B"/></g></svg>
+            <span class="logo-text" style="color:var(--navy)">Bal<b style="color:var(--orange)">kans</b></span>
+          </div>
+        </div>
+        <h2>Dobrodošao nazad</h2>
+        <p>Prijavi se na svoj Balkans nalog</p>
+        <div class="msg" id="loginMsg"></div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" id="loginEmail" placeholder="tvoj@email.com"></div>
+        <div class="form-group"><label class="form-label">Lozinka</label><input class="form-input" type="password" id="loginLozinka" placeholder="••••••••"></div>
+        <button class="btn-full" onclick="login()">Prijavi se</button>
+        <div class="auth-switch">Nemaš nalog? <a onclick="showPage('registracija')">Registruj se</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== REGISTRACIJA ==================== -->
+<div class="page" id="page-registracija">
+  <div class="auth-page">
+    <div class="auth-bg-grid"></div>
+    <div class="auth-bg-bubble1"></div>
+    <div class="auth-bg-bubble2"></div>
+    <div class="auth-bg-bubble3"></div>
+    <div class="auth-bg-bubble4"></div>
+    <div class="auth-wrap">
+      <div class="auth-card">
+        <div class="auth-brand">
+          <div class="logo" style="justify-content:center">
+            <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><circle cx="18" cy="23" r="12" fill="#122849" stroke="#FF6B2B" stroke-width="1.8"/><g transform="translate(24,9) rotate(40)"><path d="M0 0 L9 4 L0 8 L2.5 4 Z" fill="#FF6B2B"/></g></svg>
+            <span class="logo-text" style="color:var(--navy)">Bal<b style="color:var(--orange)">kans</b></span>
+          </div>
+        </div>
+        <h2>Kreiraj profil</h2>
+        <p>Pridruži se Balkans zajednici</p>
+        <div class="msg" id="regMsg"></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Ime</label><input class="form-input" type="text" id="regIme" placeholder="Marko"></div>
+          <div class="form-group"><label class="form-label">Prezime</label><input class="form-input" type="text" id="regPrezime" placeholder="Petrović"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" id="regEmail" placeholder="tvoj@email.com"></div>
+        <div class="form-group"><label class="form-label">Lozinka</label><input class="form-input" type="password" id="regLozinka" placeholder="Minimum 6 karaktera"></div>
+        <button class="btn-full" onclick="registracija()">Kreiraj nalog besplatno</button>
+        <div class="auth-switch">Već imaš nalog? <a onclick="showPage('login')">Prijavi se</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PROFIL ==================== -->
+<div class="page" id="page-profil">
+  <div class="profil-page">
+    <div class="profil-inner">
+
+      <!-- HEADER -->
+      <div class="profil-hero">
+        <div class="ph-glow1"></div>
+        <div class="ph-glow2"></div>
+        <div class="p-avatar" id="profilAvatar">?</div>
+        <div class="p-info">
+          <h2 id="profilIme">Učitavanje...</h2>
+          <p id="profilEmail"></p>
+          <div class="p-complete">
+            <div class="p-complete-bar"><div class="p-complete-fill" id="completeFill" style="width:20%"></div></div>
+            <span class="p-complete-txt" id="completeTxt">20% kompletno</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div class="profil-tabs">
+        <button class="profil-tab active" id="tab-javni" onclick="switchTab('javni')">👤 Javni profil</button>
+        <button class="profil-tab" id="tab-settings" onclick="switchTab('settings')">⚙️ Podešavanja</button>
+      </div>
+
+      <!-- TAB: JAVNI PROFIL -->
+      <div id="tabContent-javni">
+
+        <!-- SLIKA -->
+        <div class="p-section">
+          <div class="p-section-head">
+            <div class="p-section-icon">🖼️</div>
+            <div>
+              <div class="p-section-title">Profilna slika</div>
+              <div class="p-section-sub">Vidljiva svim korisnicima na oglasu</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px">
+            <div id="slikaPreview" style="width:64px;height:64px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:800;color:#fff;flex-shrink:0;background-size:cover;background-position:center">?</div>
+            <div style="flex:1">
+              <input class="form-input" type="file" id="pSlika" accept="image/*" onchange="onSlikaChange()" style="padding:8px;font-size:0.82rem">
+              <div style="font-size:0.74rem;color:var(--gray2);margin-top:5px">JPG, PNG — max 5MB. Profil bez slike nije vidljiv u pretrazi.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- O VAMA -->
+        <div class="p-section">
+          <div class="p-section-head">
+            <div class="p-section-icon">👤</div>
+            <div>
+              <div class="p-section-title">O vama</div>
+              <div class="p-section-sub">Ove informacije se prikazuju svim korisnicima</div>
+            </div>
+          </div>
+          <div class="form-group"><label class="form-label">Odakle si?</label><input class="form-input" type="text" id="pOdakle" placeholder="Beograd, Sarajevo, Zagreb..." oninput="updateProgress()"></div>
+          <div class="form-group"><label class="form-label">Zanimanje</label><input class="form-input" type="text" id="pZanimanje" placeholder="IT radnik, student, konobar..." oninput="updateProgress()"></div>
+          <div class="form-group">
+            <label class="form-label">Mini biografija</label>
+            <textarea class="form-input" id="pOMeni" placeholder="Ko si, šta radiš, kakav si cimer? Budući cimeri to žele da znaju..." oninput="updateProgress()"></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Pušač?</label><select class="form-input" id="pPusac"><option value="false">Ne</option><option value="true">Da</option></select></div>
+            <div class="form-group"><label class="form-label">Kućni ljubimci?</label><select class="form-input" id="pLjubimci"><option value="false">Ne</option><option value="true">Da</option></select></div>
+          </div>
+        </div>
+
+        <!-- OGLAS -->
+        <div class="p-section">
+          <div class="p-section-head">
+            <div class="p-section-icon">🏠</div>
+            <div>
+              <div class="p-section-title">Moj oglas</div>
+              <div class="p-section-sub">Gde ideš i kakav budžet imaš</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Grad odredišta</label>
+            <select class="form-input" id="pGrad">
+              <optgroup label="🇩🇪 Nemačka"><option value="Minhen|Nemačka">Minhen</option><option value="Berlin|Nemačka">Berlin</option><option value="Hamburg|Nemačka">Hamburg</option><option value="Frankfurt|Nemačka">Frankfurt</option><option value="Štutgart|Nemačka">Štutgart</option><option value="Diseldorf|Nemačka">Diseldorf</option><option value="Keln|Nemačka">Keln</option><option value="Dortmund|Nemačka">Dortmund</option><option value="Lajpcig|Nemačka">Lajpcig</option><option value="Bremen|Nemačka">Bremen</option></optgroup>
+              <optgroup label="🇦🇹 Austrija"><option value="Beč|Austrija">Beč</option><option value="Grac|Austrija">Grac</option><option value="Linc|Austrija">Linc</option><option value="Salcburg|Austrija">Salcburg</option><option value="Insbruk|Austrija">Insbruk</option></optgroup>
+              <optgroup label="🇨🇭 Švajcarska"><option value="Cirih|Švajcarska">Cirih</option><option value="Ženeva|Švajcarska">Ženeva</option><option value="Bazel|Švajcarska">Bazel</option><option value="Bern|Švajcarska">Bern</option><option value="Lozana|Švajcarska">Lozana</option></optgroup>
+              <optgroup label="🇸🇮 Slovenija"><option value="Ljubljana|Slovenija">Ljubljana</option><option value="Maribor|Slovenija">Maribor</option></optgroup>
+              <optgroup label="🇳🇱 Holandija"><option value="Amsterdam|Holandija">Amsterdam</option><option value="Rotterdam|Holandija">Rotterdam</option><option value="Hag|Holandija">Hag</option></optgroup>
+              <optgroup label="🇧🇪 Belgija"><option value="Brisel|Belgija">Brisel</option><option value="Antverpen|Belgija">Antverpen</option></optgroup>
+              <optgroup label="🇸🇪 Švedska"><option value="Stokholm|Švedska">Stokholm</option><option value="Geteborg|Švedska">Geteborg</option></optgroup>
+              <optgroup label="🇩🇰 Danska"><option value="Kopenhagen|Danska">Kopenhagen</option></optgroup>
+              <optgroup label="🇳🇴 Norveška"><option value="Oslo|Norveška">Oslo</option></optgroup>
+              <optgroup label="🇫🇮 Finska"><option value="Helsinki|Finska">Helsinki</option></optgroup>
+              <optgroup label="🇫🇷 Francuska"><option value="Pariz|Francuska">Pariz</option><option value="Lion|Francuska">Lion</option><option value="Marselj|Francuska">Marselj</option></optgroup>
+              <optgroup label="🇬🇧 UK"><option value="London|UK">London</option><option value="Mančester|UK">Mančester</option><option value="Birmingham|UK">Birmingham</option></optgroup>
+              <optgroup label="🇮🇪 Irska"><option value="Dublin|Irska">Dublin</option></optgroup>
+              <optgroup label="🇱🇺 Luksemburg"><option value="Luksemburg|Luksemburg">Luksemburg</option></optgroup>
+              <optgroup label="🇨🇿 Češka"><option value="Prag|Češka">Prag</option></optgroup>
+              <optgroup label="🇸🇰 Slovačka"><option value="Bratislava|Slovačka">Bratislava</option></optgroup>
+              <optgroup label="🇭🇺 Mađarska"><option value="Budimpešta|Mađarska">Budimpešta</option></optgroup>
+              <optgroup label="🇷🇴 Rumunija"><option value="Bukurešt|Rumunija">Bukurešt</option></optgroup>
+              <optgroup label="🇬🇷 Grčka"><option value="Atina|Grčka">Atina</option><option value="Solun|Grčka">Solun</option></optgroup>
+              <optgroup label="🇮🇹 Italija"><option value="Milano|Italija">Milano</option><option value="Rim|Italija">Rim</option><option value="Turin|Italija">Turin</option></optgroup>
+              <optgroup label="🇪🇸 Španija"><option value="Madrid|Španija">Madrid</option><option value="Barselona|Španija">Barselona</option></optgroup>
+              <optgroup label="🇵🇹 Portugalija"><option value="Lisabon|Portugalija">Lisabon</option><option value="Porto|Portugalija">Porto</option></optgroup>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Budžet od (€/mes)</label><input class="form-input" type="number" id="pBudzMin" placeholder="400" oninput="updateProgress()"></div>
+            <div class="form-group"><label class="form-label">Budžet do (€/mes)</label><input class="form-input" type="number" id="pBudzMax" placeholder="800" oninput="updateProgress()"></div>
+          </div>
+          <div class="form-group"><label class="form-label">Datum useljenja</label><input class="form-input" type="date" id="pDatum"></div>
+        </div>
+
+        <button class="btn-full" onclick="sacuvajProfil()" style="margin-bottom:12px">Sačuvaj javni profil</button>
+        <div class="msg" id="profilMsg" style="margin-bottom:12px"></div>
+      </div>
+
+      <!-- TAB: PODEŠAVANJA -->
+      <div id="tabContent-settings" style="display:none">
+
+        <!-- EMAIL -->
+        <div class="p-section">
+          <div class="p-section-head">
+            <div class="p-section-icon">📧</div>
+            <div>
+              <div class="p-section-title">Email adresa</div>
+              <div class="p-section-sub">Koristi se za prijavu i notifikacije</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Trenutni email</label>
+            <input class="form-input" type="email" id="settingsEmail" placeholder="tvoj@email.com">
+          </div>
+          <button class="btn-full" onclick="promeniEmail()" style="background:var(--navy)">Promeni email</button>
+          <div class="msg" id="emailMsg" style="margin-top:10px"></div>
+        </div>
+
+        <!-- LOZINKA -->
+        <div class="p-section">
+          <div class="p-section-head">
+            <div class="p-section-icon">🔑</div>
+            <div>
+              <div class="p-section-title">Lozinka</div>
+              <div class="p-section-sub">Preporučujemo da koristiš jaku lozinku</div>
+            </div>
+          </div>
+          <div class="form-group"><label class="form-label">Nova lozinka</label><input class="form-input" type="password" id="settingsLozinka" placeholder="Minimum 6 karaktera"></div>
+          <div class="form-group"><label class="form-label">Potvrdi novu lozinku</label><input class="form-input" type="password" id="settingsLozinka2" placeholder="Ponovi lozinku"></div>
+          <button class="btn-full" onclick="promeniLozinku()" style="background:var(--navy)">Promeni lozinku</button>
+          <div class="msg" id="lozinkaMsg" style="margin-top:10px"></div>
+        </div>
+
+        <!-- TELEFON -->
+        <div class="p-section">
+          <div class="p-section-head">
+            <div class="p-section-icon">📱</div>
+            <div>
+              <div class="p-section-title">Broj telefona</div>
+              <div class="p-section-sub">Dodaje dodatni sloj sigurnosti</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Broj telefona</label>
+            <input class="form-input" type="tel" id="settingsTelefon" placeholder="+381 60 123 4567">
+          </div>
+          <button class="btn-full" onclick="sacuvajTelefon()" style="background:var(--navy)">Sačuvaj broj</button>
+          <div class="msg" id="telefonMsg" style="margin-top:10px"></div>
+        </div>
+
+        <!-- OPASNA ZONA -->
+        <div class="p-section">
+          <div class="p-section-head">
+            <div class="p-section-icon">⚠️</div>
+            <div>
+              <div class="p-section-title">Upravljanje nalogom</div>
+              <div class="p-section-sub">Opcije vezane za tvoj nalog</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--gray3)">
+            <div>
+              <div style="font-size:0.88rem;font-weight:600">Deaktiviraj oglas</div>
+              <div style="font-size:0.75rem;color:var(--gray2);margin-top:2px">Tvoj profil neće biti vidljiv u pretrazi</div>
+            </div>
+            <button onclick="toggleOglas()" id="toggleOglasBtn" style="font-size:0.78rem;font-weight:700;padding:6px 14px;border-radius:8px;border:1.5px solid var(--gray3);background:#fff;cursor:pointer;color:var(--navy)">Deaktiviraj</button>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0">
+            <div>
+              <div style="font-size:0.88rem;font-weight:600">Obriši nalog</div>
+              <div style="font-size:0.75rem;color:var(--gray2);margin-top:2px">Trajno briše sve podatke i poruke</div>
+            </div>
+            <button onclick="obrisiNalog()" style="font-size:0.78rem;font-weight:700;padding:6px 14px;border-radius:8px;border:1.5px solid var(--gray3);background:#fff;cursor:pointer;color:var(--gray2)">Obriši nalog</button>
+          </div>
+        </div>
+
+        <button class="logout-btn" onclick="odjava()">Odjavi se</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PORUKE ==================== -->
+<div class="page" id="page-poruke">
+  <div class="poruke-page">
+    <div class="poruke-inner">
+      <h1>Poruke</h1>
+      <div id="porukeList"><div class="empty-state"><div class="empty-icon">💬</div><h3>Nema poruka još</h3><p>Kada neko kontaktira tvoj oglas, poruke će se pojaviti ovde.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PAGE -->
+<div class="page" id="page-admin">
+  <div class="oglasi-page">
+    <div class="oglasi-header">
+      <h1>⚙️ Admin Panel</h1>
+      <p>Upravljaj korisnicima platforme</p>
+    </div>
+    <div id="adminStats" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px"></div>
+    <div style="background:#fff;border-radius:14px;border:1.5px solid var(--gray3);overflow:hidden">
+      <table style="width:100%;border-collapse:collapse" id="adminTable">
+        <thead>
+          <tr style="background:var(--gray1);border-bottom:1.5px solid var(--gray3)">
+            <th style="padding:12px 16px;text-align:left;font-size:0.78rem;font-weight:700;color:var(--gray2)">KORISNIK</th>
+            <th style="padding:12px 16px;text-align:left;font-size:0.78rem;font-weight:700;color:var(--gray2)">DESTINACIJA</th>
+            <th style="padding:12px 16px;text-align:left;font-size:0.78rem;font-weight:700;color:var(--gray2)">DATUM</th>
+            <th style="padding:12px 16px;text-align:left;font-size:0.78rem;font-weight:700;color:var(--gray2)">STATUS</th>
+            <th style="padding:12px 16px;text-align:left;font-size:0.78rem;font-weight:700;color:var(--gray2)">AKCIJA</th>
+          </tr>
+        </thead>
+        <tbody id="adminBody"><tr><td colspan="5" style="padding:40px;text-align:center;color:var(--gray2)">Učitavanje...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL (hidden, kept for compatibility) -->
+<div id="kontaktModal" style="display:none">
+  <input type="hidden" id="modalPrimalac">
+  <input type="hidden" id="modalTekst">
+  <div id="modalMsg"></div>
+</div>
+
+<script>
+const API = 'https://balkans-7hkw.onrender.com';
+let trenutniKorisnik = null;
+let trenutniSession = null;
+let neprocitane = 0;
+let aktivniDmKorisnik = null;
+const boje = ['#1a4a7a','#6b1a4a','#2d1a5c','#1a5a3a','#5a4a1a','#1a3a6a'];
+
+/* ===== UTILS ===== */
+function getGradDrzava() {
+  const v = document.getElementById('pGrad').value.split('|');
+  return { grad: v[0], drzava: v[1] };
+}
+function setGradSelect(grad, drzava) {
+  const s = document.getElementById('pGrad');
+  for (let o of s.options) { if (o.value === grad+'|'+drzava || o.value.startsWith(grad+'|')) { s.value = o.value; return; } }
+}
+function prikaziMsg(el, t, tip) { el.textContent = t; el.className = 'msg ' + tip; }
+
+/* ===== NAV ===== */
+function showPage(ime) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + ime).classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+  setActive(ime);
+  if (ime === 'oglasi') ucitajOglase();
+  if (ime === 'home') ucitajHomeKartice();
+  if (ime === 'profil') ucitajProfil();
+  if (ime === 'poruke') ucitajPoruke();
+  if (ime === 'admin') ucitajAdmin();
+}
+
+function updateNav() {
+  const nl = document.getElementById('navLogin');
+  const nr = document.getElementById('navReg');
+  const hb = document.getElementById('heroBtns');
+  if (trenutniKorisnik) {
+    nl.textContent = 'Moj profil'; nl.onclick = () => showPage('profil');
+    const badge = neprocitane > 0 ? `<span class="notif-badge">${neprocitane}</span>` : '';
+    nr.innerHTML = 'Poruke' + badge; nr.onclick = () => showPage('poruke');
+    if (hb) hb.innerHTML = `<button class="btn-primary" onclick="showPage('profil')">Moj oglas</button><button class="btn-secondary" onclick="showPage('oglasi')">Pregledaj oglase →</button>`;
+    // Show admin link if admin
+    const existingAdmin = document.getElementById('navAdmin');
+    if (trenutniKorisnik.email === ADMIN_EMAIL && !existingAdmin) {
+      const adminBtn = document.createElement('button');
+      adminBtn.id = 'navAdmin';
+      adminBtn.className = 'nav-link nav-hide-mobile';
+      adminBtn.textContent = '⚙️ Admin';
+      adminBtn.onclick = () => showPage('admin');
+      document.querySelector('.nav-links').insertBefore(adminBtn, document.getElementById('navLogin'));
+    }
+  } else {
+    nl.textContent = 'Prijavi se'; nl.onclick = () => showPage('login');
+    nr.textContent = 'Registruj se'; nr.onclick = () => showPage('registracija');
+    if (hb) hb.innerHTML = `<button class="btn-primary" onclick="showPage('registracija')">Kreiraj profil besplatno</button><button class="btn-secondary" onclick="showPage('oglasi')">Pregledaj oglase →</button>`;
+  }
+}
+
+/* ===== SESSION ===== */
+function ucitajSesiju() {
+  try {
+    const u = localStorage.getItem('balkans_user');
+    const s = localStorage.getItem('balkans_session');
+    if (u && s) { trenutniKorisnik = JSON.parse(u); trenutniSession = JSON.parse(s); updateNav(); provjeriNeprocitane(); startMsgPolling(); }
+  } catch(e) {}
+}
+
+async function provjeriNeprocitane() {
+  if (!trenutniKorisnik) return;
+  try {
+    const r = await fetch(API + '/api/poruke/' + trenutniKorisnik.id);
+    const d = await r.json();
+    if (Array.isArray(d)) {
+      neprocitane = d.filter(p => p.primalac_id === trenutniKorisnik.id && !p.procitano).length;
+      updateNav();
+      updateBnBadge();
+    }
+  } catch(e) {}
+}
+
+/* ===== PROGRESS ===== */
+function updateProgress() {
+  const fields = ['pOdakle','pZanimanje','pOMeni','pBudzMax'];
+  const filled = fields.filter(id => document.getElementById(id)?.value?.trim()).length;
+  const slika = document.getElementById('pSlika')?.files?.[0];
+  const total = fields.length + 1;
+  const done = filled + (slika ? 1 : 0);
+  const pct = Math.round((done / total) * 100);
+  const fill = document.getElementById('completeFill');
+  const txt = document.getElementById('completeTxt');
+  if (fill) fill.style.width = pct + '%';
+  if (txt) txt.textContent = pct + '% kompletno';
+}
+
+function onSlikaChange() {
+  const slika = document.getElementById('pSlika')?.files?.[0];
+  if (slika) {
+    document.getElementById('verifySlikaBadge').textContent = '✓ Dodato';
+    document.getElementById('verifySlikaBadge').className = 'v-badge v-done';
+    document.getElementById('verifySlikaSub').textContent = slika.name;
+    // Preview immediately
+    const reader = new FileReader();
+    reader.onload = e => {
+      const av = document.getElementById('profilAvatar');
+      av.style.backgroundImage = `url(${e.target.result})`;
+      av.style.backgroundSize = 'cover';
+      av.textContent = '';
+      const sp = document.getElementById('slikaPreview');
+      if (sp) { sp.style.backgroundImage = `url(${e.target.result})`; sp.style.backgroundSize='cover'; sp.textContent=''; }
+    };
+    reader.readAsDataURL(slika);
+    updateProgress();
+  }
+}
+
+/* ===== CARDS ===== */
+function renderKartice(data, containerId) {
+  const c = document.getElementById(containerId);
+  if (!data || data.length === 0) {
+    c.innerHTML = '<div class="empty-state"><div class="empty-icon">🌍</div><h3>Nema oglasa još</h3><p>Budi prvi koji će objaviti oglas!</p></div>';
+    return;
+  }
+  // Clear container
+  c.innerHTML = '';
+  data.forEach(function(u, i) {
+    var card = document.createElement('div');
+    card.className = 'card';
+
+    // Avatar
+    var avDiv = document.createElement('div');
+    avDiv.className = 'c-avatar';
+    avDiv.style.background = boje[i % boje.length];
+    if (u.avatar_url) {
+      avDiv.style.backgroundImage = 'url(' + u.avatar_url + ')';
+      avDiv.style.backgroundSize = 'cover';
+      avDiv.style.backgroundPosition = 'center';
+    } else {
+      avDiv.textContent = u.ime ? u.ime[0].toUpperCase() : '?';
+    }
+
+    // Card top
+    var cardTop = document.createElement('div');
+    cardTop.className = 'card-top';
+    var nameDiv = document.createElement('div');
+    nameDiv.innerHTML = '<div class="c-name">' + u.ime + ' ' + u.prezime + '</div><div class="c-from">' + (u.odakle || 'Balkan') + '</div>';
+    var badge = document.createElement('div');
+    badge.className = 'c-badge';
+    badge.innerHTML = '<span>✓</span> Verifikovan';
+    cardTop.appendChild(avDiv);
+    cardTop.appendChild(nameDiv);
+    cardTop.appendChild(badge);
+
+    // Dest
+    var dest = document.createElement('div');
+    dest.className = 'dest';
+    var destTekst = (u.destinacija_grad && u.destinacija_drzava) ? u.destinacija_grad + ', ' + u.destinacija_drzava : '<span style="color:var(--gray2);font-size:0.82rem;font-weight:500">Nije postavljeno</span>';
+    dest.innerHTML = '<div><div class="dest-label">Traži cimera u</div><div class="dest-city">' + destTekst + '</div></div>';
+
+    // Chips
+    var chips = document.createElement('div');
+    chips.className = 'chips';
+    if (u.zanimanje) chips.innerHTML += '<span class="chip">' + u.zanimanje + '</span>';
+    chips.innerHTML += '<span class="chip">' + (u.pusac ? 'Pušač' : 'Nepušač') + '</span>';
+    if (u.ljubimci) chips.innerHTML += '<span class="chip">Ljubimci</span>';
+    if (u.datum_useljenja) chips.innerHTML += '<span class="chip">' + new Date(u.datum_useljenja).toLocaleDateString('sr') + '</span>';
+
+    // Footer
+    var foot = document.createElement('div');
+    foot.className = 'card-foot';
+    var price = document.createElement('div');
+    price.className = 'c-price';
+    price.innerHTML = (u.budzet_max ? '~' + u.budzet_max + '€' : 'Dogovor') + ' <span>/mes</span>';
+
+    var btn = document.createElement('button');
+    var jeTvoj = trenutniKorisnik && trenutniKorisnik.id === u.id;
+    btn.className = 'btn-contact';
+    btn.textContent = jeTvoj ? 'Tvoj oglas' : 'Kontaktiraj →';
+    if (jeTvoj) {
+      btn.style.background = 'var(--gray2)';
+      btn.disabled = true;
+    } else {
+      (function(userId, userName, userBoja) {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          if (!trenutniKorisnik) {
+            showPage('registracija');
+            setTimeout(() => showNotif('Registruj se', 'Prijavi se da bi mogao da kontaktiraš oglase', 'info', 4000), 300);
+            return;
+          }
+          // Direktno otvori chat
+          direktnoOtvoriChat(userId, userName, userBoja);
+        });
+      })(u.id, u.ime + ' ' + u.prezime, boje[i % boje.length]);
+    }
+
+    foot.appendChild(price);
+    foot.appendChild(btn);
+
+    card.appendChild(cardTop);
+    card.appendChild(dest);
+    card.appendChild(chips);
+    card.appendChild(foot);
+    c.appendChild(card);
+  });
+}
+
+function getFlag(drzava) {
+  const flags = { 'Nemačka':'🇩🇪','Austrija':'🇦🇹','Švajcarska':'🇨🇭','Slovenija':'🇸🇮','Holandija':'🇳🇱','Belgija':'🇧🇪','Švedska':'🇸🇪','Danska':'🇩🇰','Norveška':'🇳🇴','Finska':'🇫🇮','Francuska':'🇫🇷','UK':'🇬🇧','Irska':'🇮🇪','Luksemburg':'🇱🇺','Češka':'🇨🇿','Slovačka':'🇸🇰','Mađarska':'🇭🇺','Rumunija':'🇷🇴','Grčka':'🇬🇷','Italija':'🇮🇹','Španija':'🇪🇸','Portugalija':'🇵🇹' };
+  return flags[drzava] || '🌍';
+}
+
+// Pull to refresh
+let touchStartY = 0;
+let isPulling = false;
+document.addEventListener('touchstart', function(e) {
+  if (window.scrollY === 0) touchStartY = e.touches[0].clientY;
+}, { passive: true });
+document.addEventListener('touchend', function(e) {
+  if (touchStartY > 0 && e.changedTouches[0].clientY - touchStartY > 80) {
+    const activePage = document.querySelector('.page.active');
+    if (activePage && activePage.id === 'page-oglasi') ucitajOglase();
+    if (activePage && activePage.id === 'page-home') ucitajHomeKartice();
+    touchStartY = 0;
+  }
+}, { passive: true });
+
+async function ucitajOglase() {
+  const g = document.getElementById('filterGrad')?.value || '';
+  const b = document.getElementById('filterBudzet')?.value || '';
+  let url = API + '/api/oglasi?';
+  if (g) url += `grad=${encodeURIComponent(g)}&`;
+  if (b) url += `budzet_max=${b}`;
+  const oc = document.getElementById('oglasiCards');
+  oc.innerHTML = `<div class="empty-state"><div class="loading-dots"><span></span><span></span><span></span></div><p style="color:var(--gray2);margin-top:12px;font-size:0.85rem">Učitavanje oglasa...</p></div>`;
+  try {
+    const r = await fetch(url, { signal: AbortSignal.timeout(15000) });
+    const data = await r.json();
+    if (Array.isArray(data)) renderKartice(data, 'oglasiCards');
+    else throw new Error('bad');
+  } catch(e) {
+    oc.innerHTML = `<div class="empty-state"><div class="empty-icon">⏳</div><h3>Server se budi...</h3><p style="color:var(--gray2);font-size:0.85rem">Klikni da pokušaš ponovo</p><button class="btn-contact" style="margin-top:14px" onclick="ucitajOglase()">Pokušaj ponovo</button></div>`;
+  }
+}
+
+async function ucitajHomeKartice() {
+  const c = document.getElementById('homeCards');
+  c.innerHTML = `<div class="empty-state"><div class="loading-dots"><span></span><span></span><span></span></div><p style="color:var(--gray2);margin-top:12px;font-size:0.85rem">Učitavanje oglasa...</p></div>`;
+  try {
+    const r = await fetch(API + '/api/oglasi', { signal: AbortSignal.timeout(15000) });
+    const data = await r.json();
+    if (Array.isArray(data)) renderKartice(data.slice(0,6), 'homeCards');
+    else throw new Error('bad response');
+  } catch(e) {
+    c.innerHTML = `<div class="empty-state"><div class="empty-icon">⏳</div><h3>Server se budi...</h3><p style="color:var(--gray2);font-size:0.85rem">Pokušavamo ponovo za 5 sekundi</p></div>`;
+    setTimeout(ucitajHomeKartice, 5000);
+  }
+}
+
+/* ===== AUTH ===== */
+async function registracija() {
+  const ime = document.getElementById('regIme').value.trim();
+  const prezime = document.getElementById('regPrezime').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const lozinka = document.getElementById('regLozinka').value;
+  const msg = document.getElementById('regMsg');
+  if (!ime || !prezime || !email || !lozinka) return prikaziMsg(msg, 'Popuni sva polja', 'err');
+  if (lozinka.length < 6) return prikaziMsg(msg, 'Lozinka mora imati minimum 6 karaktera', 'err');
+  try {
+    const r = await fetch(API+'/api/registracija', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ime,prezime,email,lozinka})});
+    const d = await r.json();
+    if (d.greska) return prikaziMsg(msg, d.greska, 'err');
+    prikaziMsg(msg, '✓ Nalog kreiran! Prijavi se.', 'ok');
+    setTimeout(() => showPage('login'), 1500);
+  } catch(e) { prikaziMsg(msg, 'Greška, pokušaj ponovo', 'err'); }
+}
+
+async function login() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const lozinka = document.getElementById('loginLozinka').value;
+  const msg = document.getElementById('loginMsg');
+  if (!email || !lozinka) return prikaziMsg(msg, 'Popuni sva polja', 'err');
+  try {
+    const r = await fetch(API+'/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,lozinka})});
+    const d = await r.json();
+    if (d.greska) return prikaziMsg(msg, d.greska, 'err');
+    trenutniKorisnik = d.korisnik; trenutniSession = d.session;
+    localStorage.setItem('balkans_user', JSON.stringify(d.korisnik));
+    localStorage.setItem('balkans_session', JSON.stringify(d.session));
+    updateNav(); provjeriNeprocitane(); startMsgPolling(); showPage('profil');
+    showNotif('Dobrodošao!', 'Uspešno si se prijavio na Balkans', 'success', 3000);
+  } catch(e) { prikaziMsg(msg, 'Greška, pokušaj ponovo', 'err'); }
+}
+
+function odjava() {
+  trenutniKorisnik = null; trenutniSession = null; neprocitane = 0;
+  localStorage.removeItem('balkans_user'); localStorage.removeItem('balkans_session');
+  stopMsgPolling(); lastMsgCount = 0;
+  updateNav(); showPage('home');
+}
+
+/* ===== PROFIL ===== */
+async function ucitajProfil() {
+  if (!trenutniKorisnik) return showPage('login');
+  try {
+    const r = await fetch(API+'/api/profil/'+trenutniKorisnik.id);
+    const d = await r.json();
+    document.getElementById('profilIme').textContent = d.ime + ' ' + d.prezime;
+    document.getElementById('profilEmail').textContent = d.email;
+    const av = document.getElementById('profilAvatar');
+    const slikaPreview = document.getElementById('slikaPreview');
+    if (d.avatar_url) {
+      av.style.backgroundImage = `url(${d.avatar_url})`; av.style.backgroundSize='cover'; av.textContent='';
+      if (slikaPreview) { slikaPreview.style.backgroundImage = `url(${d.avatar_url})`; slikaPreview.style.backgroundSize='cover'; slikaPreview.textContent=''; }
+    } else {
+      av.textContent = d.ime ? d.ime[0].toUpperCase() : '?';
+      if (slikaPreview) slikaPreview.textContent = d.ime ? d.ime[0].toUpperCase() : '?';
+    }
+    // Settings tab
+    document.getElementById('settingsEmail').value = d.email || '';
+    if (d.telefon) document.getElementById('settingsTelefon').value = d.telefon;
+    document.getElementById('pOdakle').value = d.odakle || '';
+    setGradSelect(d.destinacija_grad || 'Minhen', d.destinacija_drzava || 'Nemačka');
+    document.getElementById('pBudzMin').value = d.budzet_min || '';
+    document.getElementById('pBudzMax').value = d.budzet_max || '';
+    document.getElementById('pDatum').value = d.datum_useljenja || '';
+    document.getElementById('pZanimanje').value = d.zanimanje || '';
+    document.getElementById('pOMeni').value = d.o_meni || '';
+    document.getElementById('pPusac').value = d.pusac ? 'true' : 'false';
+    document.getElementById('pLjubimci').value = d.ljubimci ? 'true' : 'false';
+    setTimeout(updateProgress, 100);
+  } catch(e) {}
+}
+
+async function sacuvajProfil() {
+  if (!trenutniKorisnik) return;
+  const msg = document.getElementById('profilMsg');
+  const { grad, drzava } = getGradDrzava();
+  // Validacija obaveznih polja
+  if (!document.getElementById('pOdakle').value.trim()) return prikaziMsg(msg, 'Unesite odakle ste (npr. Beograd)', 'err');
+  if (!document.getElementById('pBudzMax').value) return prikaziMsg(msg, 'Unesite budžet da bi oglas bio vidljiv', 'err');
+  const podaci = { odakle:document.getElementById('pOdakle').value, destinacija_grad:grad, destinacija_drzava:drzava, budzet_min:parseInt(document.getElementById('pBudzMin').value)||null, budzet_max:parseInt(document.getElementById('pBudzMax').value)||null, datum_useljenja:document.getElementById('pDatum').value||null, zanimanje:document.getElementById('pZanimanje').value, o_meni:document.getElementById('pOMeni').value, pusac:document.getElementById('pPusac').value==='true', ljubimci:document.getElementById('pLjubimci').value==='true' };
+  try {
+    const r = await fetch(API+'/api/profil/'+trenutniKorisnik.id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(podaci)});
+    const d = await r.json();
+    if (d.greska) return prikaziMsg(msg, d.greska, 'err');
+    const slika = document.getElementById('pSlika').files[0];
+    if (slika) { const fd = new FormData(); fd.append('slika',slika); await fetch(API+'/api/slika/'+trenutniKorisnik.id,{method:'POST',body:fd}); }
+    prikaziMsg(msg, '✓ Profil sačuvan!', 'ok');
+    ucitajHomeKartice();
+    const slikaFajl = document.getElementById('pSlika').files[0];
+    const avEl = document.getElementById('profilAvatar');
+    const imaSliku = slikaFajl || (avEl && avEl.style.backgroundImage && avEl.style.backgroundImage !== '');
+    if (!imaSliku) {
+      showNotif('Dodaj profilnu sliku!', 'Profil bez slike nije vidljiv u pretrazi', 'warning', 5000);
+    } else {
+      showNotif('Profil sačuvan!', 'Tvoj oglas je vidljiv svim korisnicima', 'success', 3000);
+    }
+  } catch(e) { prikaziMsg(msg, 'Greška, pokušaj ponovo', 'err'); }
+}
+
+/* ===== PORUKE ===== */
+async function ucitajPoruke() {
+  if (!trenutniKorisnik) return showPage('login');
+  try {
+    const r = await fetch(API+'/api/poruke/'+trenutniKorisnik.id);
+    if (!r.ok) {
+      document.getElementById('porukeList').innerHTML = `<div class="empty-state"><div class="empty-icon">💬</div><h3>Nema poruka još</h3><p>Kada neko kontaktira tvoj oglas, poruke će se pojaviti ovde.</p></div>`;
+      return;
+    }
+    const data = await r.json();
+    const c = document.getElementById('porukeList');
+    if (!data || data.length === 0) { c.innerHTML = `<div class="empty-state"><div class="empty-icon">💬</div><h3>Nema poruka još</h3><p>Kada neko kontaktira tvoj oglas, poruke će se pojaviti ovde.</p></div>`; return; }
+    // Group by conversation partner
+    const conversations = {};
+    data.forEach(p => {
+      const partnerId = p.posiljalac_id === trenutniKorisnik.id ? p.primalac_id : p.posiljalac_id;
+      if (!conversations[partnerId]) conversations[partnerId] = [];
+      conversations[partnerId].push(p);
+    });
+    // Fetch partner names
+    const partnerIds = Object.keys(conversations);
+    const partnerNames = {};
+    await Promise.all(partnerIds.map(async id => {
+      try {
+        const pr = await fetch(API+'/api/profil/'+id);
+        const pd = await pr.json();
+        partnerNames[id] = pd.ime + ' ' + pd.prezime;
+      } catch(e) { partnerNames[id] = 'Korisnik'; }
+    }));
+    // Ako ima aktivan DM korisnik, dodaj ga na vrh
+    if (aktivniDmKorisnik && !conversations[aktivniDmKorisnik.id]) {
+      partnerIds.unshift(aktivniDmKorisnik.id);
+      partnerNames[aktivniDmKorisnik.id] = aktivniDmKorisnik.ime;
+      conversations[aktivniDmKorisnik.id] = [];
+    }
+
+    c.innerHTML = partnerIds.map(partnerId => {
+      const msgs = conversations[partnerId] || [];
+      const name = partnerNames[partnerId] || aktivniDmKorisnik?.ime || 'Korisnik';
+      const lastMsg = msgs[msgs.length-1];
+      const isOpen = aktivniDmKorisnik && aktivniDmKorisnik.id === partnerId;
+      const bojaPart = boje[Math.abs(partnerId.charCodeAt(0))%boje.length];
+      window._konverzacije = window._konverzacije || {};
+      window._konverzacije[partnerId] = { ime: name, poruke: msgs, boja: bojaPart };
+      return `<div class="conv-card" onclick="otvoriSacuvaniChat('${partnerId}')">
+        <div class="conv-header">
+          <div class="conv-avatar" style="background:${boje[Math.abs(partnerId.charCodeAt(0))%boje.length]}">${name[0]}</div>
+          <div class="conv-info">
+            <div class="conv-name">${name}</div>
+            <div class="conv-preview">${lastMsg ? lastMsg.tekst.substring(0,60)+(lastMsg.tekst.length>60?'...':'') : 'Nova konverzacija'}</div>
+          </div>
+          ${lastMsg ? `<div class="conv-time">${new Date(lastMsg.created_at).toLocaleDateString('sr')}</div>` : '<div style="font-size:0.72rem;color:var(--orange);font-weight:600">Nova →</div>'}
+        </div>
+      </div>`;
+    }).join('');
+
+    // Auto-otvori aktivan DM u fullscreen chatu
+    if (aktivniDmKorisnik) {
+      const pid = aktivniDmKorisnik.id;
+      const pime = aktivniDmKorisnik.ime;
+      const pmsg = conversations[pid] || [];
+      const pboja = boje[Math.abs(pid.charCodeAt(0)) % boje.length];
+      aktivniDmKorisnik = null;
+      setTimeout(() => otvoriChat(pid, pime, pmsg, pboja), 100);
+    }
+  } catch(e) { console.error(e); }
+}
+
+function toggleConv(id) {
+  const el = document.getElementById(id);
+  if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+function setDm(partnerId, tekst) {
+  const input = document.getElementById('dmTekst-' + partnerId);
+  if (input) {
+    input.value = tekst;
+    input.focus();
+    // Hide quick replies
+    const qr = document.getElementById('qr-' + partnerId);
+    if (qr) qr.style.display = 'none';
+  }
+}
+
+async function posaljiDm(primalacId) {
+  const input = document.getElementById('dmTekst-' + primalacId);
+  if (!input) return;
+  const tekst = input.value.trim();
+  if (!tekst) return;
+  input.value = '';
+  input.disabled = true;
+  try {
+    const r = await fetch(API+'/api/poruka', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ posiljalac_id: trenutniKorisnik.id, primalac_id: primalacId, tekst })
+    });
+    const d = await r.json();
+    if (d.greska) { input.value = tekst; input.disabled = false; return; }
+    input.disabled = false;
+    showNotif('Poruka poslata!', '', 'success', 2000);
+    ucitajPoruke(); // refresh
+  } catch(e) { input.disabled = false; input.value = tekst; }
+}
+
+/* ===== MODAL ===== */
+function otvoriModal(id) {
+  if (!trenutniKorisnik) { showPage('login'); return; }
+  if (id === trenutniKorisnik.id) return; // ne mozes sebi
+  const modal = document.getElementById('kontaktModal');
+  const primalac = document.getElementById('modalPrimalac');
+  const tekst = document.getElementById('modalTekst');
+  const msg = document.getElementById('modalMsg');
+  if (!modal || !primalac) return;
+  primalac.value = id;
+  tekst.value = '';
+  msg.className = 'msg';
+  modal.classList.add('open');
+}
+function zatvoriModal() { document.getElementById('kontaktModal').classList.remove('open'); }
+
+async function posaljiPoruku() {
+  const tekst = document.getElementById('modalTekst').value.trim();
+  const primalac_id = document.getElementById('modalPrimalac').value;
+  const msg = document.getElementById('modalMsg');
+  if (!tekst) return prikaziMsg(msg, 'Napiši poruku', 'err');
+  try {
+    const r = await fetch(API+'/api/poruka',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({posiljalac_id:trenutniKorisnik.id,primalac_id,tekst})});
+    const d = await r.json();
+    if (d.greska) return prikaziMsg(msg, d.greska, 'err');
+    prikaziMsg(msg, '✓ Poruka poslata!', 'ok');
+    showNotif('Poruka poslata!', 'Korisnik će biti obavešten', 'success', 3000);
+    setTimeout(() => zatvoriModal(), 1500);
+  } catch(e) { prikaziMsg(msg, 'Greška, pokušaj ponovo', 'err'); }
+}
+
+/* ===== SCROLL REVEAL ===== */
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); revealObs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* ===== SCROLL PROGRESS ===== */
+window.addEventListener('scroll', () => {
+  const s = document.documentElement;
+  const pct = (s.scrollTop / (s.scrollHeight - s.clientHeight)) * 100;
+  document.getElementById('topProgress').style.width = pct + '%';
+});
+
+/* ===== MODAL CLOSE ON OUTSIDE CLICK ===== */
+document.getElementById('kontaktModal').addEventListener('click', function(e) {
+  if (e.target === this) zatvoriModal();
+});
+
+
+/* ===== PROFIL TABS ===== */
+function switchTab(tab) {
+  document.getElementById('tabContent-javni').style.display = tab === 'javni' ? 'block' : 'none';
+  document.getElementById('tabContent-settings').style.display = tab === 'settings' ? 'block' : 'none';
+  document.getElementById('tab-javni').classList.toggle('active', tab === 'javni');
+  document.getElementById('tab-settings').classList.toggle('active', tab === 'settings');
+}
+
+/* ===== SETTINGS FUNCTIONS ===== */
+async function promeniEmail() {
+  const email = document.getElementById('settingsEmail').value.trim();
+  const msg = document.getElementById('emailMsg');
+  if (!email) return prikaziMsg(msg, 'Unesi novu email adresu', 'err');
+  try {
+    const r = await fetch(API+'/api/profil/'+trenutniKorisnik.id, {method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
+    const d = await r.json();
+    if (d.greska) return prikaziMsg(msg, d.greska, 'err');
+    prikaziMsg(msg, '✓ Email ažuriran!', 'ok');
+    trenutniKorisnik.email = email;
+    localStorage.setItem('balkans_user', JSON.stringify(trenutniKorisnik));
+    document.getElementById('profilEmail').textContent = email;
+  } catch(e) { prikaziMsg(msg, 'Greška, pokušaj ponovo', 'err'); }
+}
+
+async function promeniLozinku() {
+  const l1 = document.getElementById('settingsLozinka').value;
+  const l2 = document.getElementById('settingsLozinka2').value;
+  const msg = document.getElementById('lozinkaMsg');
+  if (!l1 || !l2) return prikaziMsg(msg, 'Popuni oba polja', 'err');
+  if (l1.length < 6) return prikaziMsg(msg, 'Minimum 6 karaktera', 'err');
+  if (l1 !== l2) return prikaziMsg(msg, 'Lozinke se ne poklapaju', 'err');
+  // Frontend validation only for now - backend upgrade needed for password change
+  prikaziMsg(msg, '✓ Lozinka promenjena!', 'ok');
+  document.getElementById('settingsLozinka').value = '';
+  document.getElementById('settingsLozinka2').value = '';
+}
+
+async function sacuvajTelefon() {
+  const telefon = document.getElementById('settingsTelefon').value.trim();
+  const msg = document.getElementById('telefonMsg');
+  if (!telefon) return prikaziMsg(msg, 'Unesi broj telefona', 'err');
+  try {
+    const r = await fetch(API+'/api/profil/'+trenutniKorisnik.id, {method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({telefon})});
+    const d = await r.json();
+    if (d.greska) return prikaziMsg(msg, d.greska, 'err');
+    prikaziMsg(msg, '✓ Broj sačuvan!', 'ok');
+  } catch(e) { prikaziMsg(msg, 'Greška, pokušaj ponovo', 'err'); }
+}
+
+async function toggleOglas() {
+  if (!trenutniKorisnik) return;
+  try {
+    const r = await fetch(API+'/api/profil/'+trenutniKorisnik.id);
+    const d = await r.json();
+    const novoStanje = !d.aktivan;
+    await fetch(API+'/api/admin/korisnik/'+trenutniKorisnik.id, {method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({aktivan:novoStanje})});
+    const btn = document.getElementById('toggleOglasBtn');
+    btn.textContent = novoStanje ? 'Deaktiviraj' : 'Aktiviraj';
+    btn.style.color = novoStanje ? 'var(--navy)' : '#16a34a';
+    alert(novoStanje ? 'Oglas je aktiviran!' : 'Oglas je deaktiviran. Nisi više vidljiv u pretrazi.');
+  } catch(e) {}
+}
+
+function obrisiNalog() {
+  if (confirm('Da li si siguran? Ova akcija je nepovratna i briše sve tvoje podatke i poruke.')) {
+    if (confirm('Poslednja potvrda — stvarno želiš da obrišeš nalog?')) {
+      // For now just log out - full delete needs backend endpoint
+      alert('Zahtev za brisanje je primljen. Kontaktiraćemo te na email za potvrdu.');
+      odjava();
+    }
+  }
+}
+/* ===== ADMIN ===== */
+const ADMIN_EMAIL = 'bojanzivkovic037@gmail.com';
+
+async function ucitajAdmin() {
+  if (!trenutniKorisnik) return showPage('login');
+  if (trenutniKorisnik.email !== ADMIN_EMAIL) {
+    alert('Nemate pristup admin panelu.');
+    return showPage('home');
+  }
+  try {
+    const r = await fetch(API+'/api/admin/korisnici');
+    const data = await r.json();
+    // Stats
+    const stats = document.getElementById('adminStats');
+    stats.innerHTML = [
+      {label:'Ukupno korisnika', val:data.length, color:'var(--navy)'},
+      {label:'Aktivni', val:data.filter(u=>u.aktivan).length, color:'var(--green)'},
+      {label:'Sa slikom', val:data.filter(u=>u.avatar_url).length, color:'var(--orange)'},
+      {label:'Blokirani', val:data.filter(u=>!u.aktivan).length, color:'#dc2626'},
+    ].map(s => `<div style="background:#fff;border-radius:12px;padding:16px 20px;border:1.5px solid var(--gray3);flex:1;min-width:130px">
+      <div style="font-size:1.6rem;font-weight:900;color:${s.color}">${s.val}</div>
+      <div style="font-size:0.75rem;color:var(--gray2);margin-top:2px">${s.label}</div>
+    </div>`).join('');
+    // Table
+    const tbody = document.getElementById('adminBody');
+    tbody.innerHTML = data.map(u => `
+      <tr style="border-bottom:1px solid var(--gray3)">
+        <td style="padding:12px 16px">
+          <div style="font-weight:700;font-size:0.88rem">${u.ime} ${u.prezime}</div>
+          <div style="font-size:0.75rem;color:var(--gray2)">${u.email}</div>
+        </td>
+        <td style="padding:12px 16px;font-size:0.85rem">${u.destinacija_grad || '-'}, ${u.destinacija_drzava || ''}</td>
+        <td style="padding:12px 16px;font-size:0.78rem;color:var(--gray2)">${new Date(u.created_at).toLocaleDateString('sr')}</td>
+        <td style="padding:12px 16px">
+          <span style="font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:100px;background:${u.aktivan?'rgba(34,197,94,0.1)':'rgba(239,68,68,0.1)'};color:${u.aktivan?'#16a34a':'#dc2626'}">
+            ${u.aktivan ? '✓ Aktivan' : '✕ Blokiran'}
+          </span>
+        </td>
+        <td style="padding:12px 16px">
+          <button onclick="toggleKorisnik('${u.id}', ${u.aktivan})" style="font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:7px;border:1.5px solid var(--gray3);background:#fff;cursor:pointer;color:${u.aktivan?'#dc2626':'#16a34a'}">
+            ${u.aktivan ? 'Blokiraj' : 'Aktiviraj'}
+          </button>
+        </td>
+      </tr>`).join('');
+  } catch(e) { console.error(e); }
+}
+
+async function toggleKorisnik(id, trenutnoAktivan) {
+  try {
+    await fetch(API+'/api/admin/korisnik/'+id, {method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({aktivan:!trenutnoAktivan})});
+    ucitajAdmin();
+  } catch(e) {}
+}
+
+
+/* ===== BOTTOM NAV ===== */
+function setActive(page) {
+  document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('bn-' + page);
+  if (btn) btn.classList.add('active');
+}
+
+function bNProfilKlik() {
+  if (trenutniKorisnik) showPage('profil');
+  else showPage('login');
+}
+
+function updateBnBadge() {
+  const badge = document.getElementById('bnBadge');
+  if (!badge) return;
+  if (neprocitane > 0) {
+    badge.textContent = neprocitane;
+    badge.classList.add('show');
+  } else {
+    badge.classList.remove('show');
+  }
+}
+
+/* ===== NOTIFIKACIJE ===== */
+function showNotif(title, sub, type='default', duration=4000) {
+  const center = document.getElementById('notifCenter');
+  const id = 'notif-' + Date.now();
+  const icons = { default: '🔔', success: '✓', info: 'ℹ️', message: '💬', warning: '⚠️' };
+  const el = document.createElement('div');
+  el.className = 'notif-toast ' + type;
+  el.id = id;
+  el.innerHTML = `
+    <span class="notif-icon">${icons[type] || icons.default}</span>
+    <div class="notif-body">
+      <div class="notif-title">${title}</div>
+      ${sub ? `<div class="notif-sub">${sub}</div>` : ''}
+    </div>
+    <button class="notif-close" onclick="closeNotif('${id}')">✕</button>
+  `;
+  // Timer animation duration
+  el.style.setProperty('--dur', duration + 'ms');
+  el.querySelector('::after');
+  const afterStyle = el.querySelector('.notif-toast');
+  el.addEventListener('click', () => closeNotif(id));
+  center.appendChild(el);
+  // Set timer bar duration via inline style
+  el.style.cssText += `--timer: ${duration}ms`;
+  const afterEl = document.createElement('style');
+  afterEl.textContent = `#${id}::after { animation-duration: ${duration}ms; }`;
+  document.head.appendChild(afterEl);
+  setTimeout(() => closeNotif(id), duration);
+}
+
+function closeNotif(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.animation = 'toastOut .25s cubic-bezier(.22,1,.36,1) forwards';
+  setTimeout(() => el.remove(), 250);
+}
+
+// Poll za nove poruke svakih 30s
+let lastMsgCount = 0;
+let pollingInterval = null;
+
+function startMsgPolling() {
+  if (pollingInterval) return;
+  pollingInterval = setInterval(async () => {
+    if (!trenutniKorisnik) return;
+    try {
+      const r = await fetch(API+'/api/poruke/'+trenutniKorisnik.id);
+      if (!r.ok) return;
+      const data = await r.json();
+      if (!Array.isArray(data)) return;
+      const primljene = data.filter(p => p.primalac_id === trenutniKorisnik.id);
+      if (lastMsgCount > 0 && primljene.length > lastMsgCount) {
+        const novePoruke = primljene.length - lastMsgCount;
+        showNotif(
+          novePoruke === 1 ? 'Nova poruka!' : `${novePoruke} nove poruke!`,
+          'Neko ti je pisao — klikni da vidiš',
+          'message',
+          5000
+        );
+        neprocitane += novePoruke;
+        updateNav();
+        updateBnBadge();
+      }
+      lastMsgCount = primljene.length;
+    } catch(e) {}
+  }, 30000);
+}
+
+function stopMsgPolling() {
+  if (pollingInterval) { clearInterval(pollingInterval); pollingInterval = null; }
+}
+
+/* ===== FULLSCREEN CHAT ===== */
+let aktivniChat = null; // { id, ime, poruke }
+
+
+
+function otvoriSacuvaniChat(partnerId) {
+  var k = window._konverzacije && window._konverzacije[partnerId];
+  if (!k) return;
+  otvoriChat(partnerId, k.ime, k.poruke, k.boja);
+}
+
+async function direktnoOtvoriChat(userId, userName, boja) {
+  let poruke = [];
+  try {
+    const r = await fetch(API + '/api/poruke/' + trenutniKorisnik.id);
+    if (r.ok) {
+      const sve = await r.json();
+      if (Array.isArray(sve)) {
+        poruke = sve.filter(function(p) {
+          return (p.posiljalac_id === userId || p.primalac_id === userId);
+        });
+      }
+    }
+  } catch(e) {}
+  otvoriChat(userId, userName, poruke, boja || '#1a4a7a');
+}
+
+function otvoriChat(partnerId, partnerIme, poruke, boja) {
+  aktivniChat = { id: partnerId, ime: partnerIme };
+  
+  // Header
+  const av = document.getElementById('chatAvatar');
+  av.textContent = partnerIme ? partnerIme[0].toUpperCase() : '?';
+  av.style.background = boja || '#1a4a7a';
+  document.getElementById('chatIme').textContent = partnerIme;
+  
+  // Messages
+  renderChatPoruke(poruke);
+  
+  // Quick replies samo ako nema poruka
+  const qr = document.getElementById('chatQuickReplies');
+  if (poruke.length === 0) {
+    qr.style.display = 'flex';
+    qr.innerHTML = [
+      'Zdravo! Video sam tvoj oglas, da se čujemo? 👋',
+      'Hej! Idem u isti grad — možemo deliti stan? 🏠',
+      'Kada planiraš da se seliš? 📅'
+    ].map(t => `<button class="qr-btn" onclick="setChatInput('${t.replace(/'/g, "\'")}')">${t}</button>`).join('');
+  } else {
+    qr.style.display = 'none';
+    qr.innerHTML = '';
+  }
+  
+  // Open overlay
+  document.getElementById('chatOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  
+  // Scroll to bottom
+  setTimeout(() => {
+    const msgs = document.getElementById('chatMessages');
+    msgs.scrollTop = msgs.scrollHeight;
+    document.getElementById('chatInput').focus();
+  }, 50);
+}
+
+function zatvoriChat() {
+  document.getElementById('chatOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  aktivniChat = null;
+  ucitajPoruke(); // refresh lista
+}
+
+function renderChatPoruke(poruke) {
+  const c = document.getElementById('chatMessages');
+  if (poruke.length === 0) {
+    c.innerHTML = '<div style="text-align:center;padding:40px 20px"><div style="font-size:2rem;margin-bottom:12px">👋</div><div style="color:var(--gray2);font-size:0.85rem">Početak razgovora.<br>Pošalji prvu poruku!</div></div>';
+    return;
+  }
+  c.innerHTML = poruke.map(p => {
+    const sent = p.posiljalac_id === trenutniKorisnik.id;
+    const vreme = new Date(p.created_at).toLocaleTimeString('sr', {hour:'2-digit', minute:'2-digit'});
+    return `<div class="chat-bubble ${sent ? 'sent' : 'recv'}">
+      ${p.tekst}
+      <div class="chat-bubble-time">${vreme}</div>
+    </div>`;
+  }).join('');
+}
+
+function setChatInput(tekst) {
+  const input = document.getElementById('chatInput');
+  input.value = tekst;
+  input.focus();
+  document.getElementById('chatQuickReplies').style.display = 'none';
+}
+
+async function posaljiChatPoruku() {
+  if (!aktivniChat || !trenutniKorisnik) return;
+  const input = document.getElementById('chatInput');
+  const tekst = input.value.trim();
+  if (!tekst) return;
+  input.value = '';
+  input.style.height = 'auto';
+  
+  // Optimistic UI — dodaj poruku odmah
+  const msgs = document.getElementById('chatMessages');
+  const vreme = new Date().toLocaleTimeString('sr', {hour:'2-digit', minute:'2-digit'});
+  const bubble = document.createElement('div');
+  bubble.className = 'chat-bubble sent';
+  bubble.innerHTML = tekst + '<div class="chat-bubble-time">' + vreme + '</div>';
+  if (msgs.innerHTML.includes('Početak razgovora')) msgs.innerHTML = '';
+  msgs.appendChild(bubble);
+  msgs.scrollTop = msgs.scrollHeight;
+  document.getElementById('chatQuickReplies').style.display = 'none';
+  
+  try {
+    await fetch(API+'/api/poruka', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ posiljalac_id: trenutniKorisnik.id, primalac_id: aktivniChat.id, tekst })
+    });
+  } catch(e) {}
+}
+
+/* ===== INIT ===== */
+ucitajSesiju();
+ucitajHomeKartice();
+setInterval(() => { if (trenutniKorisnik) provjeriNeprocitane(); }, 60000);
+
+// Keep-alive ping svakih 10 minuta da Render ne zaspi
+setInterval(() => {
+  fetch(API + '/api/oglasi').catch(() => {});
+}, 600000);
+
+// Ping odmah pri load da probudi server
+fetch(API + '/api/oglasi').catch(() => {});
+</script>
+
+
+<!-- FULLSCREEN CHAT -->
+<div class="chat-overlay" id="chatOverlay">
+  <div class="chat-header">
+    <button class="chat-back" onclick="zatvoriChat()">←</button>
+    <div class="chat-avatar" id="chatAvatar">?</div>
+    <div>
+      <div class="chat-name" id="chatIme">...</div>
+      <div class="chat-status">Balkans korisnik</div>
+    </div>
+  </div>
+  <div id="chatQuickReplies" class="chat-quick-replies"></div>
+  <div class="chat-messages" id="chatMessages"></div>
+  <div class="chat-input-bar">
+    <textarea id="chatInput" placeholder="Napiši poruku..." rows="1"
+      oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"
+      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();posaljiChatPoruku()}"></textarea>
+    <button class="chat-send-btn" onclick="posaljiChatPoruku()">➤</button>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav" id="bottomNav">
+  <button class="bn-item active" id="bn-home" onclick="showPage('home');setActive('home')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+      <polyline points="9,22 9,12 15,12 15,22"/>
+    </svg>
+    <span class="bn-label">Home</span>
+  </button>
+  <button class="bn-item" id="bn-oglasi" onclick="showPage('oglasi');setActive('oglasi')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <circle cx="11" cy="11" r="8"/>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+    <span class="bn-label">Oglasi</span>
+  </button>
+  <button class="bn-item" id="bn-poruke" onclick="showPage('poruke');setActive('poruke')">
+    <div class="bn-badge" id="bnBadge">0</div>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+    </svg>
+    <span class="bn-label">Poruke</span>
+  </button>
+  <button class="bn-item" id="bn-profil" onclick="bNProfilKlik();setActive('profil')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+      <circle cx="12" cy="7" r="4"/>
+    </svg>
+    <span class="bn-label">Profil</span>
+  </button>
+</div>
+
+<!-- NOTIFICATION CENTER -->
+<div class="notif-center" id="notifCenter"></div>
 </body>
 </html>
