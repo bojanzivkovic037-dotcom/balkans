@@ -1686,8 +1686,12 @@ async function registracija() {
     const r = await fetch(API+'/api/registracija', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ime,prezime,email,lozinka})});
     const d = await r.json();
     if (d.greska) return prikaziMsg(msg, d.greska, 'err');
-    prikaziMsg(msg, '✓ Nalog kreiran! Prijavi se.', 'ok');
-    setTimeout(() => showPage('login'), 1500);
+    // Pokazzi poruku za verifikaciju emaila
+    prikaziMsg(msg, '✓ Nalog kreiran! Proveri email i klikni na link za potvrdu.', 'ok');
+    document.getElementById('regIme').value = '';
+    document.getElementById('regPrezime').value = '';
+    document.getElementById('regEmail').value = '';
+    document.getElementById('regLozinka').value = '';
   } catch(e) { prikaziMsg(msg, 'Greška, pokušaj ponovo', 'err'); }
 }
 
