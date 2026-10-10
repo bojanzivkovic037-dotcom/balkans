@@ -4,14 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Balkans — Nađi cimera u Evropi</title>
+<meta name="description" content="Nađi cimera bilo gde u Evropi — Beograd, Beč, Minhen, Cirih... Postavi oglas i spoji se sa ljudima.">
+<meta name="theme-color" content="#0B2B5C">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Balkans">
+<script src="/gradovi.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --navy: #0B1F3A;
-  --navy2: #0f2847;
+  --navy: #0B2B5C;
+  --navy2: #103873;
+  --blue: #1E6FE0;
+  --blue2: #4C8EF0;
   --orange: #FF6B2B;
   --orange2: #ff8650;
   --white: #fff;
@@ -30,7 +42,7 @@ button { cursor: pointer; font-family: 'Inter', sans-serif; }
 
 /* ===================== NAV ===================== */
 nav {
-  background: rgba(11,31,58,0.92);
+  background: rgba(11,43,92,0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   padding: 0 5%;
@@ -231,7 +243,7 @@ nav {
   transition: opacity .3s;
   pointer-events: none;
 }
-.card:hover { border-color: var(--orange); transform: translateY(-4px); box-shadow: 0 12px 36px rgba(11,31,58,0.1); }
+.card:hover { border-color: var(--orange); transform: translateY(-4px); box-shadow: 0 12px 36px rgba(11,43,92,0.1); }
 .card:hover::before { opacity: 1; }
 
 .card-top { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
@@ -595,6 +607,33 @@ textarea.form-input { resize: vertical; min-height: 90px; }
 @keyframes dotPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.3); } }
 @keyframes ringExpand { 0% { transform: scale(1); opacity: 0.4; } 100% { transform: scale(2.5); opacity: 0; } }
 
+/* ===================== APP: INSTALL + POST ===================== */
+.btn-install {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 14px; padding: 10px 18px; border-radius: 10px;
+  background: var(--blue); color: #fff; border: none;
+  font-size: 0.88rem; font-weight: 700;
+  transition: background .2s, transform .15s;
+}
+.btn-install:hover { background: var(--blue2); transform: translateY(-1px); }
+.btn-install[hidden] { display: none; }
+.ios-hint {
+  position: fixed; left: 16px; right: 16px; bottom: calc(80px + env(safe-area-inset-bottom));
+  background: #fff; color: var(--navy); border-radius: 14px; padding: 14px 40px 14px 16px;
+  box-shadow: 0 12px 40px rgba(11,43,92,0.25); border-top: 4px solid var(--orange);
+  font-size: 0.85rem; line-height: 1.45; z-index: 300;
+}
+.ios-hint button { position: absolute; top: 8px; right: 10px; background: none; border: none; font-size: 1.1rem; color: var(--gray2); }
+.bn-post { color: #fff !important; }
+.bn-post::after { display: none; }
+.bn-post-circle {
+  width: 40px; height: 40px; margin-top: -18px; border-radius: 50%;
+  background: var(--orange); display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 18px rgba(255,107,43,0.45); border: 3px solid var(--navy);
+}
+.bn-post-circle svg { width: 20px !important; height: 20px !important; }
+.filter-select select:focus { outline: 2px solid var(--blue); outline-offset: 1px; }
+
 /* ===================== BOTTOM NAV (MOBILE APP) ===================== */
 .bottom-nav {
   display: none;
@@ -670,7 +709,7 @@ textarea.form-input { resize: vertical; min-height: 90px; }
 .profil-tab.active {
   background: var(--navy);
   color: #fff;
-  box-shadow: 0 2px 8px rgba(11,31,58,0.15);
+  box-shadow: 0 2px 8px rgba(11,43,92,0.15);
 }
 
 /* ===================== NOTIFIKACIJE ===================== */
@@ -754,7 +793,7 @@ textarea.form-input { resize: vertical; min-height: 90px; }
 /* ===================== SETTINGS NIANSE ===================== */
 .p-section-head { cursor: default; }
 .p-section { transition: box-shadow .2s; }
-.p-section:hover { box-shadow: 0 4px 20px rgba(11,31,58,0.06); }
+.p-section:hover { box-shadow: 0 4px 20px rgba(11,43,92,0.06); }
 .settings-row {
   display: flex; align-items: center; justify-content: space-between;
   padding: 14px 0; border-bottom: 1px solid var(--gray3);
@@ -855,7 +894,7 @@ textarea.form-input { resize: vertical; min-height: 90px; }
   color: var(--navy);
   align-self: flex-start;
   border-bottom-left-radius: 4px;
-  box-shadow: 0 2px 8px rgba(11,31,58,0.06);
+  box-shadow: 0 2px 8px rgba(11,43,92,0.06);
 }
 .chat-bubble-time {
   font-size: 0.65rem;
@@ -964,13 +1003,14 @@ textarea.form-input { resize: vertical; min-height: 90px; }
     <div class="hero-glow"></div>
     <div class="hero-glow2"></div>
     <div class="hero-content">
-      <div class="hero-eyebrow"><span></span> Platforma za Balkance u Evropi</div>
+      <div class="hero-eyebrow"><span></span> Cimeri širom cele Evrope</div>
       <h1>Nađi cimera na koga možeš da <span class="accent">računaš</span></h1>
-      <p class="hero-sub">Pronađi verifikovanog cimera iz Srbije, BiH ili Hrvatske koji ide u istu zemlju kao ti. Delite kiriju i troškove smeštaja širom Evrope.</p>
+      <p class="hero-sub">Postavi oglas da tražiš cimera u Beogradu, Beču, Minhenu ili bilo kom gradu u Evropi. Spoji se sa ljudima, delite kiriju i troškove.</p>
       <div class="hero-actions" id="heroBtns">
-        <button class="btn-primary" onclick="showPage('registracija')">Kreiraj profil besplatno</button>
+        <button class="btn-primary" onclick="postaviOglas()">+ Postavi oglas</button>
         <button class="btn-secondary" onclick="showPage('oglasi')">Pregledaj oglase →</button>
       </div>
+      <button class="btn-install" id="installBtn" onclick="instalirajAplikaciju()" hidden>📲 Instaliraj aplikaciju</button>
       <div class="hero-motto">
         <span class="motto-text">Tvoj prvi prijatelj u <span>novom gradu.</span></span>
       </div>
@@ -1099,34 +1139,17 @@ textarea.form-input { resize: vertical; min-height: 90px; }
   <div class="oglasi-page">
     <div class="oglasi-header">
       <h1>Aktivni oglasi</h1>
-      <p>Pronađi verifikovanog cimera koji ide tamo gde i ti</p>
+      <p>Izaberi državu i grad — od Beograda do Beča i Lisabona</p>
     </div>
     <div class="filter-bar">
       <div class="filter-select">
+        <select id="filterDrzava" onchange="onDrzavaFilter()">
+          <option value="">🌍 Cela Evropa</option>
+        </select>
+      </div>
+      <div class="filter-select">
         <select id="filterGrad" onchange="ucitajOglase()">
           <option value="">Svi gradovi</option>
-          <optgroup label="🇩🇪 Nemačka"><option>Minhen</option><option>Berlin</option><option>Hamburg</option><option>Frankfurt</option><option>Štutgart</option><option>Diseldorf</option><option>Keln</option><option>Dortmund</option><option>Lajpcig</option><option>Bremen</option></optgroup>
-          <optgroup label="🇦🇹 Austrija"><option>Beč</option><option>Grac</option><option>Linc</option><option>Salcburg</option><option>Insbruk</option></optgroup>
-          <optgroup label="🇨🇭 Švajcarska"><option>Cirih</option><option>Ženeva</option><option>Bazel</option><option>Bern</option><option>Lozana</option></optgroup>
-          <optgroup label="🇸🇮 Slovenija"><option>Ljubljana</option><option>Maribor</option></optgroup>
-          <optgroup label="🇳🇱 Holandija"><option>Amsterdam</option><option>Rotterdam</option><option>Hag</option></optgroup>
-          <optgroup label="🇧🇪 Belgija"><option>Brisel</option><option>Antverpen</option></optgroup>
-          <optgroup label="🇸🇪 Švedska"><option>Stokholm</option><option>Geteborg</option></optgroup>
-          <optgroup label="🇩🇰 Danska"><option>Kopenhagen</option></optgroup>
-          <optgroup label="🇳🇴 Norveška"><option>Oslo</option></optgroup>
-          <optgroup label="🇫🇮 Finska"><option>Helsinki</option></optgroup>
-          <optgroup label="🇫🇷 Francuska"><option>Pariz</option><option>Lion</option><option>Marselj</option></optgroup>
-          <optgroup label="🇬🇧 UK"><option>London</option><option>Mančester</option><option>Birmingham</option></optgroup>
-          <optgroup label="🇮🇪 Irska"><option>Dublin</option></optgroup>
-          <optgroup label="🇱🇺 Luksemburg"><option>Luksemburg</option></optgroup>
-          <optgroup label="🇨🇿 Češka"><option>Prag</option></optgroup>
-          <optgroup label="🇸🇰 Slovačka"><option>Bratislava</option></optgroup>
-          <optgroup label="🇭🇺 Mađarska"><option>Budimpešta</option></optgroup>
-          <optgroup label="🇷🇴 Rumunija"><option>Bukurešt</option></optgroup>
-          <optgroup label="🇬🇷 Grčka"><option>Atina</option><option>Solun</option></optgroup>
-          <optgroup label="🇮🇹 Italija"><option>Milano</option><option>Rim</option><option>Turin</option></optgroup>
-          <optgroup label="🇪🇸 Španija"><option>Madrid</option><option>Barselona</option></optgroup>
-          <optgroup label="🇵🇹 Portugalija"><option>Lisabon</option><option>Porto</option></optgroup>
         </select>
       </div>
       <div class="filter-select">
@@ -1285,39 +1308,17 @@ textarea.form-input { resize: vertical; min-height: 90px; }
         </div>
 
         <!-- OGLAS -->
-        <div class="p-section">
+        <div class="p-section" id="oglasSection">
           <div class="p-section-head">
             <div class="p-section-icon">🏠</div>
             <div>
               <div class="p-section-title">Moj oglas</div>
-              <div class="p-section-sub">Gde ideš i kakav budžet imaš</div>
+              <div class="p-section-sub">Grad u kom tražiš cimera i kakav budžet imaš</div>
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Grad odredišta</label>
+            <label class="form-label">Grad u kom tražiš cimera</label>
             <select class="form-input" id="pGrad">
-              <optgroup label="🇩🇪 Nemačka"><option value="Minhen|Nemačka">Minhen</option><option value="Berlin|Nemačka">Berlin</option><option value="Hamburg|Nemačka">Hamburg</option><option value="Frankfurt|Nemačka">Frankfurt</option><option value="Štutgart|Nemačka">Štutgart</option><option value="Diseldorf|Nemačka">Diseldorf</option><option value="Keln|Nemačka">Keln</option><option value="Dortmund|Nemačka">Dortmund</option><option value="Lajpcig|Nemačka">Lajpcig</option><option value="Bremen|Nemačka">Bremen</option></optgroup>
-              <optgroup label="🇦🇹 Austrija"><option value="Beč|Austrija">Beč</option><option value="Grac|Austrija">Grac</option><option value="Linc|Austrija">Linc</option><option value="Salcburg|Austrija">Salcburg</option><option value="Insbruk|Austrija">Insbruk</option></optgroup>
-              <optgroup label="🇨🇭 Švajcarska"><option value="Cirih|Švajcarska">Cirih</option><option value="Ženeva|Švajcarska">Ženeva</option><option value="Bazel|Švajcarska">Bazel</option><option value="Bern|Švajcarska">Bern</option><option value="Lozana|Švajcarska">Lozana</option></optgroup>
-              <optgroup label="🇸🇮 Slovenija"><option value="Ljubljana|Slovenija">Ljubljana</option><option value="Maribor|Slovenija">Maribor</option></optgroup>
-              <optgroup label="🇳🇱 Holandija"><option value="Amsterdam|Holandija">Amsterdam</option><option value="Rotterdam|Holandija">Rotterdam</option><option value="Hag|Holandija">Hag</option></optgroup>
-              <optgroup label="🇧🇪 Belgija"><option value="Brisel|Belgija">Brisel</option><option value="Antverpen|Belgija">Antverpen</option></optgroup>
-              <optgroup label="🇸🇪 Švedska"><option value="Stokholm|Švedska">Stokholm</option><option value="Geteborg|Švedska">Geteborg</option></optgroup>
-              <optgroup label="🇩🇰 Danska"><option value="Kopenhagen|Danska">Kopenhagen</option></optgroup>
-              <optgroup label="🇳🇴 Norveška"><option value="Oslo|Norveška">Oslo</option></optgroup>
-              <optgroup label="🇫🇮 Finska"><option value="Helsinki|Finska">Helsinki</option></optgroup>
-              <optgroup label="🇫🇷 Francuska"><option value="Pariz|Francuska">Pariz</option><option value="Lion|Francuska">Lion</option><option value="Marselj|Francuska">Marselj</option></optgroup>
-              <optgroup label="🇬🇧 UK"><option value="London|UK">London</option><option value="Mančester|UK">Mančester</option><option value="Birmingham|UK">Birmingham</option></optgroup>
-              <optgroup label="🇮🇪 Irska"><option value="Dublin|Irska">Dublin</option></optgroup>
-              <optgroup label="🇱🇺 Luksemburg"><option value="Luksemburg|Luksemburg">Luksemburg</option></optgroup>
-              <optgroup label="🇨🇿 Češka"><option value="Prag|Češka">Prag</option></optgroup>
-              <optgroup label="🇸🇰 Slovačka"><option value="Bratislava|Slovačka">Bratislava</option></optgroup>
-              <optgroup label="🇭🇺 Mađarska"><option value="Budimpešta|Mađarska">Budimpešta</option></optgroup>
-              <optgroup label="🇷🇴 Rumunija"><option value="Bukurešt|Rumunija">Bukurešt</option></optgroup>
-              <optgroup label="🇬🇷 Grčka"><option value="Atina|Grčka">Atina</option><option value="Solun|Grčka">Solun</option></optgroup>
-              <optgroup label="🇮🇹 Italija"><option value="Milano|Italija">Milano</option><option value="Rim|Italija">Rim</option><option value="Turin|Italija">Turin</option></optgroup>
-              <optgroup label="🇪🇸 Španija"><option value="Madrid|Španija">Madrid</option><option value="Barselona|Španija">Barselona</option></optgroup>
-              <optgroup label="🇵🇹 Portugalija"><option value="Lisabon|Portugalija">Lisabon</option><option value="Porto|Portugalija">Porto</option></optgroup>
             </select>
           </div>
           <div class="form-row">
@@ -1497,7 +1498,7 @@ function updateNav() {
     nl.textContent = 'Moj profil'; nl.onclick = () => showPage('profil');
     const badge = neprocitane > 0 ? `<span class="notif-badge">${neprocitane}</span>` : '';
     nr.innerHTML = 'Poruke' + badge; nr.onclick = () => showPage('poruke');
-    if (hb) hb.innerHTML = `<button class="btn-primary" onclick="showPage('profil')">Moj oglas</button><button class="btn-secondary" onclick="showPage('oglasi')">Pregledaj oglase →</button>`;
+    if (hb) hb.innerHTML = `<button class="btn-primary" onclick="postaviOglas()">Moj oglas</button><button class="btn-secondary" onclick="showPage('oglasi')">Pregledaj oglase →</button>`;
     // Show admin link if admin
     const existingAdmin = document.getElementById('navAdmin');
     if (trenutniKorisnik.email === ADMIN_EMAIL && !existingAdmin) {
@@ -1511,7 +1512,7 @@ function updateNav() {
   } else {
     nl.textContent = 'Prijavi se'; nl.onclick = () => showPage('login');
     nr.textContent = 'Registruj se'; nr.onclick = () => showPage('registracija');
-    if (hb) hb.innerHTML = `<button class="btn-primary" onclick="showPage('registracija')">Kreiraj profil besplatno</button><button class="btn-secondary" onclick="showPage('oglasi')">Pregledaj oglase →</button>`;
+    if (hb) hb.innerHTML = `<button class="btn-primary" onclick="postaviOglas()">+ Postavi oglas</button><button class="btn-secondary" onclick="showPage('oglasi')">Pregledaj oglase →</button>`;
   }
 }
 
@@ -1664,8 +1665,8 @@ function renderKartice(data, containerId) {
 }
 
 function getFlag(drzava) {
-  const flags = { 'Nemačka':'🇩🇪','Austrija':'🇦🇹','Švajcarska':'🇨🇭','Slovenija':'🇸🇮','Holandija':'🇳🇱','Belgija':'🇧🇪','Švedska':'🇸🇪','Danska':'🇩🇰','Norveška':'🇳🇴','Finska':'🇫🇮','Francuska':'🇫🇷','UK':'🇬🇧','Irska':'🇮🇪','Luksemburg':'🇱🇺','Češka':'🇨🇿','Slovačka':'🇸🇰','Mađarska':'🇭🇺','Rumunija':'🇷🇴','Grčka':'🇬🇷','Italija':'🇮🇹','Španija':'🇪🇸','Portugalija':'🇵🇹' };
-  return flags[drzava] || '🌍';
+  const d = EVROPA.find(x => x.drzava === drzava);
+  return d ? d.flag : '🌍';
 }
 
 // Pull to refresh
@@ -1685,8 +1686,10 @@ document.addEventListener('touchend', function(e) {
 
 async function ucitajOglase() {
   const g = document.getElementById('filterGrad')?.value || '';
+  const d = document.getElementById('filterDrzava')?.value || '';
   const b = document.getElementById('filterBudzet')?.value || '';
   let url = API + '/api/oglasi?';
+  if (d) url += `drzava=${encodeURIComponent(d)}&`;
   if (g) url += `grad=${encodeURIComponent(g)}&`;
   if (b) url += `budzet_max=${b}`;
   const oc = document.getElementById('oglasiCards');
@@ -2430,6 +2433,73 @@ supabaseClient.auth.onAuthStateChange(async (event, session) => {
   }
 });
 
+/* ===== GRADOVI ===== */
+popuniDrzave(document.getElementById('filterDrzava'));
+popuniGradove(document.getElementById('filterGrad'));
+popuniGradove(document.getElementById('pGrad'), { saDrzavom: true });
+
+function onDrzavaFilter() {
+  const d = document.getElementById('filterDrzava').value;
+  const fg = document.getElementById('filterGrad');
+  fg.innerHTML = '<option value="">Svi gradovi</option>';
+  if (d) {
+    EVROPA.find(x => x.drzava === d).gradovi.forEach(g => {
+      const o = document.createElement('option'); o.textContent = g; fg.appendChild(o);
+    });
+  } else {
+    popuniGradove(fg);
+  }
+  ucitajOglase();
+}
+
+/* ===== POSTAVI OGLAS ===== */
+function postaviOglas() {
+  if (!trenutniKorisnik) {
+    showNotif('Registruj se', 'Napravi nalog da postaviš oglas', 'default', 3000);
+    return showPage('registracija');
+  }
+  showPage('profil');
+  switchTab('javni');
+  setTimeout(() => {
+    const el = document.getElementById('oglasSection');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 400);
+}
+
+/* ===== APLIKACIJA (PWA) ===== */
+let installPrompt = null;
+const jeInstalirana = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
+}
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  installPrompt = e;
+  document.getElementById('installBtn').hidden = false;
+});
+window.addEventListener('appinstalled', () => {
+  installPrompt = null;
+  document.getElementById('installBtn').hidden = true;
+  showNotif('Aplikacija instalirana!', 'Balkans je sada na tvom telefonu', 'success', 3000);
+});
+const jeIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+if (jeIOS && !jeInstalirana) document.getElementById('installBtn').hidden = false;
+
+async function instalirajAplikaciju() {
+  if (installPrompt) {
+    installPrompt.prompt();
+    await installPrompt.userChoice;
+    installPrompt = null;
+    document.getElementById('installBtn').hidden = true;
+  } else if (jeIOS) {
+    if (document.getElementById('iosHint')) return;
+    const h = document.createElement('div');
+    h.className = 'ios-hint'; h.id = 'iosHint';
+    h.innerHTML = '<b>Instaliraj Balkans na iPhone:</b><br>Tapni <b>Podeli</b> (kvadrat sa strelicom) u Safariju, pa <b>Dodaj na početni ekran</b>.<button onclick="this.parentNode.remove()" aria-label="Zatvori">✕</button>';
+    document.body.appendChild(h);
+  }
+}
+
 ucitajSesiju();
 ucitajHomeKartice();
 provjeriGoogleCallback();
@@ -2480,6 +2550,12 @@ fetch(API + '/api/oglasi').catch(() => {});
       <line x1="21" y1="21" x2="16.65" y2="16.65"/>
     </svg>
     <span class="bn-label">Oglasi</span>
+  </button>
+  <button class="bn-item bn-post" id="bn-postavi" onclick="postaviOglas()" aria-label="Postavi oglas">
+    <span class="bn-post-circle">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </span>
+    <span class="bn-label">Oglas</span>
   </button>
   <button class="bn-item" id="bn-poruke" onclick="showPage('poruke');setActive('poruke')">
     <div class="bn-badge" id="bnBadge">0</div>
